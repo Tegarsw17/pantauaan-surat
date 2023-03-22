@@ -4,13 +4,20 @@
   "description": "backend sistem register surat",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:dev": "cross-env NODE_ENV=development nodemon index.js"
   },
   "author": "muhammad yasin alqurni",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mysqli": "^3.1.4",
     "sequelize": "^6.29.3"
+  },
+  "devDependencies": {
+    "@types/sequelize": "^4.28.14",
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.21",
+    "sequelize-cli": "^6.6.0"
   }
 }
