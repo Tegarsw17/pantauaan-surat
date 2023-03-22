@@ -9,7 +9,7 @@ const tokenjwt = new tokenJwt()
 
 
 //router user
-router.post('/api/register/user', usercontroller.registerUser )
+router.post('/api/register', usercontroller.registerUser )
 //router login
 router.post('/api/login', usercontroller.loginUser )
 //router cek profile
