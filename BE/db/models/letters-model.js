@@ -2,34 +2,30 @@
 const { Model, DataTypes } = require("sequelize")
 const sequelize = require("../config/config")
 
-class user extends Model {
+class letter extends Model {
 }
 
-user.init(
+letter.init(
   {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      fullname: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      jabatan_id: {
+      user_id: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'jabatan_id'
-,      },
-      phone: {
+        field: 'user_id'
+      },
+      jenis_surat: {
         type: DataTypes.STRING,
         allowNull: true
       },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false
+      nomor_agenda: {
+        type: DataTypes.INTEGER,
+        allowNull: true
       },
-      password: {
+      url: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -45,6 +41,6 @@ user.init(
   }
   
 )
-// return user
+// return letter
 
-module.exports = user
+module.exports = letter

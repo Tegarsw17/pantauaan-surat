@@ -5,35 +5,17 @@ const sequelize = require('sequelize')
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-     await queryInterface.createTable('approvals', {
+     await queryInterface.createTable('jabatan_roles', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      letter_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references : {
-          model: "letters",
-          key: "id",
-          as: "letter_id"
-        }
-      },
-      user_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references : {
-          model: "user",
-          key: "id",
-          as: "user_id"
-        }
-      },
-      status: {
+      jabatan: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      catatan: {
+      role: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -52,6 +34,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-     await queryInterface.dropTable('approvals')
+     await queryInterface.dropTable('jabatan_roles')
   }
 }

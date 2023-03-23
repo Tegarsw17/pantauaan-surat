@@ -2,37 +2,30 @@
 const { Model, DataTypes } = require("sequelize")
 const sequelize = require("../config/config")
 
-class user extends Model {
+class user_dispositon extends Model {
 }
 
-user.init(
+user_dispositon.init(
   {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
-      },
-      fullname: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      jabatan_id: {
+    },
+    user_disposition_id: {
         type: DataTypes.INTEGER,
-        allowNull: true,
-        field: 'jabatan_id'
-,      },
-      phone: {
+        allowNull: false,
+        field: "user_disposition_id"
+    },
+    user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: "user_id"
+    },
+    status: {
         type: DataTypes.STRING,
-        allowNull: true
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
+        allowNull: false,
+    },
   },
   {
     sequelize: sequelize,
@@ -45,6 +38,6 @@ user.init(
   }
   
 )
-// return user
+// return user_dispositon
 
-module.exports = user
+module.exports = user_dispositon

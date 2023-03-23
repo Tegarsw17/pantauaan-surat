@@ -15,20 +15,20 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
-      jabatan: {
-        type: Sequelize.STRING,
-        allowNull: true
+      jabatan_role_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references : {
+          model: "jabatan_role",
+          key: "id",
+          as: "jabatan_role_id"
+        }
       },
       phone: {
         type: Sequelize.STRING,
         allowNull: true
       },
       email: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      
-      role: {
         type: Sequelize.STRING,
         allowNull: false
       },
