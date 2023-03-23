@@ -6,7 +6,8 @@
   "scripts": {
     "start:dev": "cross-env NODE_ENV=development nodemon index.js",
     "sequelize:create": "cross-env NODE_ENV=development npx sequelize db:create",
-    "sequelize:migrate": "cross-env NODE_ENV=development npx sequelize db:migrate"
+    "sequelize:migrate": "cross-env NODE_ENV=development npx sequelize db:migrate",
+    "sequelize:seed": "cross-env NODE_ENV=development npx sequelize db:seed:all"
   },
   "author": "muhammad yasin alqurni",
   "license": "ISC",
