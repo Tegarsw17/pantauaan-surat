@@ -29,16 +29,27 @@ module.exports = {
           as: "user_id"
         }
       },
+      // created_at: {
+      //   type: Sequelize.DATEONLY,
+      //   defaultValue: Sequelize.fn('now')
+      // },
+      // updated_at: {
+      //   type: Sequelize.DATEONLY,
+      //   defaultValue: Sequelize.fn('now')
+      // },
+      // deleted_at: {
+      //   type: Sequelize.DATEONLY,
+      // }
       created_at: {
-        type: Sequelize.DATEONLY,
-        defaultValue: Sequelize.fn('now')
+        type: Sequelize.DATE,
+        defaultValue: Date.now()
       },
       updated_at: {
-        type: Sequelize.DATEONLY,
-        defaultValue: Sequelize.fn('now')
+        type: Sequelize.DATE,
+        defaultValue: Date.now()
       },
       deleted_at: {
-        type: Sequelize.DATEONLY,
+        type: Sequelize.DATE
       }
     })
   },
