@@ -33,3 +33,7 @@ class letterController {
 
 }
 
+
+module.exports = {
+    letterController
+}
