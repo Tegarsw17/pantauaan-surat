@@ -7,4 +7,6 @@ const lettercontroller = new letterController()
 const tokenjwt = new tokenJwt()
 
 //router save document
-router.post()
+router.post('/api/surat', tokenjwt.verifyToken, lettercontroller.registerLetter)
+
+module.exports = router

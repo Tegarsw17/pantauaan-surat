@@ -16,10 +16,10 @@ user.init(
         type: DataTypes.STRING,
         allowNull: true
       },
-      jabatan_id: {
+      jabatan_role_id: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'jabatan_id'
+        field: 'jabatan_role_id'
 ,      },
       phone: {
         type: DataTypes.STRING,
