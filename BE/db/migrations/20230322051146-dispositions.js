@@ -11,13 +11,13 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
-      letter_id: {
+      surat_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
         references : {
-          model: "letters",
+          model: "surats",
           key: "id",
-          as: "letter_id"
+          as: "surat_id"
         }
       },
       user_id: {

@@ -1,5 +1,5 @@
 const User = require('../models/users-model')
-const Letter = require('../models/letters-model')
+const Surat = require('../models/letters-model')
 const Disposition = require('../models/dispositions-model')
 const Notification = require('../models/notifications-model')
 const Jabatan_role = require('../models/jabatan_roles-model')
@@ -12,18 +12,19 @@ Jabatan_role.belongsTo(User, {
     foreignKey: 'jabatan_role_id'
 })
 
-Register.hasMany(Letter, {
-    foreignKey: 'letter_id'
+Register.hasMany(Surat, {
+    foreignKey: 'surat_id'
 })
 
 
 
 module.exports = {
     User,
-    Letter,
+    Surat,
     Disposition,
     Notification,
     Jabatan_role,
     Register,
     User_disposition,
+    Upload_letter,
 }

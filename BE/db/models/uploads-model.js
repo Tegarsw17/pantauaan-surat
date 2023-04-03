@@ -2,7 +2,7 @@
 const { Model, DataTypes } = require("sequelize")
 const sequelize = require("../config/config")
 
-class letter extends Model {
+class upload_letter extends Model {
 }
 
 upload_letter.init(

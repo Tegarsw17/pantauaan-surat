@@ -2,10 +2,10 @@
 const { Model, DataTypes } = require("sequelize")
 const sequelize = require("../config/config")
 
-class letter extends Model {
+class surat extends Model {
 }
 
-letter.init(
+surat.init(
   {
     id: {
         type: DataTypes.INTEGER,
@@ -37,6 +37,6 @@ letter.init(
   }
   
 )
-// return letter
+// return surat
 
-module.exports = letter
+module.exports = surat

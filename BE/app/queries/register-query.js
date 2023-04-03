@@ -2,7 +2,7 @@ const Register = require('../../db/models')
 
 const createRegister = async (letterId, payload) => {
     return Register.create({
-        letter_id: letterId,
+        surat_id: letterId,
         nomor_surat: payload.nomor_surat,
         pengirim: payload.pengirim,
         perihal: payload.perihal,
