@@ -5,19 +5,19 @@ const sequelize = require('sequelize')
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-     await queryInterface.createTable('upload_letter', {
+     await queryInterface.createTable('upload_letters', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      letter_id: {
+      surat_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
         references : {
-          model: "letters",
+          model: "surats",
           key: "id",
-          as: "letter_id"
+          as: "surat_id"
         }
       },
       filename: {
@@ -54,6 +54,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-     await queryInterface.dropTable('upload_letter')
+     await queryInterface.dropTable('upload_letters')
   }
 }

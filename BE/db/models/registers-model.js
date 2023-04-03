@@ -12,10 +12,10 @@ register.init(
         primaryKey: true,
         autoIncrement: true
     },
-    letter_id: {
+    surat_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    field: 'letter_id'
+    field: 'surat_id'
     },
     nomor_surat: {
     type: DataTypes.STRING,

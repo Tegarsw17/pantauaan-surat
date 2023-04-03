@@ -1,4 +1,4 @@
-const {uploadFile} = require('../services/upload')
+
 const {letterQueries, registerQueries} = require('../queries')
 const message = require('../../response-helpers/messages').MESSAGE
 const responseHendler = require('../../response-helpers/error-helper')
@@ -12,13 +12,13 @@ class letterController {
             const payload = req.body
             const auth = req.userId
 
-            await uploadFile(req, res)
-            if(req.file === undefined) { return responseHendler.badRequest(res, message('document').incompleteKeyOrValue)}
-            console.log(req.file)
             //create letters
-            const createLetter = await letterQueries.createLetter(auth, payload, req.file.path)
+            const createLetter = await letterQueries.createLetter(auth, payload)
+
+            console.log(createLetter)
             if(!createLetter) { return responseHendler.badRequest(res, message('create letter').invalidCreateResource)}
             //create registers
+            console.log(createLetter.id)
             const createRegister = await registerQueries.createRegister(createLetter.id, payload)
             if(!createRegister) { return responseHendler.badRequest(res, message('create register').invalidCreateResource)}
 
