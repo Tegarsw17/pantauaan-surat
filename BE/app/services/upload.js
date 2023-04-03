@@ -5,13 +5,13 @@ const __basedir = path.resolve()
 // const { cloudinary } = require('../../db/config/cloudinary')
 // const { CloudinaryStorage } = require("multer-storage-cloudinary")
 
-const imageFilter = (req, file, cb) => {
-    if(file.mimetype.startsWith('pdf')) {
-        cb (null, true)
-    }else {
-        cb('please upload only pdf', false)
-    }
-}
+// const imageFilter = (req, file, cb) => {
+//     if(file.mimetype.startsWith('pdf')) {
+//         cb (null, true)
+//     }else {
+//         cb('please upload only pdf', false)
+//     }
+// }
 
 // const storage = new CloudinaryStorage({
 //     cloudinary: cloudinary,
@@ -33,7 +33,7 @@ const imageFilter = (req, file, cb) => {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, __basedir + '/storage/upload')
+        cb(null, __basedir + '/storage/pdf')
     },
     filename: (req, file, cb) => {
         cb(null, `${Date.now()}-${file.originalname}`) //
@@ -43,7 +43,7 @@ const storage = multer.diskStorage({
 
 const uploadImage =  multer({
     storage: storage,
-    fileFilter: imageFilter,
+    // fileFilter: imageFilter,
 }).single('file') //untuk menentukan banyak image yg bisa diupload
 
 let uploadFile = util.promisify(uploadImage)

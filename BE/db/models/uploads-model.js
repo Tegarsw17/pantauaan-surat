@@ -5,25 +5,25 @@ const sequelize = require("../config/config")
 class letter extends Model {
 }
 
-letter.init(
+upload_letter.init(
   {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-    user_id: {
+      letter_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      field: 'user_id'
+      field: 'letter_id'
     },
-    jenis_surat: {
-      type: DataTypes.STRING,
-      allowNull: true
+    filename: {
+    type: DataTypes.STRING,
+    allowNull: false
     },
-    nomor_agenda: {
-      type: DataTypes.INTEGER,
-      allowNull: true
+    url: {
+    type: DataTypes.STRING,
+    allowNull: false
     },
   },
   {
@@ -39,4 +39,4 @@ letter.init(
 )
 // return letter
 
-module.exports = letter
+module.exports = upload_letter
