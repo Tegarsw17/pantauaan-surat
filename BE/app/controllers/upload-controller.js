@@ -1,33 +1,33 @@
 const {uploadFile} = require('../services/upload')
-const {letterQueries, registerQueries} = require('../queries')
+const {uploadQueries, letterQueries} = require('../queries')
 const message = require('../../response-helpers/messages').MESSAGE
 const responseHendler = require('../../response-helpers/error-helper')
 
 
-class letterController {
+class uploadController {
 
-    async registerLetter(req, res) {
+    async uploadDocument(req, res) {
         try{
             //upload pdf
-            const payload = req.body
-            const auth = req.userId
-
+            const payload = req.params
+            if(!payload) {return responseHendler.badRequest(res, message('req.params').incompleteKeyOrValue)}
+  
+            const findLetter = await letterQueries.findSurat(payload)
+            if(!findLetter) {return responseHendler.notFound(res, message('document id').notFoundResource)}
+            
             await uploadFile(req, res)
             if(req.file === undefined) { return responseHendler.badRequest(res, message('document').incompleteKeyOrValue)}
+            
             console.log(req.file)
-            //create letters
-            const createLetter = await letterQueries.createLetter(auth, payload, req.file.path)
+            const createLetter = await uploadQueries.createUpload(findLetter, req.file)
+            console.log(createLetter)
             if(!createLetter) { return responseHendler.badRequest(res, message('create letter').invalidCreateResource)}
-            //create registers
-            const createRegister = await registerQueries.createRegister(createLetter.id, payload)
-            if(!createRegister) { return responseHendler.badRequest(res, message('create register').invalidCreateResource)}
 
-            return responseHendler.ok(res, message('document save').success)
+            return responseHendler.ok(res, message('upload document').success)
         }
 
         catch(err){
             const key = err.message
-            console.log(key)
             return responseHendler.internalError(res, message(key).errorMessage)
         }
     }
@@ -36,5 +36,5 @@ class letterController {
 
 
 module.exports = {
-    letterController
+    uploadController
 }

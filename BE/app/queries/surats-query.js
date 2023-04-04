@@ -18,7 +18,11 @@ const createSurat = async (auth, payload) => {
     })
 }
 
+const findSurat = async (payload) => {
+    return Surat.findOne({where: {id: payload.id}})
+}
 
 module.exports = {
-    createSurat
+    createSurat,
+    findSurat,
 }
