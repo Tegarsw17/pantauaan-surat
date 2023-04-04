@@ -8,7 +8,12 @@
     "sequelize:create": "cross-env NODE_ENV=development npx sequelize db:create",
     "sequelize:migrate": "cross-env NODE_ENV=development npx sequelize db:migrate",
     "sequelize:seed": "cross-env NODE_ENV=development npx sequelize db:seed:all",
-    "sequelize:generate": "cross-env NODE_ENV=development npx sequelize migration:generate --name uploads"
+    "sequelize:generate": "cross-env NODE_ENV=development npx sequelize migration:generate --name uploads",
+    "start:prod": "cross-env NODE_ENV=production nodemon index.js",
+    "sequelize:create:prod": "cross-env NODE_ENV=production npx sequelize db:create",
+    "sequelize:migrate:prod": "cross-env NODE_ENV=production npx sequelize db:migrate",
+    "sequelize:seed:prod": "cross-env NODE_ENV=production npx sequelize db:seed:all",
+    "sequelize:generate:prod": "cross-env NODE_ENV=production npx sequelize migration:generate --name uploads"
   },
   "author": "muhammad yasin alqurni",
   "license": "ISC",

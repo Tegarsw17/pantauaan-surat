@@ -5,11 +5,10 @@ const bcrypt = require('bcrypt')
 const createUser = async (payload) => {
     return User.create({
         fullname: payload.fullname,
-        jabatan: payload.jabatan,
+        jabatan_role_id: payload.jabatan_role_id,
         phone: payload.phone,
         email: payload.email,
         password: bcrypt.hashSync(payload.password, 8),
-        role: payload.role
     })
 }
 
