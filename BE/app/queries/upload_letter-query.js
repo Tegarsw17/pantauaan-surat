@@ -8,7 +8,16 @@ const createUpload = async (params, payload) => {
     })
 }
 
+const findUpload = async (params) => {
+    return Upload_letter.findOne({where: {id: params.id}})
+}
+
+const deleteUpload = async (payload) => {
+    return Upload_letter.destroy({where: {id: payload.id}})
+}
 
 module.exports = {
     createUpload,
+    findUpload,
+    deleteUpload
 }

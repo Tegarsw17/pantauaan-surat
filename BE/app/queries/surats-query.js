@@ -1,4 +1,4 @@
-const {Surat} = require('../../db/models')
+const {Surat, Upload_letter} = require('../../db/models')
 
 const createSurat = async (auth, payload) => {
     return Surat.create({
@@ -22,7 +22,16 @@ const findSurat = async (payload) => {
     return Surat.findOne({where: {id: payload.id}})
 }
 
+const deleteSurat = async (payload) => {
+    return Surat.destroy({where: {id: payload.id}})
+}
+
+const findAllSurat = async () => {
+    return Surat.findAll({include: Upload_letter})
+}
 module.exports = {
     createSurat,
     findSurat,
+    deleteSurat,
+    findAllSurat
 }
