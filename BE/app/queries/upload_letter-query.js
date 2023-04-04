@@ -1,10 +1,10 @@
 const { Upload_letter } = require('../../db/models')
 
 const createUpload = async (params, payload) => {
-    Upload_letter.create({
-        surat_id: params,
+    return Upload_letter.create({
+        surat_id: params.id,
         filename: payload.filename,
-        url: payload.url,
+        url: payload.path,
     })
 }
 

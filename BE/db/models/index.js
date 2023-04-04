@@ -10,6 +10,10 @@ Jabatan_role.belongsTo(User, {
     foreignKey: 'jabatan_role_id'
 })
 
+Surat.hasMany(Upload_letter, {
+    foreignKey: 'surat_id'
+})
+
 
 
 
