@@ -12,7 +12,7 @@ Jabatan_role.belongsTo(User, {
     foreignKey: 'jabatan_role_id'
 })
 
-Register.hasMany(Surat, {
+Surat.hasMany(Register, {
     foreignKey: 'surat_id'
 })
 

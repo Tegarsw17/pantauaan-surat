@@ -1,4 +1,4 @@
-const Register = require('../../db/models')
+const {Register} = require('../../db/models')
 
 const createRegister = async (letterId, payload) => {
     return Register.create({
