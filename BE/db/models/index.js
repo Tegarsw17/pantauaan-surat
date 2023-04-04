@@ -14,8 +14,9 @@ Surat.hasMany(Upload_letter, {
     foreignKey: 'surat_id'
 })
 
-
-
+Surat.belongsTo(User, {
+    foreignKey: 'user_id'
+})
 
 module.exports = {
     User,
