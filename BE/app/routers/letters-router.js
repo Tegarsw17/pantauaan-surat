@@ -9,5 +9,7 @@ const tokenjwt = new tokenJwt()
 
 //router save document
 router.post('/api/surat', tokenjwt.verifyToken, authorization(1), lettercontroller.registerLetter)
+//router get all documents
+router.get('/api/surat', tokenjwt.verifyToken, authorization(1), lettercontroller.getAllLetter)
 
 module.exports = router

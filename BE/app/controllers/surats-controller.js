@@ -29,6 +29,21 @@ class letterController {
         }
     }
 
+    async getAllLetter (req, res) {
+        try {
+            const getAll = await letterQueries.findAllSurat()
+            if(getAll.length == 0){return responseHendler.notFound(res, message('document').notFoundResource)}
+            
+            const data = getAll
+            return responseHendler.ok(res, message('register document').success, data)
+        }
+
+        catch(err) {
+         const key = err.message
+        return responseHendler.internalError(res, message(key).errorMessage)
+        }
+    }
+
 }
 
 

@@ -32,6 +32,42 @@ class uploadController {
         }
     }
 
+    async removeDocument (req, res) {
+
+        try {
+            const payload = req.params
+            // find surat yang akan dihapus
+           const findLetter = await letterQueries.findSurat(payload)
+           if(!findLetter) {return responseHendler.notFound(res, message('document id').notFoundResource)}
+
+            //find document 
+            const findDocument = await uploadQueries.findUpload(findLetter)
+            if(!findDocument) {return responseHendler.notFound(res, message('upload id').notFoundResource)}
+            
+            //menghapus image di storage
+            fs.unlink(__basedir + `/storage/upload/${findDocument.filename}`, 
+                function (err)  {
+                    if (err) {
+                        const key = err.message
+                        return responseHendler.internalError(res, message(key).errorMessage)
+                    }
+                    const deleteLetter = letterQueries.deleteSurat(findLetter)
+                    if(!deleteLetter){return responseHendler.badRequest(res, message('delete letter').invalidCreateResource)}
+                    
+                    const deleteUpload = uploadQueries.deleteUpload(findDocument)
+                    if(!deleteUpload){return responseHendler.badRequest(res, message('delete Document').invalidCreateResource)}
+
+                    return responseHendler.ok(res, message('delete document').success)
+                })
+        }
+
+        catch(err) {
+            const key = err.message
+            console.log(key)
+            return responseHendler.internalError(res, message(key).errorMessage)
+        }
+    }
+
 }
 
 
