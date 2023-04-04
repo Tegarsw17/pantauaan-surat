@@ -1,8 +1,10 @@
-const {Register} = require('../../db/models')
+const {Surat} = require('../../db/models')
 
-const createRegister = async (letterId, payload) => {
-    return Register.create({
-        surat_id: letterId,
+const createSurat = async (auth, payload) => {
+    return Surat.create({
+        user_id: auth,
+        jenis_surat: payload.jenis_surat,
+        nomor_agenda: payload.nomor_agenda,
         nomor_surat: payload.nomor_surat,
         pengirim: payload.pengirim,
         perihal: payload.perihal,
@@ -18,5 +20,5 @@ const createRegister = async (letterId, payload) => {
 
 
 module.exports = {
-    createRegister
+    createSurat
 }

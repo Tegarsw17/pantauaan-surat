@@ -2,7 +2,7 @@ const loginDecorator = (user, token) =>{
   
     const loginUser = {
         username: user.fullname,
-        role: user.role,
+        jabatan_role_id: user.jabatan_role_id,
         token: token
       }
 
@@ -12,11 +12,9 @@ const loginDecorator = (user, token) =>{
 const profileDecorator = (payload) => {
   const profile = {
     fullname: payload.fullname,
-    address: payload.address,
     phone: payload.phone,
     email: payload.email,
-    role: payload.role,
-    is_verified: payload.is_verified
+    jabatan_role_id: user.jabatan_role_id,
   }
 
   return profile

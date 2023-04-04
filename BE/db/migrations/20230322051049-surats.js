@@ -5,20 +5,11 @@ const sequelize = require('sequelize')
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-     await queryInterface.createTable('notifications', {
+     await queryInterface.createTable('surats', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
-      },
-      user_disposition_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references : {
-          model: "user_dispositions",
-          key: "id",
-          as: "user_disposition_id"
-        }
       },
       user_id: {
         type: Sequelize.INTEGER,
@@ -29,9 +20,53 @@ module.exports = {
           as: "user_id"
         }
       },
+      jenis_surat: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      nomor_agenda: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      nomor_surat: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      pengirim: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      perihal: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      tanggal_surat: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      tanggal_diterima: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
       status: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false
+      },
+      control: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      unit_proses: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      tindak_lanjut: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      keterangan: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       // created_at: {
       //   type: Sequelize.DATEONLY,
@@ -59,6 +94,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-     await queryInterface.dropTable('notifications')
+     await queryInterface.dropTable('surats')
   }
 }

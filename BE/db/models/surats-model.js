@@ -2,20 +2,28 @@
 const { Model, DataTypes } = require("sequelize")
 const sequelize = require("../config/config")
 
-class register extends Model {
+class surat extends Model {
 }
 
-register.init(
+surat.init(
   {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    surat_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    field: 'surat_id'
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'user_id'
+    },
+    jenis_surat: {
+      type: DataTypes.STRING, 
+      allowNull: true
+    },
+    nomor_agenda: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     },
     nomor_surat: {
     type: DataTypes.STRING,
@@ -69,6 +77,6 @@ register.init(
   }
   
 )
-// return register
+// return surat
 
-module.exports = register
+module.exports = surat
