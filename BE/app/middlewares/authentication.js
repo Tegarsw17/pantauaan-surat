@@ -22,6 +22,7 @@ class tokenJwt {
             req.userRole = decoded.role
             next()
         })
+        
     }
 
 }
