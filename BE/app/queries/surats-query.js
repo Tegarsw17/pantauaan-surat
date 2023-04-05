@@ -26,8 +26,19 @@ const deleteSurat = async (payload) => {
     return Surat.destroy({where: {id: payload.id}})
 }
 
-const findAllSurat = async () => {
+const findAllSurat = async (payload) => {
     return Surat.findAll({
+        where: {jenis_surat: payload},
+        include: [
+            {model: Upload_letter},
+            {model: User}
+        ]
+    })
+}
+
+const getDetail = async (payload) => {
+    return Surat.findOne({
+        where: {id: payload.id},
         include: [
             {model: Upload_letter},
             {model: User}
@@ -38,5 +49,6 @@ module.exports = {
     createSurat,
     findSurat,
     deleteSurat,
-    findAllSurat
+    findAllSurat,
+    getDetail
 }
