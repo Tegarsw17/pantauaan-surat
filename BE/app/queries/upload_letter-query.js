@@ -9,7 +9,7 @@ const createUpload = async (params, payload) => {
 }
 
 const findUpload = async (params) => {
-    return Upload_letter.findOne({where: {id: params.id}})
+    return Upload_letter.findOne({where: {surat_id: params.id}})
 }
 
 const deleteUpload = async (payload) => {
