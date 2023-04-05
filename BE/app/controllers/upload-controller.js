@@ -1,7 +1,8 @@
-const {uploadFile} = require('../services/upload')
+const {uploadFile, __basedir} = require('../services/upload')
 const {uploadQueries, letterQueries} = require('../queries')
 const message = require('../../response-helpers/messages').MESSAGE
 const responseHendler = require('../../response-helpers/error-helper')
+const fs = require('fs')
 
 
 class uploadController {
@@ -45,7 +46,7 @@ class uploadController {
             if(!findDocument) {return responseHendler.notFound(res, message('upload id').notFoundResource)}
             
             //menghapus image di storage
-            fs.unlink(__basedir + `/storage/upload/${findDocument.filename}`, 
+            fs.unlink(__basedir + `/storage/pdf/${findDocument.filename}`, 
                 function (err)  {
                     if (err) {
                         const key = err.message
