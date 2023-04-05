@@ -14,7 +14,7 @@ const profileDecorator = (payload) => {
     fullname: payload.fullname,
     phone: payload.phone,
     email: payload.email,
-    jabatan_role_id: user.jabatan_role_id,
+    jabatan_role_id: payload.jabatan_role_id,
   }
 
   return profile
