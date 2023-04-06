@@ -19,7 +19,7 @@ class tokenJwt {
                 })
             }
             req.userId = decoded.id
-            req.userRole = decoded.role
+            req.userRole = decoded.jabatan_role_id
             next()
         })
         

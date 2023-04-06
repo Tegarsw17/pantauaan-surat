@@ -30,7 +30,11 @@ const deleteUser = async (payload) => {
 }
 
 const findUserByName = async (payload) => {
-    return User.findOne({ where: {fullname: payload.fullname}})
+    return User.findOne({ 
+        where: [
+            {fullname: payload.fullname},
+            {jabatan_role_id: 2}
+        ]})
 }
 
 const findAllUser = async (payload) => {

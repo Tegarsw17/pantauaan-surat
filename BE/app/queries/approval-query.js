@@ -10,6 +10,15 @@ const createApproval = async (surat_id, status_approval, catatan, user_id) => {
     })
 }
 
+const findApproval = async (auth) => {
+    return Approval.findOne({where: {user_id: auth}})
+}
+
+const findApprovalStatus = async (payload) => {
+    return Approval.findOne({where: {status: payload}})
+}
 module.exports = {
-    createApproval
+    createApproval,
+    findApproval,
+    findApprovalStatus
 }
