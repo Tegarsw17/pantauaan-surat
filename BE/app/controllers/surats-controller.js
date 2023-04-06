@@ -2,7 +2,7 @@
 const {letterQueries} = require('../queries')
 const message = require('../../response-helpers/messages').MESSAGE
 const responseHendler = require('../../response-helpers/error-helper')
-const { suratDecorator, suratObjekDecorator } = require('../decorators/surats-decorator')
+const { suratDecorator, suratObjekDecorator, suratArrayDecorator } = require('../decorators/surats-decorator')
 
 
 class letterController {
@@ -34,7 +34,7 @@ class letterController {
             const getAll = await letterQueries.findAllSurat('surat masuk')
             if(getAll.length == 0){return responseHendler.notFound(res, message('document').notFoundResource)}
             
-            const data = getAll
+            const data = await suratArrayDecorator(getAll)
             return responseHendler.ok(res, message('get all surat masuk').success, data)
         }
 
@@ -49,7 +49,7 @@ class letterController {
             const getAll = await letterQueries.findAllSurat('surat keluar')
             if(getAll.length == 0){return responseHendler.notFound(res, message('document').notFoundResource)}
             
-            const data = getAll
+            const data = await suratArrayDecorator(getAll)
             return responseHendler.ok(res, message('get all surat keluar').success, data)
         }
 
