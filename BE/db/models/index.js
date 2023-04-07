@@ -31,6 +31,9 @@ Surat.hasMany(Approval, {
     foreignKey: 'surat_id'
 })
 
+Approval.belongsTo(User, {
+    foreignKey: 'user_id'
+})
 module.exports = {
     User,
     Surat,

@@ -1,6 +1,7 @@
 const {letterQueries, approvalQueries, userQueries} = require('../queries')
 const message = require('../../response-helpers/messages').MESSAGE
 const responseHendler = require('../../response-helpers/error-helper')
+const { approvalDecorator } = require('../decorators/approvals-decorator')
 
 
 class approvalController {
@@ -42,7 +43,7 @@ class approvalController {
             const findApproval = await approvalQueries.findApproval(auth)
             if(!findApproval) { return responseHendler.notFound(res, message('approval').notFoundResource)}
 
-            const data = findApproval
+            const data = await approvalDecorator(findApproval)
             return responseHendler.ok(res, message('get approval').success, data)
         }
         catch(err) {

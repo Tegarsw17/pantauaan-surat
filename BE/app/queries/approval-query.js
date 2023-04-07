@@ -1,4 +1,4 @@
-const { Approval } = require('../../db/models')
+const { Approval, Surat, Upload_letter, User } = require('../../db/models')
 
 
 const createApproval = async (surat_id, status_approval, catatan, user_id) => {
@@ -11,7 +11,16 @@ const createApproval = async (surat_id, status_approval, catatan, user_id) => {
 }
 
 const findApproval = async (auth) => {
-    return Approval.findOne({where: {user_id: auth}})
+    return Approval.findOne({
+        where: {user_id: auth},
+        include: [
+                {model: Surat, include: [
+                    {model: Upload_letter },
+                    {model: User}
+                ]},
+                {model: User}
+        ]
+    })
 }
 
 const findApprovalStatus = async (payload) => {
