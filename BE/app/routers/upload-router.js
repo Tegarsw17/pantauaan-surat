@@ -10,6 +10,6 @@ const tokenjwt = new tokenJwt()
 //to upload document
 router.post('/api/upload/:id', tokenjwt.verifyToken, authorization(1), uploadcontroller.uploadDocument)
 
-router.delete('/api/upload/:id', tokenjwt.verifyToken, authorization(1), uploadcontroller.removeDocument)
+router.delete('/api/delete/:id', tokenjwt.verifyToken, authorization(1), uploadcontroller.removeDocument)
 
 module.exports = router

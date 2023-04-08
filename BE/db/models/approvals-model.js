@@ -12,10 +12,10 @@ approval.init(
         primaryKey: true,
         autoIncrement: true
     },
-    letter_id: {
+    surat_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
-    field: 'letter_id'
+    field: 'surat_id'
     },
     user_id: {
         type: DataTypes.INTEGER,

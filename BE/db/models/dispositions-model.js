@@ -12,7 +12,7 @@ disposition.init(
         primaryKey: true,
         autoIncrement: true
     },
-    letter_id: {
+    surat_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
     field: 'letter_id'

@@ -49,6 +49,7 @@ class userController {
              if(!token) { return responseHendler.internalError(res,message().serverError)}
  
              const data = loginDecorator(findUser, token)
+            // const data = findUser
              return responseHendler.ok(res,message('login').success, data) 
         }
 
