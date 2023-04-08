@@ -1,11 +1,11 @@
 const express = require('express')
 const app = express()
-const {userRouter, letterRouter, uploadRouter, approvalRouter } = require('./app/routers')
+const {userRouter, letterRouter, uploadRouter, approvalRouter, roleRouter } = require('./app/routers')
 const bodyParser = require('body-parser')
 const { cors, corsOptions } = require('./app/middlewares/cors')
 const swaggerUi = require(`swagger-ui-express`)
 const YAML = require('yamljs');
-const swaggerDocument = YAML.load(`./swagger.yaml`);
+const swaggerDocument = YAML.load('./swagger.yaml');
 
 
 
@@ -28,6 +28,7 @@ app.use('/v1', userRouter)
 app.use('/v1', letterRouter)
 app.use('/v1', uploadRouter)
 app.use('/v1', approvalRouter)
+app.use('/v1', roleRouter)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 // app.use('/v1', imageRouter)
 
