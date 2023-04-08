@@ -23,11 +23,39 @@ const findApproval = async (auth) => {
     })
 }
 
-const findApprovalStatus = async (payload) => {
-    return Approval.findOne({where: {status: payload}})
+const findOneApproval = async (payload) => {
+    return Approval.findOne({where: {id: payload.id}})
 }
+
+const findApprovalStatus = async (payload) => {
+    return Approval.findOne({
+        where: {status: payload}})
+}
+
+const findOneApprovalUser = async (auth, payload) => {
+    return Approval.findOne({
+        where: {
+            user_id: auth,
+            id: payload.id
+        }
+    })
+}
+
+const updateApproval = async (body, status, params) => {
+    return Approval.update(
+        {
+            catatan: body.catatan,
+            status: status
+        }, 
+        {where: {id: params.id}}
+    )
+}
+
 module.exports = {
     createApproval,
     findApproval,
-    findApprovalStatus
+    findApprovalStatus,
+    findOneApproval,
+    updateApproval,
+    findOneApprovalUser
 }
