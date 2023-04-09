@@ -254,7 +254,11 @@
     <script src="plugins/chart.js/Chart.min.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="dist/js/pages/dashboard3.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+        const data = axios.get("http://localhost:5151/v1/api/role")
+        console.log(data)
+
         const form = document.querySelector("form");
         form.addEventListener("submit", (e) => {
             var fullname = document.getElementById("fullname").value;
