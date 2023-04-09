@@ -161,8 +161,16 @@
     <script src="dist/js/navbar.js"></script>
 
     <script>
+        // var url = "localhost:5151/v1/api/surat_masuk"
         $(document).ready(function () {
             $('#example1').DataTable({
+                // 'ajax': {
+                //     'url': url,
+                //     'type': 'GET',
+                //     'beforeSend': function (request) {
+                //         request.setRequestHeader("authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6MSwiaWF0IjoxNjgxMDE1NDY1LCJleHAiOjE2ODEwMTkwNjV9.8zNhZgotDTsVYyzA2xfX1XnkvAgoWP2_uPpPMMm2Uuc");
+                //     }
+                // }
                 'ajax': './data/surat.json',
                 'columns': [
                     { data: 'nomor_surat' },
