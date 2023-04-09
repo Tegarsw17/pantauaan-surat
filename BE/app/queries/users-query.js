@@ -1,4 +1,4 @@
-const { User } = require('../../db/models')
+const { User, Jabatan_role} = require('../../db/models')
 const bcrypt = require('bcrypt')
 
 
@@ -14,7 +14,8 @@ const createUser = async (payload) => {
 
 const findUserByEmail = async (payload) => {
     return User.findOne({
-        where: { email: payload.email }
+        where: { email: payload.email },
+        include: {model: Jabatan_role }
     })
 }
 
@@ -28,10 +29,23 @@ const deleteUser = async (payload) => {
     return User.destroy({ where: {email: payload.email}})
 }
 
+const findUserByName = async (payload) => {
+    return User.findOne({ 
+        where: [
+            {fullname: payload.fullname},
+            {jabatan_role_id: 2}
+        ]})
+}
+
+const findAllUser = async (payload) => {
+    return User.findAll()
+}
 
 module.exports = {
     createUser,
     findUserByEmail,
     findUserById,
-    deleteUser
+    deleteUser,
+    findUserByName,
+    findAllUser
 }

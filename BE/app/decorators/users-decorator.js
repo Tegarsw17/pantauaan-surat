@@ -2,7 +2,8 @@ const loginDecorator = (user, token) =>{
   
     const loginUser = {
         username: user.fullname,
-        jabatan_role_id: user.jabatan_role_id,
+        jabatan: user.jabatan_role.jabatan,
+        role: user.jabatan_role.role,
         token: token
       }
 

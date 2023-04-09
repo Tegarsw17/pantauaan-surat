@@ -33,6 +33,34 @@ const suratDecorator = (payload) => {
 //       return await Promise.all(mappedSurat)
 // }
 
+const suratArrayDecorator = async (payload) => {
+    const mappedSurat = payload.map((surat) => {
+        return {
+            id: surat.id,
+            admin: surat.user.fullname,
+            jenis_surat: surat.jenis_surat,
+            nomor_agenda: surat.nomor_agenda,
+            nomor_surat: surat.nomor_surat,
+            pengirim: surat.pengirim,
+            perihal: surat.perihal,
+            tanggal_surat: surat.tanggal_surat,
+            tanggal_diterima: surat.tanggal_diterima,
+            status: surat.status,
+            control: surat.control,
+            unit_proses: surat.unit_proses,
+            tindak_lanjut: surat.tindak_lanjut,
+            keterangan: surat.keterangan,
+            file: surat.upload_letters.map((document) => {
+                return {
+                    filename: document.filename,
+                    url: document.url
+                }
+            })
+        }
+    }) 
+    return await Promise.all(mappedSurat)
+}   
+    
 const suratObjekDecorator = async (payload) => {
     return {
         id: payload.id,
@@ -60,5 +88,6 @@ const suratObjekDecorator = async (payload) => {
 
 module.exports = {
     suratDecorator,
-    suratObjekDecorator
+    suratObjekDecorator,
+    suratArrayDecorator
 }
