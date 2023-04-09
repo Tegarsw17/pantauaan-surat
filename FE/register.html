@@ -183,11 +183,6 @@
                                                 placeholder="Nama">
                                         </div>
                                         <div class="form-group">
-                                            <label for="jabatan">Jabatan</label>
-                                            <input type="text" class="form-control" name="jabatan" id="jabatan"
-                                                placeholder="Nama">
-                                        </div>
-                                        <div class="form-group">
                                             <label for="phone">No telepon</label>
                                             <input type="text" class="form-control" name="phone" id="phone"
                                                 placeholder="Phone">
@@ -256,27 +251,39 @@
     <script src="dist/js/pages/dashboard3.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        const data = axios.get("http://localhost:5151/v1/api/role")
-        console.log(data)
+        axios.get("http://localhost:5151/v1/api/role").then((res) => {
+            // console.log(res.data.data[0])
+            var data = res.data.data
+            const element = document.getElementById("role");
+            let listRole = ""
+            for (let i = 0; i < Object.keys(data).length; i++) {
+                listRole += `<option value="${data[i].id_role}">${data[i].role}</option>`;
+            }
+            element.innerHTML = listRole
+        })
+
 
         const form = document.querySelector("form");
         form.addEventListener("submit", (e) => {
             var fullname = document.getElementById("fullname").value;
-            var jabatan = document.getElementById("jabatan").value;
             var phone = document.getElementById("phone").value;
             var email = document.getElementById("email").value;
             var role = document.getElementById("role").value;
             var password = document.getElementById("password").value;
             const inputData = {
                 fullname: fullname,
-                jabatan: jabatan,
+                jabatan_role_id: role,
                 phone: phone,
                 email: email,
-                role: role,
                 password: password,
             };
             e.preventDefault();
-            console.log(inputData)
+            axios.post('http://localhost:5151/v1/api/register', inputData).then((res) => {
+                if (res.status == 200) {
+                    location.replace('/FE/register.html')
+                }
+            })
+            // console.log(inputData)
         })
     </script>
 </body>
