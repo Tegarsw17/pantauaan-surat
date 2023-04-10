@@ -28,7 +28,7 @@ with font-awesome or any other icon font library -->
   </ul>
   <ul class="nav nav-treeview">
     <li class="nav-item">
-      <a href="./index.html" class="nav-link">
+      <a href="./tambahsurat.html" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Tambah Surat</p>
       </a>
