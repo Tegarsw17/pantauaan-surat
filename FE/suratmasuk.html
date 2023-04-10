@@ -131,6 +131,28 @@
             <strong>Copyright &copy; 2023.</strong>
         </footer>
     </div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <iframe src="..\\BE\\storage\\pdf\\1681080477879-pdf dummy.pdf" width="500" height="300"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
@@ -161,17 +183,18 @@
     <script src="dist/js/navbar.js"></script>
 
     <script>
-        // var url = "localhost:5151/v1/api/surat_masuk"
+        var token = localStorage.getItem("token")
+        var url = "http://localhost:5151/v1/api/surat_masuk"
         $(document).ready(function () {
             $('#example1').DataTable({
-                // 'ajax': {
-                //     'url': url,
-                //     'type': 'GET',
-                //     'beforeSend': function (request) {
-                //         request.setRequestHeader("authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6MSwiaWF0IjoxNjgxMDE1NDY1LCJleHAiOjE2ODEwMTkwNjV9.8zNhZgotDTsVYyzA2xfX1XnkvAgoWP2_uPpPMMm2Uuc");
-                //     }
-                // }
-                'ajax': './data/surat.json',
+                'ajax': {
+                    'url': url,
+                    'type': 'GET',
+                    'beforeSend': function (request) {
+                        request.setRequestHeader("authorization", token);
+                    }
+                },
+                // 'ajax': './data/surat.json',
                 'columns': [
                     { data: 'nomor_surat' },
                     { data: 'nomor_surat' },
@@ -184,6 +207,12 @@
                     { data: 'unit_proses' },
                     { data: 'tindak_lanjut' },
                     { data: 'keterangan' },
+                    {
+                        data: 'file.0.url',
+                        render: function (data, type, row, meta) {
+                            return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
+                        }
+                    },
                 ],
             });
         });
