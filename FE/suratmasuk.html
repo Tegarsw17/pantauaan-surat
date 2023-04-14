@@ -67,6 +67,7 @@
             <div class="content-header">
                 <div class="d-flex justify-content-between ml-2 mr-2">
                     <h1 class="m-0">Surat Masuk</h1>
+
                     <div class="form-inline">
                         <!-- <div class="input-group" data-widget="sidebar-search">
                             <input class="form-control form-control-sidebar" type="search" placeholder="Search"
@@ -130,28 +131,8 @@
         <footer class="main-footer">
             <strong>Copyright &copy; 2023.</strong>
         </footer>
-    </div>
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Launch demo modal
-    </button>
+        <div id="modalsam"></div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <iframe src="..\\BE\\storage\\pdf\\1681080477879-pdf dummy.pdf" width="500" height="300"></iframe>
-                </div>
-            </div>
-        </div>
     </div>
     <!-- ./wrapper -->
 
@@ -196,7 +177,11 @@
                 },
                 // 'ajax': './data/surat.json',
                 'columns': [
-                    { data: 'nomor_surat' },
+                    {
+                        render: function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
                     { data: 'nomor_surat' },
                     { data: 'pengirim' },
                     { data: 'perihal' },
@@ -208,14 +193,26 @@
                     { data: 'tindak_lanjut' },
                     { data: 'keterangan' },
                     {
-                        data: 'file.0.url',
+                        data: 'id',
                         render: function (data, type, row, meta) {
-                            return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
+                            // return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
+                            return `<a class='btn btn-primary' onclick="getPdf(${data})">Lihat</a> `
                         }
                     },
                 ],
             });
         });
+
+        function getPdf(id) {
+            axios.get(`http://localhost:5151/v1/api/surat/${id}`, {
+                headers: {
+                    'authorization': token
+                }
+            }).then(function (res) {
+                console.log(res.data.data.file[0].filename)
+                // document.getElementById(modalsam).innerHTML = `<iframe src="..\\BE\\storage\\pdf\\1681080620766-pdf dummy.pdf" type="application/pdf" width="100%" height="500px">`
+            })
+        }
     </script>
 
     <!-- OPTIONAL SCRIPTS -->

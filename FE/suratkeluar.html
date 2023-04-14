@@ -107,62 +107,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>2-24-123</td>
-                                                <td>Jakarta Raya</td>
-                                                <td>Permintaan Izin</td>
-                                                <td>12 Januari 2022</td>
-                                                <td>12 Januari 2022</td>
-                                                <td>Diterima</td>
-                                                <td>-</td>
-                                                <td>APB</td>
-                                                <td>Segera</td>
-                                                <td>aman</td>
-                                                <td><button type="button" class="btn btn-primary">Lihat</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>2-25-198</td>
-                                                <td>Jakarta Raya</td>
-                                                <td>Permintaan Izin</td>
-                                                <td>12 Januari 2022</td>
-                                                <td>12 Januari 2022</td>
-                                                <td>Diterima</td>
-                                                <td>-</td>
-                                                <td>APB</td>
-                                                <td>Segera</td>
-                                                <td>aman</td>
-                                                <td><button type="button" class="btn btn-primary">Lihat</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>2-34-923</td>
-                                                <td>Jakarta Raya</td>
-                                                <td>Permintaan Izin</td>
-                                                <td>12 Januari 2022</td>
-                                                <td>12 Januari 2022</td>
-                                                <td>Diterima</td>
-                                                <td>-</td>
-                                                <td>APB</td>
-                                                <td>Segera</td>
-                                                <td>aman</td>
-                                                <td><button type="button" class="btn btn-primary">Lihat</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>2-54-154</td>
-                                                <td>Jakarta Raya</td>
-                                                <td>Permintaan Izin</td>
-                                                <td>12 Januari 2022</td>
-                                                <td>12 Januari 2022</td>
-                                                <td>Diterima</td>
-                                                <td>-</td>
-                                                <td>APB</td>
-                                                <td>Segera</td>
-                                                <td>aman</td>
-                                                <td><button type="button" class="btn btn-primary">Lihat</button></td>
-                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -217,10 +162,43 @@
 
     <script>
         $(function () {
-            $("#example1").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
-                "buttons": ["pdf", "print"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            var token = localStorage.getItem("token")
+            var url = "http://localhost:5151/v1/api/surat_keluar"
+            $(document).ready(function () {
+                $('#example1').DataTable({
+                    'ajax': {
+                        'url': url,
+                        'type': 'GET',
+                        'beforeSend': function (request) {
+                            request.setRequestHeader("authorization", token);
+                        }
+                    },
+                    // 'ajax': './data/surat.json',
+                    'columns': [
+                        {
+                            render: function (data, type, full, meta) {
+                                return meta.row + 1;
+                            }
+                        },
+                        { data: 'nomor_surat' },
+                        { data: 'pengirim' },
+                        { data: 'perihal' },
+                        { data: 'tanggal_surat' },
+                        { data: 'tanggal_diterima' },
+                        { data: 'status' },
+                        { data: 'control' },
+                        { data: 'unit_proses' },
+                        { data: 'tindak_lanjut' },
+                        { data: 'keterangan' },
+                        {
+                            data: 'file.0.url',
+                            render: function (data, type, row, meta) {
+                                return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
+                            }
+                        },
+                    ],
+                });
+            });
 
         });
     </script>
