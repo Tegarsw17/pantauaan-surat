@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -104,7 +105,7 @@
 
                 <div class="small-box bg-info">
                   <div class="inner">
-                    <h3>24</h3>
+                    <h3 id="s_masuk">0</h3>
                     <p>Surat Masuk</p>
                   </div>
                   <div class="icon">
@@ -119,7 +120,7 @@
 
                 <div class="small-box bg-success">
                   <div class="inner">
-                    <h3>25</h3>
+                    <h3 id="s_keluar">0</h3>
                     <p>Surat Keluar</p>
                   </div>
                   <div class="icon">
@@ -168,6 +169,31 @@
   <script src="plugins/chart.js/Chart.min.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="dist/js/pages/dashboard3.js"></script>
+  <script>
+    var token = localStorage.getItem("token")
+    $(document).ready(function () {
+      var masuk = axios.get("http://localhost:5151/v1/api/surat_masuk", {
+        headers: {
+          'authorization': token
+        }
+      }).then((res) => {
+        // console.log(res.data.data.length)
+        var angkaMasuk = res.data.data.length
+        document.getElementById("s_masuk").innerHTML = angkaMasuk
+      })
+      masuk.then((res) => {
+        axios.get("http://localhost:5151/v1/api/surat_keluar", {
+          headers: {
+            'authorization': token
+          }
+        }).then((res) => {
+          // console.log(res.data.data.length)
+          var angkaKeluar = res.data.data.length
+          document.getElementById("s_keluar").innerHTML = angkaKeluar
+        })
+      })
+    })
+  </script>
 </body>
 
 </html>
