@@ -1,409 +1,526 @@
-swagger: '2.0'
+openapi: 3.0.0
 info:
-  version: '1.0'
   title: inventory surat
   contact: {}
-host: localhost:5151
-basePath: /v1/api
-securityDefinitions: {}
-schemes:
-- http
-consumes:
-- application/json
-produces:
-- application/json
+  version: '1.0'
+servers:
+- url: http://localhost:5151/v1/api
+  variables: {}
 paths:
   /register:
     post:
-      summary: user register
       tags:
-      - Misc
+      - User
+      summary: user register
       operationId: userregister
-      deprecated: false
-      produces:
-      - application/json
-      parameters:
-      - name: Body
-        in: body
-        required: true
+      parameters: []
+      requestBody:
         description: ''
-        schema:
-          $ref: '#/definitions/userregisterrequest'
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/userregisterrequest'
+              - example:
+                  fullname: Arif Haryadi,S.Pd
+                  jabatan_role_id: 1
+                  phone: '085723144211'
+                  email: arif1312@gmail.com
+                  password: makannasi
+            example:
+              fullname: Arif Haryadi,S.Pd
+              jabatan_role_id: 1
+              phone: '085723144211'
+              email: arif1312@gmail.com
+              password: makannasi
+        required: true
       responses:
         '200':
           description: ''
           headers: {}
+      deprecated: false
   /login:
     post:
-      summary: user login
       tags:
-      - Misc
+      - User
+      summary: user login
       operationId: userlogin
-      deprecated: false
-      produces:
-      - application/json
-      parameters:
-      - name: Body
-        in: body
-        required: true
+      parameters: []
+      requestBody:
         description: ''
-        schema:
-          $ref: '#/definitions/userloginrequest'
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/userloginrequest'
+              - example:
+                  email: arif1312@gmail.com
+                  password: makannasi
+            example:
+              email: arif1312@gmail.com
+              password: makannasi
+        required: true
       responses:
         '200':
           description: ''
           headers: {}
+      deprecated: false
   /profile:
     get:
+      tags:
+      - User
       summary: profile user
-      tags:
-      - Misc
       operationId: profileuser
-      deprecated: false
-      produces:
-      - application/json
       parameters:
       - name: authorization
         in: header
-        required: true
-        type: string
         description: ''
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      security: []
-  /surat:
-    post:
-      summary: register surat
-      tags:
-      - Misc
-      operationId: registersurat
-      deprecated: false
-      produces:
-      - application/json
-      parameters:
-      - name: authorization
-        in: header
         required: true
-        type: string
-        description: ''
-      - name: Body
-        in: body
-        required: true
-        description: ''
+        style: simple
         schema:
-          $ref: '#/definitions/registersuratrequest'
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6MiwiaWF0IjoxNjgxMjIzNzM5LCJleHAiOjE2ODEzMTAxMzl9.70NDW1Q55-4bEISPV6-A5lX00W_HcdERGC5kXLmmKc0
       responses:
         '200':
           description: ''
           headers: {}
-      security: []
-  /upload/{id}:
-    post:
-      summary: upload document
-      tags:
-      - Misc
-      operationId: uploaddocument
       deprecated: false
-      produces:
-      - application/json
-      consumes:
-      - multipart/form-data
-      parameters:
-      - name: id
-        in: path
-        required: true
-        type: integer
-        format: int32
-        description: ''
-      - name: authorization
-        in: header
-        required: true
-        type: string
-        description: ''
-      - name: file
-        in: formData
-        required: true
-        type: file
-        format: file
-        description: ''
-      responses:
-        '200':
-          description: ''
-          headers: {}
       security: []
-  /surat_masuk:
+  /:
     get:
-      summary: get all surat
       tags:
-      - Misc
-      operationId: getallsurat
-      deprecated: false
-      produces:
-      - application/json
-      parameters:
-      - name: authorization
-        in: header
-        required: true
-        type: string
-        description: ''
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      security: []
-  /delete/{id}:
-    delete:
-      summary: delete document
-      tags:
-      - Misc
-      operationId: deletedocument
-      deprecated: false
-      produces:
-      - application/json
-      parameters:
-      - name: id
-        in: path
-        required: true
-        type: integer
-        format: int32
-        description: ''
-      - name: authorization
-        in: header
-        required: true
-        type: string
-        description: ''
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      security: []
-  /surat/{id}:
-    get:
-      summary: get detail document
-      tags:
-      - Misc
-      operationId: getdetaildocument
-      deprecated: false
-      produces:
-      - application/json
-      parameters:
-      - name: id
-        in: path
-        required: true
-        type: integer
-        format: int32
-        description: ''
-      - name: authorization
-        in: header
-        required: true
-        type: string
-        description: ''
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      security: []
-  /approval/{id}:
-    post:
-      summary: send approval request
-      tags:
-      - Misc
-      operationId: sendapprovalrequest
-      deprecated: false
-      produces:
-      - application/json
-      parameters:
-      - name: id
-        in: path
-        required: true
-        type: integer
-        format: int32
-        description: ''
-      - name: authorization
-        in: header
-        required: true
-        type: string
-        description: ''
-      - name: Body
-        in: body
-        required: true
-        description: ''
-        schema:
-          $ref: '#/definitions/sendapprovalrequestrequest'
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      security: []
-    patch:
-      summary: approve surat
-      tags:
-      - Misc
-      operationId: approvesurat
-      deprecated: false
-      produces:
-      - application/json
-      parameters:
-      - name: id
-        in: path
-        required: true
-        type: integer
-        format: int32
-        description: ''
-      - name: authorization
-        in: header
-        required: true
-        type: string
-        description: ''
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      security: []
-  /approval:
-    get:
-      summary: get approval by supervisor
-      tags:
-      - Misc
-      operationId: getapprovalbysupervisor
-      deprecated: false
-      produces:
-      - application/json
-      parameters:
-      - name: authorization
-        in: header
-        required: true
-        type: string
-        description: ''
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      security: []
-  /role:
-    get:
-      summary: get role
-      tags:
-      - Misc
-      operationId: getrole
-      deprecated: false
-      produces:
-      - application/json
+      - User
+      summary: get data supervisior
+      operationId: getdatasupervisior
       parameters: []
       responses:
         '200':
           description: ''
           headers: {}
-definitions:
-  userregisterrequest:
-    title: userregisterrequest
-    example:
-      fullname: Arif Haryadi,S.Pd
-      jabatan_role_id: 1
-      phone: '08723144211'
-      email: arif1312@gmail.com
-      password: makannasi
-    type: object
-    properties:
-      fullname:
-        type: string
-      jabatan_role_id:
-        type: integer
-        format: int32
-      phone:
-        type: string
-      email:
-        type: string
-      password:
-        type: string
-    required:
-    - fullname
-    - jabatan_role_id
-    - phone
-    - email
-    - password
-  userloginrequest:
-    title: userloginrequest
-    example:
-      email: siti@gmail.com
-      password: makannasi
-    type: object
-    properties:
-      email:
-        type: string
-      password:
-        type: string
-    required:
-    - email
-    - password
-  registersuratrequest:
-    title: registersuratrequest
-    example:
-      jenis_surat: surat masuk
-      nomor_agenda: 2
-      nomor_surat: 21
-      pengirim: Pelabuhan Perikanan
-      perihal: permintaan Ijin
-      tanggal_surat: 21 maret 22
-      tanggal_diterima: 21 maret 22
-      status: diterima
-      control: ''
-      unit_proses: APB
-      tindak_lanjut: segera
-      keterangan: aman
-    type: object
-    properties:
-      jenis_surat:
-        type: string
-      nomor_agenda:
-        type: integer
-        format: int32
-      nomor_surat:
-        type: integer
-        format: int32
-      pengirim:
-        type: string
-      perihal:
-        type: string
-      tanggal_surat:
-        type: string
-      tanggal_diterima:
-        type: string
-      status:
-        type: string
-      control:
-        type: string
-      unit_proses:
-        type: string
-      tindak_lanjut:
-        type: string
-      keterangan:
-        type: string
-    required:
-    - jenis_surat
-    - nomor_agenda
-    - nomor_surat
-    - pengirim
-    - perihal
-    - tanggal_surat
-    - tanggal_diterima
-    - status
-    - control
-    - unit_proses
-    - tindak_lanjut
-    - keterangan
-  sendapprovalrequestrequest:
-    title: sendapprovalrequestrequest
-    example:
-      fullname: Siti Markonah,S.Pd
-    type: object
-    properties:
-      fullname:
-        type: string
-    required:
-    - fullname
+      deprecated: false
+  /role:
+    get:
+      tags:
+      - User
+      summary: get role
+      operationId: getrole
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /surat:
+    post:
+      tags:
+      - Surat
+      summary: register surat
+      operationId: registersurat
+      parameters:
+      - name: authorization
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6MSwiaWF0IjoxNjgxMjIzODAyLCJleHAiOjE2ODEzMTAyMDJ9.S5QdmAC-hyoj7veVqfKdDtmApUfZRxk7gE-XcXFyXDE
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/registersuratrequest'
+              - example:
+                  jenis_surat: surat masuk
+                  nomor_agenda: 2
+                  nomor_surat: 21
+                  pengirim: Pelabuhan Perikanan
+                  perihal: permintaan Ijin
+                  tanggal_surat: 21 maret 22
+                  tanggal_diterima: 21 maret 22
+                  status: diterima
+                  control: ''
+                  unit_proses: APB
+                  tindak_lanjut: segera
+                  keterangan: aman
+            example:
+              jenis_surat: surat masuk
+              nomor_agenda: 2
+              nomor_surat: 21
+              pengirim: Pelabuhan Perikanan
+              perihal: permintaan Ijin
+              tanggal_surat: 21 maret 22
+              tanggal_diterima: 21 maret 22
+              status: diterima
+              control: ''
+              unit_proses: APB
+              tindak_lanjut: segera
+              keterangan: aman
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /upload/{id}:
+    post:
+      tags:
+      - Surat
+      summary: upload document
+      operationId: uploaddocument
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int32
+          example: 5
+      - name: authorization
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6MSwiaWF0IjoxNjgxMjIzODAyLCJleHAiOjE2ODEzMTAyMDJ9.S5QdmAC-hyoj7veVqfKdDtmApUfZRxk7gE-XcXFyXDE
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding: {}
+            schema:
+              required:
+              - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+        required: false
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /surat_masuk:
+    get:
+      tags:
+      - Surat
+      summary: get all surat
+      operationId: getallsurat
+      parameters:
+      - name: authorization
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: 'id: payload.id'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /delete/{id}:
+    delete:
+      tags:
+      - Surat
+      summary: delete document
+      operationId: deletedocument
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int32
+          example: 2
+      - name: authorization
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6MiwiaWF0IjoxNjgwODIzODExLCJleHAiOjE2ODA4Mjc0MTF9.-rwo3yWTT24SrPu8C8qnhHymu-tX-4DwNtCu10siZBo
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /surat/{id}:
+    get:
+      tags:
+      - Surat
+      summary: get detail document
+      operationId: getdetaildocument
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int32
+          example: 3
+      - name: authorization
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6MiwiaWF0IjoxNjgwODIzODExLCJleHAiOjE2ODA4Mjc0MTF9.-rwo3yWTT24SrPu8C8qnhHymu-tX-4DwNtCu10siZBo
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /approval/{id}:
+    post:
+      tags:
+      - Approval
+      summary: send approval request
+      operationId: sendapprovalrequest
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int32
+          example: 4
+      - name: authorization
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjgwODIxMDg4LCJleHAiOjE2ODA4MjQ2ODh9.DOmO1fYEIjnEozEFCB6Dvs3b5nKhBvkrOqdp3iuhkco
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/sendapprovalrequestrequest'
+              - example:
+                  fullname: Siti Markonah,S.Pd
+            example:
+              fullname: Siti Markonah,S.Pd
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+    patch:
+      tags:
+      - Approval
+      summary: approve surat
+      operationId: approvesurat
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int32
+          example: 2
+      - name: authorization
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6MiwiaWF0IjoxNjgwODk0ODUxLCJleHAiOjE2ODA4OTg0NTF9.uCD7roXWG4j8XUkXqY_FXdyrkCLAr-7PgW3M2AyKl9c
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /approval:
+    get:
+      tags:
+      - Approval
+      summary: get approval by supervisor
+      operationId: getapprovalbysupervisor
+      parameters:
+      - name: authorization
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6MiwiaWF0IjoxNjgwODk0MzEzLCJleHAiOjE2ODA4OTc5MTN9.CgJ2FXC6mo93s8zF0cWDRGtUE_XdASXhJgTHIYBdd7c
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /dispo:
+    post:
+      tags:
+      - disposisi
+      summary: send disposisi
+      operationId: senddisposisi
+      parameters:
+      - name: authorization
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          text/plain:
+            schema:
+              type: object
+              example: {}
+            example: {}
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+components:
+  schemas:
+    userregisterrequest:
+      title: userregisterrequest
+      required:
+      - fullname
+      - jabatan_role_id
+      - phone
+      - email
+      - password
+      type: object
+      properties:
+        fullname:
+          type: string
+        jabatan_role_id:
+          type: integer
+          format: int32
+        phone:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        fullname: Arif Haryadi,S.Pd
+        jabatan_role_id: 1
+        phone: '085723144211'
+        email: arif1312@gmail.com
+        password: makannasi
+    userloginrequest:
+      title: userloginrequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: arif1312@gmail.com
+        password: makannasi
+    registersuratrequest:
+      title: registersuratrequest
+      required:
+      - jenis_surat
+      - nomor_agenda
+      - nomor_surat
+      - pengirim
+      - perihal
+      - tanggal_surat
+      - tanggal_diterima
+      - status
+      - control
+      - unit_proses
+      - tindak_lanjut
+      - keterangan
+      type: object
+      properties:
+        jenis_surat:
+          type: string
+        nomor_agenda:
+          type: integer
+          format: int32
+        nomor_surat:
+          type: integer
+          format: int32
+        pengirim:
+          type: string
+        perihal:
+          type: string
+        tanggal_surat:
+          type: string
+        tanggal_diterima:
+          type: string
+        status:
+          type: string
+        control:
+          type: string
+        unit_proses:
+          type: string
+        tindak_lanjut:
+          type: string
+        keterangan:
+          type: string
+      example:
+        jenis_surat: surat masuk
+        nomor_agenda: 2
+        nomor_surat: 21
+        pengirim: Pelabuhan Perikanan
+        perihal: permintaan Ijin
+        tanggal_surat: 21 maret 22
+        tanggal_diterima: 21 maret 22
+        status: diterima
+        control: ''
+        unit_proses: APB
+        tindak_lanjut: segera
+        keterangan: aman
+    sendapprovalrequestrequest:
+      title: sendapprovalrequestrequest
+      required:
+      - fullname
+      type: object
+      properties:
+        fullname:
+          type: string
+      example:
+        fullname: Siti Markonah,S.Pd
 tags:
-- name: Misc
-  description: ''
+- name: User
+- name: Surat
+- name: Approval
+- name: disposisi
