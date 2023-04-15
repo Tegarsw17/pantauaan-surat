@@ -278,6 +278,17 @@
                         'authorization': token,
                         'Content-Type': 'multipart/form-data'
                     }
+                }).then((res) => {
+                    console.log(res)
+                    if (res.status == 200) {
+                        Swal.fire({
+                            title: "Success",
+                            text: "data berhasil ditambahkan",
+                            icon: "success"
+                        }).then(function () {
+                            window.location = "./suratmasuk.html";
+                        });
+                    }
                 })
             })
         })

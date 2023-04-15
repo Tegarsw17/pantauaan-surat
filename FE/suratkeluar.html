@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -84,7 +85,7 @@
             <!-- Main content -->
             <div class="content">
                 <div class="row">
-                    <div class="col-10">
+                    <div class="col-12">
                         <div class="container-fluid">
                             <div class="card">
                                 <div class="card-body">
@@ -103,66 +104,11 @@
                                                 <th>Unit Proses</th>
                                                 <th>Tindak Lanjut</th>
                                                 <th>Keterangan</th>
-                                                <th>File</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>2-24-123</td>
-                                                <td>Jakarta Raya</td>
-                                                <td>Permintaan Izin</td>
-                                                <td>12 Januari 2022</td>
-                                                <td>12 Januari 2022</td>
-                                                <td>Diterima</td>
-                                                <td>-</td>
-                                                <td>APB</td>
-                                                <td>Segera</td>
-                                                <td>aman</td>
-                                                <td><button type="button" class="btn btn-primary">Lihat</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>2-25-198</td>
-                                                <td>Jakarta Raya</td>
-                                                <td>Permintaan Izin</td>
-                                                <td>12 Januari 2022</td>
-                                                <td>12 Januari 2022</td>
-                                                <td>Diterima</td>
-                                                <td>-</td>
-                                                <td>APB</td>
-                                                <td>Segera</td>
-                                                <td>aman</td>
-                                                <td><button type="button" class="btn btn-primary">Lihat</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>2-34-923</td>
-                                                <td>Jakarta Raya</td>
-                                                <td>Permintaan Izin</td>
-                                                <td>12 Januari 2022</td>
-                                                <td>12 Januari 2022</td>
-                                                <td>Diterima</td>
-                                                <td>-</td>
-                                                <td>APB</td>
-                                                <td>Segera</td>
-                                                <td>aman</td>
-                                                <td><button type="button" class="btn btn-primary">Lihat</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>2-54-154</td>
-                                                <td>Jakarta Raya</td>
-                                                <td>Permintaan Izin</td>
-                                                <td>12 Januari 2022</td>
-                                                <td>12 Januari 2022</td>
-                                                <td>Diterima</td>
-                                                <td>-</td>
-                                                <td>APB</td>
-                                                <td>Segera</td>
-                                                <td>aman</td>
-                                                <td><button type="button" class="btn btn-primary">Lihat</button></td>
-                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -187,6 +133,25 @@
         <footer class="main-footer">
             <strong>Copyright &copy; 2023.</strong>
         </footer>
+        <!-- Modal -->
+        <div class="modal fade" id="imgModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- ./wrapper -->
 
@@ -216,19 +181,89 @@
     <script src="dist/js/navbar.js"></script>
 
     <script>
-        $(function () {
-            $("#example1").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
-                "buttons": ["pdf", "print"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        var token = localStorage.getItem("token")
 
+        var url = "http://localhost:5151/v1/api/surat_keluar"
+        $(document).ready(function () {
+            $('#example1').DataTable({
+                scrollY: "625px",
+                scrollX: "true",
+                scrollCollapse: true,
+                'ajax': {
+                    'url': url,
+                    'type': 'GET',
+                    'beforeSend': function (request) {
+                        request.setRequestHeader("authorization", token);
+                    }
+                },
+                // 'ajax': './data/surat.json',
+                'columns': [
+                    {
+                        render: function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    { data: 'nomor_surat' },
+                    { data: 'pengirim' },
+                    { data: 'perihal' },
+                    {
+                        data: 'tanggal_surat',
+                        render: ((data, type, row, meta) => {
+                            let date = new Date(data);
+                            const day = date.toLocaleString('default', { day: '2-digit' });
+                            const month = date.toLocaleString('default', { month: 'numeric' });
+                            const year = date.toLocaleString('default', { year: 'numeric' });
+                            return day + '-' + month + '-' + year;
+                        })
+                    },
+                    {
+                        data: 'tanggal_diterima',
+                        render: ((data, type, row, meta) => {
+                            let date = new Date(data);
+                            const day = date.toLocaleString('default', { day: '2-digit' });
+                            const month = date.toLocaleString('default', { month: 'numeric' });
+                            const year = date.toLocaleString('default', { year: 'numeric' });
+                            return day + '-' + month + '-' + year;
+                        })
+                    },
+                    { data: 'status' },
+                    { data: 'control' },
+                    { data: 'unit_proses' },
+                    { data: 'tindak_lanjut' },
+                    { data: 'keterangan' },
+                    {
+                        data: 'id',
+                        render: function (data, type, row, meta) {
+                            // return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
+                            return `<button type="button" class="btn btn-primary openBtn" data-toggle="modal" onclick="getPdf(event)"
+                                            data-target="${data}">
+                                            Detail
+                                        </button>`
+                        }
+                    },
+                ],
+            });
         });
+
+        function getPdf(event) {
+            var id = event.target.dataset.target
+            axios.get(`http://localhost:5151/v1/api/surat/${id}`, {
+                headers: {
+                    'authorization': token
+                }
+            }).then((res) => {
+                var file = res.data.data.file[0]
+                $('.modal-body').load('modal.html', (data) => {
+                    $('#title').text(file.filename);
+                    $('#img').attr('src', `../${file.url}`);
+                    $('#imgModal').modal({ show: true });
+                })
+            })
+        }
     </script>
 
     <!-- OPTIONAL SCRIPTS -->
     <script src="plugins/chart.js/Chart.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="dist/js/pages/dashboard3.js"></script>
 </body>
