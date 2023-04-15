@@ -95,11 +95,13 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
+                                                <th>No Agenda</th>
                                                 <th>No Surat</th>
                                                 <th>Pengirim</th>
                                                 <th>Perihal</th>
                                                 <th>Tanggal Surat</th>
                                                 <th>Tanggal Diterima</th>
+                                                <th>Status</th>
                                                 <th>Control</th>
                                                 <th>Unit Proses</th>
                                                 <th>Tindak Lanjut</th>
@@ -205,6 +207,7 @@
                             return meta.row + 1;
                         }
                     },
+                    { data: 'nomor_agenda' },
                     { data: 'nomor_surat' },
                     { data: 'pengirim' },
                     { data: 'perihal' },
@@ -228,6 +231,7 @@
                             return day + '-' + month + '-' + year;
                         })
                     },
+                    { data: 'status' },
                     { data: 'control' },
                     { data: 'unit_proses' },
                     { data: 'tindak_lanjut' },
@@ -241,7 +245,7 @@
                         Detail
                     </button>
                             <a class='btn btn-success' onclick="getPdf(${data})">Approval</a>
-                            <a class='btn btn-info' onclick="getPdf(${data})">Disposisi</a>`
+                            <a class='btn btn-info mt-1' onclick="getPdf(${data})">Disposisi</a>`
                         }
                     },
                 ],
