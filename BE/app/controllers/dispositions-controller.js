@@ -22,7 +22,7 @@ class dispositionController {
         const findApproval = await approvalQueries.findOneApproval(payloadParams)
         if(!findApproval) { return responseHendler.notFound(res, message('surat belum di approve').errorMessage)}
 
-        const findUserByName = await userQueries.findUserByName(req.body)
+        const findUserByName = await userQueries.findUserByName(payloadBody)
         if(!findApproval) { return responseHendler.notFound(res, message('user tujuan').notFoundResource)}
 
         const createDisposi = await dispoQueries.createDisposition(findSurat.id,findUserByName.id ,req.body.klasifikasi_surat, '')

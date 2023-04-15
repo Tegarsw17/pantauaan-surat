@@ -32,7 +32,7 @@ const deleteUser = async (payload) => {
 const findUserByName = async (payload) => {
     return User.findOne({ 
         where: [
-            {fullname: payload.fullname},
+            {id: payload.id},
             {jabatan_role_id: 2}
         ]})
 }
