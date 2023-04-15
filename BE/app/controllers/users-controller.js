@@ -3,7 +3,7 @@ const responseHendler = require('../../response-helpers/error-helper')
 const { userQueries } = require('../queries')
 const { emailFormatValidator, phoneFormatValidator } = require('../middlewares/user.validation')
 const generateToken = require('../../lib/jwt')
-const { loginDecorator, profileDecorator } = require('../decorators/users-decorator')
+const { loginDecorator, profileDecorator, allUserDecorators } = require('../decorators/users-decorator')
 const { isMatch } = require('../../lib/bcrypt')
 class userController {
 
@@ -63,13 +63,40 @@ class userController {
     async profileUser(req, res) {
 
         try{
-            
             const payload = req.userId
             const userProfile = await userQueries.findUserById(payload)
             if(!userProfile) { return responseHendler.notFound(res, message('user').notFoundResource)}
 
             const data = profileDecorator(userProfile)
             return responseHendler.ok(res, message('profile').success, data)
+        }
+        catch(err) {
+            const key = err.message
+            return responseHendler.internalError(res, message(key).errorMessage)
+        }
+    }
+
+    async getUserSpv(req, res) {
+        try {
+            const getUser = await userQueries.findUserByRole('2')
+            if(!getUser) { return responseHendler.notFound(res, message('user').notFoundResource)}
+
+            const data = await allUserDecorators(getUser)
+            return responseHendler.ok(res, message('data Supervisior').success, data)
+        }
+        catch(err) {
+            const key = err.message
+            return responseHendler.internalError(res, message(key).errorMessage)
+        }
+    }
+
+    async getUserManager(req, res) {
+        try {
+            const getUser = await userQueries.findUserByRole('3')
+            if(!getUser) { return responseHendler.notFound(res, message('user').notFoundResource)}
+
+            const data = await allUserDecorators(getUser)
+            return responseHendler.ok(res, message('data Manager').success, data)
         }
         catch(err) {
             const key = err.message

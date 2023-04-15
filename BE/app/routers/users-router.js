@@ -14,5 +14,9 @@ router.post('/api/register', usercontroller.registerUser )
 router.post('/api/login', usercontroller.loginUser )
 //router cek profile
 router.get('/api/profile',tokenjwt.verifyToken, usercontroller.profileUser) //
+//get user by role spv
+router.get('/api/spv', usercontroller.getUserSpv)
+//get user by role manager
+router.get('/api/manager', usercontroller.getUserManager)
 
 module.exports = router

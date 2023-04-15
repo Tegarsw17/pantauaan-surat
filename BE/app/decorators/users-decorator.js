@@ -22,8 +22,20 @@ const profileDecorator = (payload) => {
   return profile
 }
 
+const allUserDecorators = async (payload) => {
+  const userMaps = payload.map((user) => {
+    return {
+      user_id: user.id,
+      fullname: user.fullname,
+      jabatan: user.jabatan_role.jabatan,
+      role:  user.jabatan_role.role
+    }
+  })
+  return await Promise.all(userMaps)
+}
     
   module.exports = {
     loginDecorator,
-    profileDecorator
+    profileDecorator,
+    allUserDecorators
   }

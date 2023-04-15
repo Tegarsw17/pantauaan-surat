@@ -41,11 +41,19 @@ const findAllUser = async (payload) => {
     return User.findAll()
 }
 
+const findUserByRole = async (payload) => {
+    return User.findAll({
+        where: {jabatan_role_id: payload}, 
+        include: Jabatan_role
+    })
+}
+
 module.exports = {
     createUser,
     findUserByEmail,
     findUserById,
     deleteUser,
     findUserByName,
-    findAllUser
+    findAllUser,
+    findUserByRole
 }
