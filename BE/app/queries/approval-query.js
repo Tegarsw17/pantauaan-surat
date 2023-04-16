@@ -23,6 +23,19 @@ const findApproval = async (auth) => {
     })
 }
 
+const findAllApproval = async (auth) => {
+    return Approval.findAll({
+        where: {user_id: auth},
+        include: [
+                {model: Surat, include: [
+                    {model: Upload_letter },
+                    {model: User}
+                ]},
+                {model: User}
+        ]
+    })
+}
+
 const findOneApproval = async (payload) => {
     return Approval.findOne({where: {id: payload.id}})
 }
@@ -57,5 +70,6 @@ module.exports = {
     findApprovalStatus,
     findOneApproval,
     updateApproval,
-    findOneApprovalUser
+    findOneApprovalUser,
+    findAllApproval,
 }
