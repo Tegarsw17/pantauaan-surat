@@ -44,7 +44,7 @@
             </div>
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <a href="#" class="dropdown-item">
+            <a href="#" onclick="logout()" class="dropdown-item">
               <p>Logout</p>
             </a>
           </div>
@@ -164,6 +164,7 @@
   <script src="dist/js/adminlte.js"></script>
   <!-- custom js -->
   <script src="dist/js/navbar.js"></script>
+  <script src="dist/js/main.js"></script>
 
   <!-- OPTIONAL SCRIPTS -->
   <script src="plugins/chart.js/Chart.min.js"></script>
@@ -177,9 +178,21 @@
           'authorization': token
         }
       }).then((res) => {
-        // console.log(res.data.data.length)
+        if (res.status == 401) {
+          localStorage.clear();
+          location.replace('./login.html')
+          return
+        }
+        console.log(res.status)
         var angkaMasuk = res.data.data.length
         document.getElementById("s_masuk").innerHTML = angkaMasuk
+      }).catch((err) => {
+        // console.log(err.response.status)
+        if (err.response.status == 401) {
+          localStorage.clear();
+          location.replace('./login.html')
+          return
+        }
       })
       masuk.then((res) => {
         axios.get("http://localhost:5151/v1/api/surat_keluar", {
@@ -193,6 +206,7 @@
         })
       })
     })
+
   </script>
 </body>
 

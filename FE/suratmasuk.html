@@ -35,7 +35,20 @@
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <div class="user-panel  d-flex">
+                            <div class="image">
+                                <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <a href="#" onclick="logout()" class="dropdown-item">
+                            <p>Logout</p>
+                        </a>
+                    </div>
+                </li>
             </ul>
         </nav>
         <!-- /.navbar -->
@@ -184,6 +197,7 @@
     <script src="dist/js/adminlte.js"></script>
     <!-- custom js -->
     <script src="dist/js/navbar.js"></script>
+    <script src="dist/js/main.js"></script>
 
     <script>
         var token = localStorage.getItem("token")
@@ -240,11 +254,11 @@
                         data: 'id',
                         render: function (data, type, row, meta) {
                             // return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
-                            return `<button type="button" class="btn btn-primary openBtn" data-toggle="modal" onclick="getPdf(event)"
+                            return `<button type="button" class="btn btn-primary mt-1 openBtn" data-toggle="modal" onclick="getPdf(event)"
                         data-target="${data}">
                         Detail
                     </button>
-                            <a class='btn btn-success' onclick="getPdf(${data})">Approval</a>
+                            <a class='btn btn-success mt-1' onclick="getPdf(${data})">Approval</a>
                             <a class='btn btn-info mt-1' onclick="getPdf(${data})">Disposisi</a>`
                         }
                     },
@@ -267,16 +281,6 @@
                 })
             })
         }
-
-        // $('.openBtn').click(() => {
-        //     var id = $('.openBtn').parents();
-        //     console.log(id)
-        //     $('.modal-body').load('modal.html', (data) => {
-        //         // $('#title').text(id);
-        //         $('#img').attr('src', '../BE/storage/pdf/1681535486375-pdf dummy.pdf');
-        //         $('#imgModal').modal({ show: true });
-        //     })
-        // })
 
     </script>
 

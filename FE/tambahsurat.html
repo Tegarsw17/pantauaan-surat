@@ -43,7 +43,7 @@
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <a href="#" class="dropdown-item">
+                        <a href="#" onclick="logout()" class="dropdown-item">
                             <p>Logout</p>
                         </a>
                     </div>
@@ -223,6 +223,7 @@
     <!-- AdminLTE -->
     <script src="dist/js/adminlte.js"></script>
     <script src="dist/js/navbar.js"></script>
+    <script src="dist/js/main.js"></script>
 
     <!-- OPTIONAL SCRIPTS -->
     <script src="plugins/chart.js/Chart.min.js"></script>
@@ -230,8 +231,10 @@
     <script src="dist/js/pages/dashboard3.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-
-
+        $(document).ready(function () {
+            var role = localStorage.getItem("role_id")
+            roleCanAccess([1], role)
+        })
         const form = document.querySelector("form");
         form.addEventListener("submit", (e) => {
             var jenis_surat = document.getElementById("jenis_surat").value;
@@ -271,7 +274,7 @@
                 }
             })
             id.then(function (res) {
-                console.log(res.data.data.surat_id)
+                // console.log(res.data.data.surat_id)
                 var id = res.data.data.surat_id
                 axios.post(`http://localhost:5151/v1/api/upload/${id}`, { file: file }, {
                     headers: {
@@ -279,14 +282,14 @@
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then((res) => {
-                    console.log(res)
+                    // console.log(res)
                     if (res.status == 200) {
                         Swal.fire({
                             title: "Success",
                             text: "data berhasil ditambahkan",
                             icon: "success"
                         }).then(function () {
-                            window.location = "./suratmasuk.html";
+                            window.location = "./index.html";
                         });
                     }
                 })
