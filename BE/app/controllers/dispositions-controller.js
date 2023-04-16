@@ -37,7 +37,24 @@ class dispositionController {
             return responseHendler.internalError(res, message(key).errorMessage)
         }
     }
+
+    async getDisposition (req, res) {
+        try {
+            const auth = req.userId
+            const getDispo = await dispoQueries.getDisposition(auth)
+            if(getDispo == 0) { return responseHendler.notFound(res, message('disposition').notFoundResource)}
+
+            const data = getDispo
+            return responseHendler.ok(res, message('disposition').success, data)
+        }
+        catch (err) {
+            const key = err.message
+            console.log(key)
+            return responseHendler.internalError(res, message(key).errorMessage)
+        }
+    }
 }
+
 
 module.exports = {
     dispositionController

@@ -10,6 +10,13 @@ const createDisposition = async (suratid, userid, klasifikasisurat, isidisposisi
     })
 }
 
+const getDisposition = async (payload) => {
+    return Disposition.findAll({
+        where: {user_id: payload}
+    })
+}
+
 module.exports = {
-    createDisposition
+    createDisposition,
+    getDisposition
 }
