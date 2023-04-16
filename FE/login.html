@@ -77,6 +77,12 @@
     <script src="dist/js/adminlte.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+        $(document).ready(function () {
+            var token = localStorage.getItem("token")
+            if (token) {
+                location.replace('./index.html')
+            }
+        })
         const form = document.querySelector("form");
         form.addEventListener("submit", (e) => {
             var email = document.getElementById("email").value;

@@ -43,7 +43,7 @@
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <a href="#" class="dropdown-item">
+                        <a href="#" onclick="logout()" class="dropdown-item">
                             <p>Logout</p>
                         </a>
                     </div>
@@ -160,6 +160,7 @@
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- jQuery -->
     <script src="plugins/jquery/jquery.min.js"></script>
@@ -168,6 +169,7 @@
     <!-- AdminLTE -->
     <script src="dist/js/adminlte.js"></script>
     <script src="dist/js/navbar.js"></script>
+    <script src="dist/js/main.js"></script>
 
     <!-- OPTIONAL SCRIPTS -->
     <script src="plugins/chart.js/Chart.min.js"></script>
@@ -175,6 +177,10 @@
     <script src="dist/js/pages/dashboard3.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+        $(document).ready(function () {
+            var role = localStorage.getItem("role_id")
+            roleCanAccess([1], role)
+        })
         axios.get("http://localhost:5151/v1/api/role").then((res) => {
             // console.log(res.data.data[0])
             var data = res.data.data
@@ -204,10 +210,21 @@
             e.preventDefault();
             axios.post('http://localhost:5151/v1/api/register', inputData).then((res) => {
                 if (res.status == 200) {
-                    location.replace('/FE/register.html')
+                    Swal.fire({
+                        title: "Success",
+                        text: "user berhasil ditambahkan",
+                        icon: "success"
+                    }).then(function () {
+                        window.location = "./index.html";
+                    });
                 }
+            }).catch((err) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: err.response.data.message,
+                })
             })
-            // console.log(inputData)
         })
     </script>
 </body>
