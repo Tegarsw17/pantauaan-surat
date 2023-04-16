@@ -231,9 +231,10 @@
     <script src="dist/js/pages/dashboard3.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+        var role = localStorage.getItem("role_id")
         $(document).ready(function () {
-            var role = localStorage.getItem("role_id")
             roleCanAccess([1], role)
+
         })
         const form = document.querySelector("form");
         form.addEventListener("submit", (e) => {

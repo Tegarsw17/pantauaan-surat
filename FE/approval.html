@@ -79,8 +79,7 @@
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="d-flex justify-content-between ml-2 mr-2">
-                    <h1 class="m-0">Surat Masuk</h1>
-
+                    <h1 class="m-0">Approval</h1>
                     <div class="form-inline">
                         <!-- <div class="input-group" data-widget="sidebar-search">
                             <input class="form-control form-control-sidebar" type="search" placeholder="Search"
@@ -108,7 +107,6 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>No Agenda</th>
                                                 <th>No Surat</th>
                                                 <th>Pengirim</th>
                                                 <th>Perihal</th>
@@ -122,6 +120,9 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
+                                        <tbody>
+
+                                        </tbody>
                                     </table>
                                 </div>
                                 <!-- /.card-body -->
@@ -145,30 +146,9 @@
         <footer class="main-footer">
             <strong>Copyright &copy; 2023.</strong>
         </footer>
-        <!-- Button trigger modal -->
-
         <!-- Modal -->
         <div class="modal fade" id="imgModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="title"></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="m2">
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="formModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="title"></h5>
@@ -182,12 +162,9 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
-
                 </div>
             </div>
         </div>
-
-
     </div>
     <!-- ./wrapper -->
 
@@ -210,8 +187,6 @@
     <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script> -->
 
     <!-- AdminLTE -->
     <script src="dist/js/adminlte.js"></script>
@@ -221,11 +196,12 @@
 
     <script>
         var token = localStorage.getItem("token")
+
         var url = "http://localhost:5151/v1/api/surat_masuk"
         $(document).ready(function () {
             $('#example1').DataTable({
                 scrollY: "625px",
-                scrollX: true,
+                scrollX: "true",
                 scrollCollapse: true,
                 'ajax': {
                     'url': url,
@@ -241,7 +217,6 @@
                             return meta.row + 1;
                         }
                     },
-                    { data: 'nomor_agenda' },
                     { data: 'nomor_surat' },
                     { data: 'pengirim' },
                     { data: 'perihal' },
@@ -274,39 +249,17 @@
                         data: 'id',
                         render: function (data, type, row, meta) {
                             // return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
-                            return `<button type="button" class="btn btn-primary mt-1 openBtn" data-toggle="modal" onclick="getPdf(event)"
-                        data-target="${data}">Detail</button>
-                        <button type="button" class="btn btn-success mt-1 openBtn" data-toggle="modal" onclick="getApproval(event)"
-                        data-target="${data}">Approval</button>
-                            <a class='btn btn-info mt-1' onclick="getPdf(${data})">Disposisi</a>`
+                            return `<button type="button" class="btn btn-primary openBtn" data-toggle="modal" onclick="getPdf(event)"
+                                            data-target="${data}">
+                                            Detail
+                                        </button>`
                         }
                     },
                 ],
             });
         });
 
-        function getApproval(event) {
-            var id_surat = event.target.dataset.target
-            // console.log(id)
-            axios.get(`http://localhost:5151/v1/api/spv`)
-                .then((res) => {
-                    //     event.preventDefault();
-                    console.log(res.data.data)
-                    $('.modal-body').load('modalapproval.html', (data) => {
-                        $('#title').text(`Approval Supervisor`)
-                        $('#hidden').append(`<input type="hidden" id="surat_id" name="custId" value="${id_surat}">`)
-                        $.each(res.data.data, function (i, val) {
-                            $('#spv').append(`<option value="${val.user_id}">${val.fullname}</option>`)
-                        })
-                        $('#imgModal').modal({ show: true });
-                    })
-                    // })
-                    // console.log(id)
-                })
-        }
-
         function getPdf(event) {
-
             var id = event.target.dataset.target
             axios.get(`http://localhost:5151/v1/api/surat/${id}`, {
                 headers: {
@@ -321,25 +274,6 @@
                 })
             })
         }
-
-        // document.getElementById('formSpv').addEventListener(submit, inputSupervisor)
-
-        function inputSupervisor() {
-            var id_user = document.getElementById("spv").value;
-            var id_surat = document.getElementById("surat_id").value;
-            // e.preventDefault();
-            axios.post(`http://localhost:5151/v1/api/approval/${id_surat}`, { "id": id_user }, {
-                headers: {
-                    'authorization': token
-                }
-            }).then((res) => {
-                console.log(res)
-            }).catch((err) => {
-                console.log(err)
-                location.replace('./suratmasuk.html')
-            })
-        }
-
     </script>
 
     <!-- OPTIONAL SCRIPTS -->
