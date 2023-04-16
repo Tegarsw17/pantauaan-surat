@@ -1,7 +1,7 @@
 const {letterQueries, approvalQueries, userQueries} = require('../queries')
 const message = require('../../response-helpers/messages').MESSAGE
 const responseHendler = require('../../response-helpers/error-helper')
-const { approvalDecorator } = require('../decorators/approvals-decorator')
+const { approvalDecorator, approvalArrayDecorator } = require('../decorators/approvals-decorator')
 
 
 class approvalController {
@@ -45,6 +45,24 @@ class approvalController {
             if(!findApproval) { return responseHendler.notFound(res, message('approval').notFoundResource)}
 
             const data = await approvalDecorator(findApproval)
+            return responseHendler.ok(res, message('get approval').success, data)
+        }
+        catch(err) {
+            const key = err.message
+            console.log(key)
+            return responseHendler.internalError(res, message(key).errorMessage)
+        }
+        
+    }
+    
+    async getAllApproval(req, res) {
+
+        try {
+            const auth = req.userId
+            const findApproval = await approvalQueries.findAllApproval(auth)
+            if(!findApproval) { return responseHendler.notFound(res, message('approval').notFoundResource)}
+
+            const data = await approvalArrayDecorator(findApproval)
             return responseHendler.ok(res, message('get approval').success, data)
         }
         catch(err) {

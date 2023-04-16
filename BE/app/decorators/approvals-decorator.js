@@ -29,6 +29,21 @@ const approvalDecorator = async (payload) => {
     }
 }
 
+
+const approvalArrayDecorator = async (payload) => {
+    const mapping = payload.map((item) => {
+        return {
+            approval_id: item.id,
+            surat_id: item.surat_id,
+            pemberi_approval: item.user.fullname,
+            pengaju_approval: item.surat.user.fullname,
+            catatan: item.catatan
+        }
+    })
+    return await Promise.all(mapping)
+}
+
 module.exports = {
-    approvalDecorator
+    approvalDecorator,
+    approvalArrayDecorator
 }
