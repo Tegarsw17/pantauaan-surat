@@ -19,7 +19,7 @@ class dispositionController {
         if(!findSurat) { return responseHendler.notFound(res, message('surat').notFoundResource)}
         if(findSurat.jenis_surat == 'surat keluar') { return responseHendler.badRequest(res, message('must surat keluar').errorMessage)}
 
-        const findApproval = await approvalQueries.findOneApproval(payloadParams)
+        const findApproval = await approvalQueries.findOneApproval(findSurat)
         if(!findApproval) { return responseHendler.notFound(res, message('surat belum di approve').errorMessage)}
 
         const findUserByName = await userQueries.findUserByName(payloadBody)
