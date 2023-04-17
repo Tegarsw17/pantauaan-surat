@@ -58,7 +58,7 @@ with font-awesome or any other icon font library -->
   </a>
   <ul class="nav nav-treeview">
     <li class="nav-item">
-      <a href="./suratmasuk.html" class="nav-link">
+      <a href="./suratmasukspv.html" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Surat Masuk</p>
       </a>
@@ -74,7 +74,7 @@ with font-awesome or any other icon font library -->
   </ul>
   <ul class="nav nav-treeview">
     <li class="nav-item">
-      <a href="#" class="nav-link">
+      <a href="./approval.html" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Approval</p>
       </a>
@@ -96,7 +96,7 @@ with font-awesome or any other icon font library -->
   </a>
   <ul class="nav nav-treeview">
     <li class="nav-item">
-      <a href="./suratmasuk.html" class="nav-link">
+      <a href="./suratmasukmanager.html" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Surat Masuk</p>
       </a>
