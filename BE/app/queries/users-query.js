@@ -29,11 +29,11 @@ const deleteUser = async (payload) => {
     return User.destroy({ where: {email: payload.email}})
 }
 
-const findUserByName = async (payload) => {
+const findUserByName = async (payload, role) => {
     return User.findOne({ 
         where: [
             {id: payload.id},
-            {jabatan_role_id: 3}
+            {jabatan_role_id: role}
         ]})
 }
 

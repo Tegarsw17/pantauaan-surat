@@ -18,7 +18,7 @@ class approvalController {
             if(!findSurat) { return responseHendler.notFound(res, message('letter').notFoundResource)}
             if(findSurat.jenis_surat !== 'surat masuk') { return responseHendler.badRequest(res, message('must surat keluar').errorMessage)}
 
-            const findUser = await userQueries.findUserByName(payloadBody)
+            const findUser = await userQueries.findUserByName(payloadBody, 2)
             if(!findUser) { return responseHendler.notFound(res, message('user tujuan').notFoundResource)}
 
             const findApproval = await approvalQueries.findApprovalStatus('process')
