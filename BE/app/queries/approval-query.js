@@ -37,7 +37,7 @@ const findAllApproval = async (auth) => {
 }
 
 const findOneApproval = async (payload) => {
-    return Approval.findOne({where: {id: payload.id}})
+    return Approval.findOne({where: {surat_id: payload.id}})
 }
 
 const findApprovalStatus = async (payload) => {
