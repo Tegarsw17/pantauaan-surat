@@ -32,7 +32,7 @@ class approvalController {
 
         catch(err) {
             const key = err.message
-            console.log(key)
+            console.log(err)
             return responseHendler.internalError(res, message(key).errorMessage)
         }
     }

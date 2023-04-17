@@ -25,7 +25,7 @@ class dispositionController {
         const findUserByName = await userQueries.findUserByName(payloadBody)
         if(!findApproval) { return responseHendler.notFound(res, message('user tujuan').notFoundResource)}
 
-        const createDisposi = await dispoQueries.createDisposition(findSurat.id,findUserByName.id ,req.body.klasifikasi_surat, '')
+        const createDisposi = await dispoQueries.createDisposition(findSurat.id,findUserByName.id ,req.body.klasifikasi_surat, '', '')
         if(!createDisposi) {return responseHendler.badRequest(res, message('disposi').invalidCreateResource)}
         
         return responseHendler.ok(res, message('disposisi').created)
@@ -33,7 +33,7 @@ class dispositionController {
 
         catch (err) {
             const key = err.message
-            console.log(key)
+            console.log(err)
             return responseHendler.internalError(res, message(key).errorMessage)
         }
     }

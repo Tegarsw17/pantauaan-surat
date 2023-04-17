@@ -26,6 +26,10 @@ disposition.init(
     type: DataTypes.STRING,
     allowNull: true
     },
+    catatan: {
+    type: DataTypes.STRING,
+    allowNull: true
+    },
     klasifikasi_surat: {
     type: DataTypes.STRING,
     allowNull: true
