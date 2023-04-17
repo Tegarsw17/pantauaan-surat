@@ -108,17 +108,9 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>No Agenda</th>
-                                                <th>No Surat</th>
-                                                <th>Pengirim</th>
-                                                <th>Perihal</th>
-                                                <th>Tanggal Surat</th>
-                                                <th>Tanggal Diterima</th>
-                                                <th>Status</th>
-                                                <th>Control</th>
-                                                <th>Unit Proses</th>
-                                                <th>Tindak Lanjut</th>
-                                                <th>Keterangan</th>
+                                                <th>Klasifikasi Surat</th>
+                                                <th>Isi disposisi</th>
+                                                <th>Catatan</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -163,26 +155,6 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="formModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="title"></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -242,37 +214,11 @@
                             return meta.row + 1;
                         }
                     },
-                    { data: 'nomor_agenda' },
-                    { data: 'nomor_surat' },
-                    { data: 'pengirim' },
-                    { data: 'perihal' },
+                    { data: 'klasifikasi_surat' },
+                    { data: 'isi_disposisi' },
+                    { data: 'catatan' },
                     {
-                        data: 'tanggal_surat',
-                        render: ((data, type, row, meta) => {
-                            let date = new Date(data);
-                            const day = date.toLocaleString('default', { day: '2-digit' });
-                            const month = date.toLocaleString('default', { month: 'numeric' });
-                            const year = date.toLocaleString('default', { year: 'numeric' });
-                            return day + '-' + month + '-' + year;
-                        })
-                    },
-                    {
-                        data: 'tanggal_diterima',
-                        render: ((data, type, row, meta) => {
-                            let date = new Date(data);
-                            const day = date.toLocaleString('default', { day: '2-digit' });
-                            const month = date.toLocaleString('default', { month: 'numeric' });
-                            const year = date.toLocaleString('default', { year: 'numeric' });
-                            return day + '-' + month + '-' + year;
-                        })
-                    },
-                    { data: 'status' },
-                    { data: 'control' },
-                    { data: 'unit_proses' },
-                    { data: 'tindak_lanjut' },
-                    { data: 'keterangan' },
-                    {
-                        data: 'id',
+                        data: 'surat_id',
                         render: function (data, type, row, meta) {
                             // return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
                             return `<button type="button" class="btn btn-primary mt-1 openBtn" data-toggle="modal" onclick="getPdf(event)"
@@ -283,7 +229,13 @@
             });
         });
 
-
+        function getDate(tgl) {
+            let date = new Date(tgl);
+            const day = date.toLocaleString('default', { day: '2-digit' });
+            const month = date.toLocaleString('default', { month: 'long' });
+            const year = date.toLocaleString('default', { year: 'numeric' });
+            return day + '-' + month + '-' + year;
+        }
 
         function getPdf(event) {
 
@@ -293,9 +245,23 @@
                     'authorization': token
                 }
             }).then((res) => {
-                var file = res.data.data.file[0]
-                $('.modal-body').load('modal.html', (data) => {
+                console.log(res.data.data)
+                var data = res.data.data
+                var tanggal_surat = getDate(data.tanggal_surat)
+                var tanggal_diterima = getDate(data.tanggal_diterima)
+                var file = data.file[0]
+                $('.modal-body').load('modalviewmanager.html', () => {
                     $('#title').text(file.filename);
+                    $('#no_agenda').attr('value', `${data.nomor_agenda}`);
+                    $('#no_surat').attr('value', `${data.nomor_surat}`);
+                    $('#pengirim').attr('value', `${data.pengirim}`);
+                    $('#perihal').attr('value', `${data.perihal}`);
+                    $('#tanggal_surat').attr('value', tanggal_surat);
+                    $('#tanggal_diterima').attr('value', tanggal_diterima);
+                    $('#status').attr('value', `${data.status}`);
+                    $('#control').attr('value', `${data.control}`);
+                    $('#unit_proses').attr('value', `${data.unit_proses}`);
+                    $('#tindak_lanjut').attr('value', `${data.tindak_lanjut}`);
                     $('#img').attr('src', `../${file.url}`);
                     $('#imgModal').modal({ show: true });
                 })
