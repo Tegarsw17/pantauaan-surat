@@ -318,7 +318,8 @@
                         $('#title').text(`Disposisi Surat`)
                         $('#hidden').append(`<input type="hidden" id="surat_id" name="custId" value="${id_surat}">`)
                         $.each(res.data.data, function (i, val) {
-                            $('#spv').append(`<option value="${val.user_id}">${val.fullname}</option>`)
+                            console.log(val)
+                            $('#manager').append(`<option value="${val.user_id}">${val.fullname}</option>`)
                         })
                         $('#imgModal').modal({ show: true });
                     })
