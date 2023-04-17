@@ -107,17 +107,10 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>No Surat</th>
-                                                <th>Pengirim</th>
-                                                <th>Perihal</th>
-                                                <th>Tanggal Surat</th>
-                                                <th>Tanggal Diterima</th>
-                                                <th>Status</th>
-                                                <th>Control</th>
-                                                <th>Unit Proses</th>
-                                                <th>Tindak Lanjut</th>
-                                                <th>Keterangan</th>
-                                                <th>Action</th>
+                                                <th>Pemberi approval</th>
+                                                <th>Pengaju approval</th>
+                                                <th>Catatan</th>
+                                                <th>Detail</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -169,7 +162,7 @@
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- jQuery -->
     <script src="plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap -->
@@ -197,7 +190,7 @@
     <script>
         var token = localStorage.getItem("token")
 
-        var url = "http://localhost:5151/v1/api/surat_masuk"
+        var url = "http://localhost:5151/v1/api/approval/all"
         $(document).ready(function () {
             $('#example1').DataTable({
                 scrollY: "625px",
@@ -217,40 +210,15 @@
                             return meta.row + 1;
                         }
                     },
-                    { data: 'nomor_surat' },
-                    { data: 'pengirim' },
-                    { data: 'perihal' },
+                    { data: 'pemberi_approval' },
+                    { data: 'pengaju_approval' },
+                    { data: 'catatan' },
                     {
-                        data: 'tanggal_surat',
-                        render: ((data, type, row, meta) => {
-                            let date = new Date(data);
-                            const day = date.toLocaleString('default', { day: '2-digit' });
-                            const month = date.toLocaleString('default', { month: 'numeric' });
-                            const year = date.toLocaleString('default', { year: 'numeric' });
-                            return day + '-' + month + '-' + year;
-                        })
-                    },
-                    {
-                        data: 'tanggal_diterima',
-                        render: ((data, type, row, meta) => {
-                            let date = new Date(data);
-                            const day = date.toLocaleString('default', { day: '2-digit' });
-                            const month = date.toLocaleString('default', { month: 'numeric' });
-                            const year = date.toLocaleString('default', { year: 'numeric' });
-                            return day + '-' + month + '-' + year;
-                        })
-                    },
-                    { data: 'status' },
-                    { data: 'control' },
-                    { data: 'unit_proses' },
-                    { data: 'tindak_lanjut' },
-                    { data: 'keterangan' },
-                    {
-                        data: 'id',
+                        data: null,
                         render: function (data, type, row, meta) {
                             // return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
-                            return `<button type="button" class="btn btn-primary openBtn" data-toggle="modal" onclick="getPdf(event)"
-                                            data-target="${data}">
+                            return `<button type="button" class="btn btn-primary openBtn" data-toggle="modal" onclick="getDetail(event)"
+                                            data-target="${row.surat_id}" data-value="${row.approval_id}">
                                             Detail
                                         </button>`
                         }
@@ -259,21 +227,49 @@
             });
         });
 
-        function getPdf(event) {
-            var id = event.target.dataset.target
-            axios.get(`http://localhost:5151/v1/api/surat/${id}`, {
+        function getDetail(event) {
+            // console.log(event.target.dataset.value)
+            var surat_id = event.target.dataset.target
+            var approval_id = event.target.dataset.value
+            axios.get(`http://localhost:5151/v1/api/surat/${surat_id}`, {
                 headers: {
                     'authorization': token
                 }
             }).then((res) => {
                 var file = res.data.data.file[0]
-                $('.modal-body').load('modal.html', (data) => {
+                $('.modal-body').load('modaldetail.html', (data) => {
                     $('#title').text(file.filename);
+                    $('#hidden').append(`<input type="hidden" id="approval_id" name="suratId" value="${approval_id}">`)
                     $('#img').attr('src', `../${file.url}`);
                     $('#imgModal').modal({ show: true });
                 })
             })
         }
+
+        function inputApproval(event) {
+            var catatan = document.getElementById("catatan").value;
+            var id = document.getElementById("approval_id").value;
+            event.preventDefault();
+            axios.patch(`http://localhost:5151/v1/api/approval/${id}`, { catatan: catatan }, {
+                headers: {
+                    'authorization': token
+                }
+            }).then((res) => {
+                console.log(res)
+                if (res.status == 200) {
+                    Swal.fire({
+                        title: "Success",
+                        text: "Approval telah disetujui",
+                        icon: "success"
+                    }).then(function () {
+                        window.location = "./approval.html";
+                    });
+                }
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+
     </script>
 
     <!-- OPTIONAL SCRIPTS -->

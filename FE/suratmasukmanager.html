@@ -222,7 +222,7 @@
 
     <script>
         var token = localStorage.getItem("token")
-        var url = "http://localhost:5151/v1/api/surat_masuk"
+        var url = "http://localhost:5151/v1/api/dispo"
         $(document).ready(function () {
             $('#example1').DataTable({
                 scrollY: "625px",
@@ -276,56 +276,14 @@
                         render: function (data, type, row, meta) {
                             // return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
                             return `<button type="button" class="btn btn-primary mt-1 openBtn" data-toggle="modal" onclick="getPdf(event)"
-                        data-target="${data}">Detail</button>
-                        <button type="button" class="btn btn-success mt-1 openBtn" data-toggle="modal" onclick="getApproval(event)"
-                        data-target="${data}">Approval</button>
-                        <button type="button" class="btn btn-info mt-1 openBtn" data-toggle="modal" onclick="getDispo(event)"
-                        data-target="${data}">Disposisi</button>`
+                        data-target="${data}">Detail</button>`
                         }
                     },
                 ],
             });
         });
 
-        function getApproval(event) {
-            var id_surat = event.target.dataset.target
-            // console.log(id)
-            axios.get(`http://localhost:5151/v1/api/spv`)
-                .then((res) => {
-                    //     event.preventDefault();
-                    console.log(res.data.data)
-                    $('.modal-body').load('modalapproval.html', (data) => {
-                        $('#title').text(`Approval Supervisor`)
-                        $('#hidden').append(`<input type="hidden" id="surat_id" name="custId" value="${id_surat}">`)
-                        $.each(res.data.data, function (i, val) {
-                            $('#spv').append(`<option value="${val.user_id}">${val.fullname}</option>`)
-                        })
-                        $('#imgModal').modal({ show: true });
-                    })
-                    // })
-                    // console.log(id)
-                })
-        }
 
-        function getDispo(event) {
-            var id_surat = event.target.dataset.target
-            // console.log(id)
-            axios.get(`http://localhost:5151/v1/api/manager`)
-                .then((res) => {
-                    //     event.preventDefault();
-                    console.log(res.data.data)
-                    $('.modal-body').load('modaldispo.html', (data) => {
-                        $('#title').text(`Disposisi Surat`)
-                        $('#hidden').append(`<input type="hidden" id="surat_id" name="custId" value="${id_surat}">`)
-                        $.each(res.data.data, function (i, val) {
-                            $('#spv').append(`<option value="${val.user_id}">${val.fullname}</option>`)
-                        })
-                        $('#imgModal').modal({ show: true });
-                    })
-                    // })
-                    // console.log(id)
-                })
-        }
 
         function getPdf(event) {
 
@@ -346,63 +304,6 @@
 
         // document.getElementById('formSpv').addEventListener(submit, inputSupervisor)
 
-        function inputSupervisor(event) {
-            var id_user = document.getElementById("spv").value;
-            var id_surat = document.getElementById("surat_id").value;
-            event.preventDefault();
-            axios.post(`http://localhost:5151/v1/api/approval/${id_surat}`, { "id": id_user }, {
-                headers: {
-                    'authorization': token
-                }
-            }).then((res) => {
-                if (res.status == 200) {
-
-                    Swal.fire({
-                        title: "Success",
-                        text: "Approval telah terkirim",
-                        icon: "success"
-                    }).then(function () {
-                        location.replace('./suratmasuk.html')
-                    });
-                }
-            }).catch((err) => {
-                console.log(err)
-                Swal.fire({
-                    title: "Oppss",
-                    text: "approval gagal terkirim",
-                    icon: "error"
-                })
-            })
-        }
-
-        function inputManager(event) {
-            var id_user = document.getElementById("manager").value;
-            var id_surat = document.getElementById("surat_id").value;
-            event.preventDefault();
-            axios.post(`http://localhost:5151/v1/api/dispo/${id_surat}`, { "id": id_user }, {
-                headers: {
-                    'authorization': token
-                }
-            }).then((res) => {
-                if (res.status == 200) {
-
-                    Swal.fire({
-                        title: "Success",
-                        text: "Disposisi telah terkirim",
-                        icon: "success"
-                    }).then(function () {
-                        location.replace('./suratmasuk.html')
-                    });
-                }
-            }).catch((err) => {
-                console.log(err)
-                Swal.fire({
-                    title: "Oppss",
-                    text: "Disposisi gagal terkirim",
-                    icon: "error"
-                })
-            })
-        }
 
     </script>
 
