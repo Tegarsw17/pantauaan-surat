@@ -378,8 +378,13 @@
         function inputManager(event) {
             var id_user = document.getElementById("manager").value;
             var id_surat = document.getElementById("surat_id").value;
+            var klasifikasi = document.getElementById("klasifikasi_surat").value;
             event.preventDefault();
-            axios.post(`http://localhost:5151/v1/api/dispo/${id_surat}`, { "id": id_user }, {
+            var input = {
+                "id": id_user,
+                "klasifikasi_surat": klasifikasi
+            }
+            axios.post(`http://localhost:5151/v1/api/dispo/${id_surat}`, input, {
                 headers: {
                     'authorization': token
                 }
