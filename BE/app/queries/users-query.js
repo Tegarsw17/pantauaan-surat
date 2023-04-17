@@ -33,7 +33,7 @@ const findUserByName = async (payload) => {
     return User.findOne({ 
         where: [
             {id: payload.id},
-            {jabatan_role_id: 2}
+            {jabatan_role_id: 3}
         ]})
 }
 
