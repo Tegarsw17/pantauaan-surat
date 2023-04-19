@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
@@ -413,11 +413,13 @@
         }
 
         const getSpeechValue = async () => {
-            var speech = true;
             window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
             const recognition = new window.SpeechRecognition();
+            // recognition.stop()
+            var speech = true;
             recognition.interimResults = true;
-            console.log(recognition)
+            recognition.lang = "id-ID"
+            // console.log(recognition)
 
             recognition.addEventListener('result', (e) => {
                 const transcript = Array.from(e.results)
@@ -429,7 +431,7 @@
 
             if (speech == true) {
                 recognition.start();
-                recognition.addEventListener('end', recognition.start);
+                // recognition.addEventListener('end', recognition.start);
             }
 
             const { value: hasil } = await Swal.fire({
@@ -441,7 +443,7 @@
             })
 
             if (hasil) {
-                console.log(hasil)
+                console.log(recognition)
                 $('#example1_filter label input').val(hasil)
                 var clk = jQuery.Event("keydown", { keyCode: 13 });
                 $('#example1_filter label input').trigger(clk)

@@ -3,7 +3,7 @@ let navItemAdmin = `<ul class="nav nav-pills nav-sidebar flex-column" data-widge
 <!-- Add icons to the links using the .nav-icon class
 with font-awesome or any other icon font library -->
 <li class="nav-item">
-  <a href="#" class="nav-link active">
+  <a href="#" class="nav-link">
     <i class="nav-icon far fa-envelope"></i>
     <p>
       Surat
@@ -20,7 +20,7 @@ with font-awesome or any other icon font library -->
   </ul>
   <ul class="nav nav-treeview">
     <li class="nav-item">
-      <a href="./suratkeluar.html" class="nav-link active">
+      <a href="./suratkeluar.html" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Surat Keluar</p>
       </a>
@@ -49,7 +49,7 @@ let navItemSpv = `<ul class="nav nav-pills nav-sidebar flex-column" data-widget=
 <!-- Add icons to the links using the .nav-icon class
 with font-awesome or any other icon font library -->
 <li class="nav-item">
-  <a href="#" class="nav-link active">
+  <a href="#" class="nav-link">
     <i class="nav-icon far fa-envelope"></i>
     <p>
       Surat
@@ -87,7 +87,7 @@ let navItemManager = `<ul class="nav nav-pills nav-sidebar flex-column" data-wid
 <!-- Add icons to the links using the .nav-icon class
 with font-awesome or any other icon font library -->
 <li class="nav-item">
-  <a href="#" class="nav-link active">
+  <a href="#" class="nav-link">
     <i class="nav-icon far fa-envelope"></i>
     <p>
       Surat
@@ -123,6 +123,16 @@ if (navRole == 2) {
 }
 if (navRole == 3) {
   element.innerHTML = navItemManager
+}
+
+var path = window.location.href
+var navClass = document.getElementsByClassName('nav-link')
+for (i = 0; i < navClass.length; i++) {
+  if (path.includes(navClass[i].href)) {
+    console.log(navClass[i].closest('li'))
+    navClass[i].classList.add('active')
+    navClass[i].closest('li').classList.add('menu-open')
+  }
 }
 
 // supervisor/kepala bidang
