@@ -15,5 +15,7 @@ router.get('/api/surat_masuk', tokenjwt.verifyToken, lettercontroller.getAllSura
 router.get('/api/surat_keluar', tokenjwt.verifyToken, lettercontroller.getAllSuratKeluar)
 //get detail document
 router.get('/api/surat/:id', tokenjwt.verifyToken, lettercontroller.getDetailletter)
+//get surat masuk manager
+router.get('/api/surat_masuk_manager', tokenjwt.verifyToken, lettercontroller.getSuratMasukManager)
 
 module.exports = router

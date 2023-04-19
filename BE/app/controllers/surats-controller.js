@@ -1,8 +1,9 @@
 
-const {letterQueries} = require('../queries')
+const {letterQueries, approvalQueries} = require('../queries')
 const message = require('../../response-helpers/messages').MESSAGE
 const responseHendler = require('../../response-helpers/error-helper')
 const { suratDecorator, suratObjekDecorator, suratArrayDecorator } = require('../decorators/surats-decorator')
+const { ApprovalSuratArrayDecorator} = require('../decorators/approvals-decorator')
 
 
 class letterController {
@@ -44,6 +45,22 @@ class letterController {
         }
     }
 
+    async getSuratMasukManager (req, res) {
+        try {
+            
+            const getAll = await approvalQueries.findAllApproval('approve')
+            if(getAll.length == 0){return responseHendler.notFound(res, message('document').notFoundResource)}
+            
+            const data = await ApprovalSuratArrayDecorator(getAll)
+            // const data = getAll
+            return responseHendler.ok(res, message('get all surat masuk').success, data)
+        }
+
+        catch(err) {
+            const key = err.message
+            return responseHendler.internalError(res, message(key).errorMessage)
+        }
+    }
     async getAllSuratKeluar (req, res) {
         try {
             const getAll = await letterQueries.findAllSurat('surat keluar')

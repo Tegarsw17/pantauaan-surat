@@ -5,27 +5,6 @@ const approvalDecorator = async (payload) => {
         pemberi_approval: payload.user.fullname,
         pengaju_approval: payload.surat.user.fullname,
         catatan: payload.catatan
-    //     detail_surat
-    //     id: payload.id,
-    //     admin: payload.user.fullname,
-    //     jenis_surat: payload.jenis_surat,
-    //     nomor_agenda: payload.nomor_agenda,
-    //     nomor_surat: payload.nomor_surat,
-    //     pengirim: payload.pengirim,
-    //     perihal: payload.perihal,
-    //     tanggal_surat: payload.tanggal_surat,
-    //     tanggal_diterima: payload.tanggal_diterima,
-    //     status: payload.status,
-    //     control: payload.control,
-    //     unit_proses: payload.unit_proses,
-    //     tindak_lanjut: payload.tindak_lanjut,
-    //     keterangan: payload.keterangan,
-    //     file: payload.upload_letters.map((document) => {
-    //         return {
-    //             filename: document.filename,
-    //             url: document.url
-    //         }
-    //     })
     }
 }
 
@@ -43,7 +22,35 @@ const approvalArrayDecorator = async (payload) => {
     return await Promise.all(mapping)
 }
 
+const ApprovalSuratArrayDecorator = async (payload) => {
+    const mappedSurat = payload.map((approval) => {
+        return {
+            id: approval.surat.id,
+            admin: approval.surat.user.fullname,
+            jenis_surat: approval.surat.jenis_surat,
+            nomor_agenda: approval.surat.nomor_agenda,
+            nomor_surat: approval.surat.nomor_surat,
+            pengirim: approval.surat.pengirim,
+            perihal: approval.surat.perihal,
+            tanggal_surat: approval.surat.tanggal_surat,
+            tanggal_diterima: approval.surat.tanggal_diterima,
+            status: approval.surat.status,
+            control: approval.surat.control,
+            unit_proses: approval.surat.unit_proses,
+            tindak_lanjut: approval.surat.tindak_lanjut,
+            keterangan: approval.surat.keterangan,
+            file: approval.surat.upload_letters.map((document) => {
+                return {
+                    filename: document.filename,
+                    url: document.url
+                }
+            })
+        }
+    }) 
+    return await Promise.all(mappedSurat)
+}   
 module.exports = {
     approvalDecorator,
-    approvalArrayDecorator
+    approvalArrayDecorator,
+    ApprovalSuratArrayDecorator
 }

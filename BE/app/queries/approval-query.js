@@ -23,7 +23,20 @@ const findApproval = async (auth) => {
     })
 }
 
-const findAllApproval = async (auth) => {
+const findAllApproval = async (status) => {
+    return Approval.findAll({
+        where: {status: status},
+        include: [
+            {model: Surat, include: [
+                {model: Upload_letter },
+                {model: User}
+            ]},
+            {model: User}
+    ]
+    })
+}
+
+const findAll = async (auth) => {
     return Approval.findAll({
         where: {user_id: auth},
         include: [
@@ -45,6 +58,11 @@ const findApprovalStatus = async (payload) => {
         where: {status: payload}})
 }
 
+const findApprovalIdSurat = async (payload) => {
+    return Approval.findOne({
+        where: {surat_id: payload}})
+}
+
 const findOneApprovalUser = async (auth, payload) => {
     return Approval.findOne({
         where: {
@@ -64,6 +82,7 @@ const updateApproval = async (body, status, params) => {
     )
 }
 
+
 module.exports = {
     createApproval,
     findApproval,
@@ -72,4 +91,6 @@ module.exports = {
     updateApproval,
     findOneApprovalUser,
     findAllApproval,
+    findAllApproval,
+    findApprovalIdSurat
 }

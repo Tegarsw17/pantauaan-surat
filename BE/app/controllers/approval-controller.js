@@ -21,7 +21,7 @@ class approvalController {
             const findUser = await userQueries.findUserByName(payloadBody, 2)
             if(!findUser) { return responseHendler.notFound(res, message('user tujuan').notFoundResource)}
 
-            const findApproval = await approvalQueries.findApprovalStatus('process')
+            const findApproval = await approvalQueries.findApprovalIdSurat(findSurat.id)
             if(findApproval) { return responseHendler.badRequest(res,message('approval sudah diprocess').errorMessage)}
 
             const createApproval = await approvalQueries.createApproval(findSurat.id, 'process','',findUser.id)
