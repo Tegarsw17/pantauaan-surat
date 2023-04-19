@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
   <meta charset="utf-8">
@@ -172,8 +172,16 @@
   <script src="dist/js/pages/dashboard3.js"></script>
   <script>
     var token = localStorage.getItem("token")
+    var role = localStorage.getItem("role_id")
+    var url
+    if (role == 1 || 2) {
+      url = 'http://localhost:5151/v1/api/surat_masuk'
+    }
+    if (role == 3) {
+      url = 'http://localhost:5151/v1/api/surat_masuk_manager'
+    }
     $(document).ready(function () {
-      var masuk = axios.get("http://localhost:5151/v1/api/surat_masuk", {
+      var masuk = axios.get(url, {
         headers: {
           'authorization': token
         }
