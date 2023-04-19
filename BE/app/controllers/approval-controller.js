@@ -59,7 +59,7 @@ class approvalController {
 
         try {
             const auth = req.userId
-            const findApproval = await approvalQueries.findAllApproval(auth)
+            const findApproval = await approvalQueries.findAll(auth)
             if(!findApproval) { return responseHendler.notFound(res, message('approval').notFoundResource)}
 
             const data = await approvalArrayDecorator(findApproval)

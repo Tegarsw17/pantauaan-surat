@@ -91,6 +91,6 @@ module.exports = {
     updateApproval,
     findOneApprovalUser,
     findAllApproval,
-    findAllApproval,
-    findApprovalIdSurat
+    findApprovalIdSurat,
+    findAll
 }
