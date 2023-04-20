@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Surat Menyurat</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+
+            </ul>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <div class="user-panel  d-flex">
+                            <div class="image">
+                                <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <a href="#" onclick="logout()" class="dropdown-item">
+                            <p>Logout</p>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="index.html" class="brand-link text-center">
+                <span class="brand-text ">SURAT</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2" id="navbar">
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="d-flex justify-content-between ml-2 mr-2">
+                    <h1 class="m-0">Surat Masuk</h1>
+                    <button class="btn btn-primary btn-lg mr-4" id="btnFind"><i class="ion ion-mic-a"></i> Temukan
+                        dengan
+                        suara</button>
+                </div>
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <div class="content">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="container-fluid">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table id="example1" class="table table-bordered table-striped"
+                                        style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>No Agenda</th>
+                                                <th>No Surat</th>
+                                                <th>Pengirim</th>
+                                                <th>Perihal</th>
+                                                <th>Tanggal Surat</th>
+                                                <th>Tanggal Diterima</th>
+                                                <th>Status</th>
+                                                <th>Control</th>
+                                                <th>Unit Proses</th>
+                                                <th>Tindak Lanjut</th>
+                                                <th>Keterangan</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2023.</strong>
+        </footer>
+        <!-- Button trigger modal -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="imgModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="m2">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="formModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- REQUIRED SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="plugins/jszip/jszip.min.js"></script>
+    <script src="plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <!-- AdminLTE -->
+    <script src="dist/js/adminlte.js"></script>
+    <!-- custom js -->
+    <script src="dist/js/navbar.js"></script>
+    <script src="dist/js/main.js"></script>
+
+    <script>
+        var token = localStorage.getItem("token")
+        var url = "http://localhost:5151/v1/api/surat_masuk"
+        $(document).ready(function () {
+            $('#example1').DataTable({
+                scrollY: "625px",
+                scrollX: true,
+                scrollCollapse: true,
+                'ajax': {
+                    'url': url,
+                    'type': 'GET',
+                    'beforeSend': function (request) {
+                        request.setRequestHeader("authorization", token);
+                    }
+                },
+                'columns': [
+                    {
+                        render: function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    { data: 'nomor_agenda' },
+                    { data: 'nomor_surat' },
+                    { data: 'pengirim' },
+                    { data: 'perihal' },
+                    {
+                        data: 'tanggal_surat',
+                        render: ((data, type, row, meta) => {
+                            let date = new Date(data);
+                            const day = date.toLocaleString('default', { day: '2-digit' });
+                            const month = date.toLocaleString('default', { month: 'numeric' });
+                            const year = date.toLocaleString('default', { year: 'numeric' });
+                            return day + '-' + month + '-' + year;
+                        })
+                    },
+                    {
+                        data: 'tanggal_diterima',
+                        render: ((data, type, row, meta) => {
+                            let date = new Date(data);
+                            const day = date.toLocaleString('default', { day: '2-digit' });
+                            const month = date.toLocaleString('default', { month: 'numeric' });
+                            const year = date.toLocaleString('default', { year: 'numeric' });
+                            return day + '-' + month + '-' + year;
+                        })
+                    },
+                    { data: 'status' },
+                    { data: 'control' },
+                    { data: 'unit_proses' },
+                    { data: 'tindak_lanjut' },
+                    { data: 'keterangan' },
+                    {
+                        data: 'id',
+                        render: function (data, type, row, meta) {
+                            // return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
+                            return `<button type="button" class="btn btn-primary mt-1 openBtn" data-toggle="modal" onclick="getPdf(event)"
+                        data-target="${data}">Detail</button>
+                        <button type="button" class="btn btn-success mt-1 openBtn" data-toggle="modal" onclick="getApproval(event)"
+                        data-target="${data}">Approval</button>
+                        <button type="button" class="btn btn-info mt-1 openBtn" data-toggle="modal" onclick="getDispo(event)"
+                        data-target="${data}">Disposisi</button>`
+                        }
+                    },
+                ],
+            });
+        });
+
+        function getApproval(event) {
+            var id_surat = event.target.dataset.target
+            axios.get(`http://localhost:5151/v1/api/spv`)
+                .then((res) => {
+                    console.log(res.data.data)
+                    $('.modal-body').load('modalapproval.html', (data) => {
+                        $('#title').text(`Approval Supervisor`)
+                        $('#hidden').append(`<input type="hidden" id="surat_id" name="custId" value="${id_surat}">`)
+                        $.each(res.data.data, function (i, val) {
+                            $('#spv').append(`<option value="${val.user_id}">${val.fullname}</option>`)
+                        })
+                        $('#imgModal').modal({ show: true });
+                    })
+                })
+        }
+
+        function getDispo(event) {
+            var id_surat = event.target.dataset.target
+            axios.get(`http://localhost:5151/v1/api/manager`)
+                .then((res) => {
+                    console.log(res.data.data)
+                    $('.modal-body').load('modaldispo.html', (data) => {
+                        $('#title').text(`Disposisi Surat`)
+                        $('#hidden').append(`<input type="hidden" id="surat_id" name="custId" value="${id_surat}">`)
+                        $.each(res.data.data, function (i, val) {
+                            console.log(val)
+                            $('#manager').append(`<option value="${val.user_id}">${val.fullname}</option>`)
+                        })
+                        $('#imgModal').modal({ show: true });
+                    })
+                })
+        }
+
+        function getPdf(event) {
+
+            var id = event.target.dataset.target
+            axios.get(`http://localhost:5151/v1/api/surat/${id}`, {
+                headers: {
+                    'authorization': token
+                }
+            }).then((res) => {
+                var file = res.data.data.file[0]
+                $('.modal-body').load('modal.html', (data) => {
+                    $('#title').text(file.filename);
+                    $('#img').attr('src', `../${file.url}`);
+                    $('#imgModal').modal({ show: true });
+                })
+            })
+        }
+
+        function inputSupervisor(event) {
+            var id_user = document.getElementById("spv").value;
+            var id_surat = document.getElementById("surat_id").value;
+            event.preventDefault();
+            axios.post(`http://localhost:5151/v1/api/approval/${id_surat}`, { "id": id_user }, {
+                headers: {
+                    'authorization': token
+                }
+            }).then((res) => {
+                if (res.status == 200) {
+                    Swal.fire({
+                        title: "Success",
+                        text: "Approval telah terkirim",
+                        icon: "success"
+                    }).then(function () {
+                        location.replace('./suratmasuk.html')
+                    });
+                }
+            }).catch((err) => {
+                console.log(err)
+                Swal.fire({
+                    title: "Oppss",
+                    text: "approval gagal terkirim",
+                    icon: "error"
+                })
+            })
+        }
+
+        function inputManager(event) {
+            var id_user = document.getElementById("manager").value;
+            var id_surat = document.getElementById("surat_id").value;
+            var klasifikasi = document.getElementById("klasifikasi_surat").value;
+            event.preventDefault();
+            var input = {
+                "id": id_user,
+                "klasifikasi_surat": klasifikasi
+            }
+            axios.post(`http://localhost:5151/v1/api/dispo/${id_surat}`, input, {
+                headers: {
+                    'authorization': token
+                }
+            }).then((res) => {
+                if (res.status == 200) {
+
+                    Swal.fire({
+                        title: "Success",
+                        text: "Disposisi telah terkirim",
+                        icon: "success"
+                    }).then(function () {
+                        location.replace('./suratmasuk.html')
+                    });
+                }
+            }).catch((err) => {
+                console.log(err)
+                Swal.fire({
+                    title: "Oppss",
+                    text: "Disposisi gagal terkirim",
+                    icon: "error"
+                })
+            })
+        }
+
+        const getSpeechValue = async () => {
+            window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+            const recognition = new window.SpeechRecognition();
+            // recognition.stop()
+            var speech = true;
+            recognition.interimResults = true;
+            recognition.lang = "id-ID"
+            // console.log(recognition)
+
+            recognition.addEventListener('result', (e) => {
+                const transcript = Array.from(e.results)
+                    .map(result => result[0])
+                    .map(result => result.transcript)
+                    .join('');
+                document.getElementById("swal2-input").value = transcript
+            });
+
+            if (speech == true) {
+                recognition.start();
+            }
+
+            const { value: hasil } = await Swal.fire({
+                title: 'Cari Surat',
+                input: 'text',
+                inputLabel: 'Silahkan berbicara',
+                showCancelButton: true
+            })
+
+            if (hasil) {
+                $('#example1_filter label input').val(hasil)
+                var clk = jQuery.Event("keydown", { keyCode: 13 });
+                $('#example1_filter label input').trigger(clk)
+                recognition.stop();
+            }
+        }
+
+        $('#btnFind').on('click', function async(e) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'question',
+                showCancelButton: true,
+                title: 'Cari Surat',
+                confirmButtonText: 'Mulai',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    getSpeechValue()
+                }
+            })
+
+        })
+
+    </script>
+    <script src="dist/js/pages/dashboard3.js"></script>
+</body>
+
+</html>

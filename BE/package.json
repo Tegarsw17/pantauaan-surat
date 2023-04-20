@@ -1,0 +1,42 @@
+{
+  "name": "be",
+  "version": "1.0.0",
+  "description": "backend sistem register surat",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "cross-env NODE_ENV=development nodemon index.js",
+    "sequelize:create": "cross-env NODE_ENV=development npx sequelize db:create",
+    "sequelize:migrate": "cross-env NODE_ENV=development npx sequelize db:migrate",
+    "sequelize:seed": "cross-env NODE_ENV=development npx sequelize db:seed:all",
+    "sequelize:generate": "cross-env NODE_ENV=development npx sequelize migration:generate --name uploads",
+    "start:prod": "cross-env NODE_ENV=production nodemon index.js",
+    "sequelize:create:prod": "cross-env NODE_ENV=production npx sequelize db:create",
+    "sequelize:migrate:prod": "cross-env NODE_ENV=production npx sequelize db:migrate",
+    "sequelize:seed:prod": "cross-env NODE_ENV=production npx sequelize db:seed:all",
+    "sequelize:generate:prod": "cross-env NODE_ENV=production npx sequelize migration:generate --name uploads"
+  },
+  "author": "muhammad yasin alqurni",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.2.0",
+    "pg": "^8.10.0",
+    "sequelize": "^6.29.3",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/sequelize": "^4.28.14",
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.21",
+    "postman-2-swagger": "^0.5.0",
+    "postman-to-swagger": "^0.0.9",
+    "sequelize-cli": "^6.6.0",
+    "swagger-ui-express": "^4.6.2",
+    "yamljs": "^0.3.0"
+  }
+}
