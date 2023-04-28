@@ -19,25 +19,25 @@
 - ORM: sequelize
 
 ## Setup
+1. masuk melalui terminal ke folder BE (cd be) kemudian lakukan migrasi ke database dengan perintah sebagai berikut:
+    - npm run sequelize:create
+    - npm run sequelize:migrate
+    - npm run sequelize:seed
 
+2. jalankan server backend dengan perintah:
+    - npm run start:dev
 
+3. jalankan frontend dengan menggunakan "live server" dari extensi visual studio code
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://github.com/saefullohmaslul"><img src="https://avatars.githubusercontent.com/u/20754023" width="100px;" alt=""/><br /><sub><b>Saefulloh Maslul</b></sub></a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href="https://github.com/saefullohmaslul"><img src="https://avatars.githubusercontent.com/u/20754023" width="100px;" alt=""/><br /><sub><b>Saefulloh Maslul</b></sub></a></td>
-  </tr>
-</table>
-<!-- markdownlint-enable -->
-<!-- prettier-ignore-end -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+## USER SEED
+- admin
+    email: admin@gmail.com
+    password: admin123
+- supervisior
+    email: spv@gmail.com
+    password: spv123
+- manager
+    email: manager@gmail.com
+    password: manager123
 
-## License
-
-Copyright (c) 2021 Saefulloh Maslul
-All rights reserved.
+## ENJOY
