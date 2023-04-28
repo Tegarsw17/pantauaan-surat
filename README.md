@@ -29,8 +29,6 @@
   <tr>
     <td align="center"><a href="https://github.com/saefullohmaslul"><img src="https://avatars.githubusercontent.com/u/20754023" width="100px;" alt=""/><br /><sub><b>Saefulloh Maslul</b></sub></a></td>
   </tr>
-</table>
-<table>
   <tr>
     <td align="center"><a href="https://github.com/saefullohmaslul"><img src="https://avatars.githubusercontent.com/u/20754023" width="100px;" alt=""/><br /><sub><b>Saefulloh Maslul</b></sub></a></td>
   </tr>
