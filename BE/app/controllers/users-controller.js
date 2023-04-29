@@ -40,12 +40,15 @@ class userController {
              const payload = req.body
             
              const findUser = await userQueries.findUserByEmail(payload)
+             console.log('a')
              if(!findUser) { return responseHendler.notFound(res,message('email').notFoundResource)}
             
              const ismatch = await isMatch(payload.password, findUser)
+             console.log('b')
              if(!ismatch) { return responseHendler.notFound(res,message('wrong password').errorMessage)}
 
              const token = await generateToken(findUser)
+             console.log('c')
              if(!token) { return responseHendler.internalError(res,message().serverError)}
  
              const data = loginDecorator(findUser, token)
