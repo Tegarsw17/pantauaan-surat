@@ -20,6 +20,7 @@
 
 ## Setup
 1. masuk melalui terminal ke folder BE (cd be) kemudian lakukan migrasi ke database dengan perintah sebagai berikut:
+    - npm install
     - npm run sequelize:create
     - npm run sequelize:migrate
     - npm run sequelize:seed
