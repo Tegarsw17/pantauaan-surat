@@ -18,15 +18,18 @@
 </head>
 
 <body class="hold-transition login-page">
+    <h1 class="mb-5">Sistem Informasi Pengarsipan</h1>
     <div class="login-box">
         <!-- /.login-logo -->
         <div class="card">
             <div class="login-logo mt-3">
-                <a href="index.html"><b>Log</b>In</a>
+                <img src="./dist/img/dishub.png" alt="" width="100px"><br>
+                UPBU Kelas I Mopah
+                <!-- <a href="index.html"><b>Log</b>In</a> -->
             </div>
             <div class="card-body login-card-body">
                 <form action="#" method="post">
-                    <div class="input-group mb-3 mt-3">
+                    <div class="input-group mb-3 mt-1">
                         <input type="email" class="form-control" id="email" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
@@ -38,19 +41,13 @@
                         <input type="password" class="form-control" id="password" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+                                <span class="fas fa-lock" onclick="passType()"></span>
                             </div>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
-                                <label for="remember">
-                                    Remember Me
-                                </label>
-                            </div>
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
@@ -76,6 +73,7 @@
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function () {
             var token = localStorage.getItem("token")
@@ -92,7 +90,7 @@
                 password: password,
             };
             e.preventDefault();
-            console.log(inputData)
+            // console.log(inputData)
             axios.post("http://localhost:5151/v1/api/login", inputData).then((res) => {
                 console.log(res)
                 // jika sukses
@@ -103,8 +101,26 @@
                 }
 
                 // jika gagal
+            }).catch((err) => {
+                console.log(err.response.data.message)
+                if (err.response.status == 404) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: err.response.data.message
+                    })
+                }
             })
         })
+
+        function passType() {
+            var x = document.getElementById("password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
     </script>
 </body>
 
