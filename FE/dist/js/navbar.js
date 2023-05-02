@@ -39,7 +39,7 @@ with font-awesome or any other icon font library -->
   <a href="./register.html" class="nav-link">
     <i class="nav-icon fas fa-edit"></i>
     <p>
-      Registrasi
+      Registrasi User
     </p>
   </a>
 </li>

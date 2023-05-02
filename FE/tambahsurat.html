@@ -106,23 +106,20 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="fullname">Jenis Surat</label>
-                                            <select class="form-control" id="jenis_surat">
+                                            <select class="form-control" id="jenis_surat" onchange="viewTujuan()">
                                                 <option value="surat masuk">Surat Masuk</option>
                                                 <option value="surat keluar">Surat Keluar</option>
                                             </select>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="no_agenda">Nomor Agenda</label>
-                                                <input type="text" class="form-control" name="no_agenda" id="no_agenda">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="no_surat">Nomor Surat</label>
-                                                <input type="text" class="form-control" name="no_surat" id="no_surat">
-                                            </div>
+                                        <div class="form-group" id="tujuanView" hidden>
+                                            <label for="fullname">Tujuan</label>
+                                            <input type="text" class="form-control" name="tujuan" id="tujuan">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="no_surat">Nomor Surat</label>
+                                            <input type="text" class="form-control" name="no_surat" id="no_surat">
                                         </div>
                                         <div class="form-row">
-
                                             <div class="form-group col-md-6">
                                                 <label for="pengirim">Pengirim</label>
                                                 <input type="text" class="form-control" name="pengirim" id="pengirim">
@@ -234,12 +231,21 @@
         var role = localStorage.getItem("role_id")
         $(document).ready(function () {
             roleCanAccess([1], role)
-
         })
+
+        function viewTujuan() {
+            var jns_surat = document.getElementById("jenis_surat").value
+            if (jns_surat == 'surat keluar') {
+                $('#tujuanView').removeAttr('hidden')
+            } else {
+                $('#tujuanView').attr('hidden', true)
+            }
+        }
+
         const form = document.querySelector("form");
         form.addEventListener("submit", (e) => {
             var jenis_surat = document.getElementById("jenis_surat").value;
-            var nomor_agenda = document.getElementById("no_agenda").value;
+            var tujuan = document.getElementById("tujuan").value;
             var nomor_surat = document.getElementById("no_surat").value;
             var pengirim = document.getElementById("pengirim").value;
             var perihal = document.getElementById("perihal").value;
@@ -255,7 +261,7 @@
 
             const inputData = {
                 jenis_surat: jenis_surat,
-                nomor_agenda: nomor_agenda,
+                tujuan: tujuan,
                 nomor_surat: nomor_surat,
                 pengirim: pengirim,
                 perihal: perihal,
@@ -268,22 +274,21 @@
                 keterangan: keterangan,
             };
             e.preventDefault();
-            // console.log(token)
             var id = axios.post('http://localhost:5151/v1/api/surat', inputData, {
                 headers: {
                     'authorization': token
                 }
             })
-            id.then(function (res) {
-                // console.log(res.data.data.surat_id)
+            id = id.then((res) => {
                 var id = res.data.data.surat_id
                 axios.post(`http://localhost:5151/v1/api/upload/${id}`, { file: file }, {
                     headers: {
                         'authorization': token,
                         'Content-Type': 'multipart/form-data'
                     }
-                }).then((res) => {
-                    // console.log(res)
+                })
+                id.then((res) => {
+                    console.log(res)
                     if (res.status == 200) {
                         Swal.fire({
                             title: "Success",
@@ -293,6 +298,9 @@
                             window.location = "./index.html";
                         });
                     }
+                }).catch((err) => {
+                    console.log(err)
+                    window.location = "./index.html"
                 })
             })
         })
