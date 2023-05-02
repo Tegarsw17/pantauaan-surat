@@ -111,7 +111,7 @@
                   <div class="icon">
                     <i class="ion ion-archive"></i>
                   </div>
-                  <a href="./suratmasuk.html" class="small-box-footer">More info <i
+                  <a href="" class="small-box-footer" id="smLink">More info <i
                       class="fas fa-arrow-circle-right"></i></a>
                 </div>
               </div>
@@ -173,6 +173,8 @@
   <script>
     var token = localStorage.getItem("token")
     var role = localStorage.getItem("role_id")
+    var smlink = document.getElementById("smLink")
+    var linkSM
     var url
     if (role == 1 || 2) {
       url = 'http://localhost:5151/v1/api/surat_masuk'
@@ -181,6 +183,10 @@
       url = 'http://localhost:5151/v1/api/surat_masuk_manager'
     }
     $(document).ready(function () {
+      if (role == 1) { linkSM = './suratmasuk.html' }
+      if (role == 2) { linkSM = './suratmasukspv.html' }
+      if (role == 3) { linkSM = './suratmasukmanager.html' }
+      $("#smLink").attr("href", linkSM)
       var masuk = axios.get(url, {
         headers: {
           'authorization': token
