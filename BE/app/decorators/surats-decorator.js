@@ -68,7 +68,7 @@ const suratObjekDecorator = async (payload) => {
         admin: payload.user.fullname,
         jenis_surat: payload.jenis_surat,
         nomor_agenda: payload.nomor_agenda,
-        tujuan: surat.tujuan,
+        tujuan: payload.tujuan,
         nomor_surat: payload.nomor_surat,
         pengirim: payload.pengirim,
         perihal: payload.perihal,
