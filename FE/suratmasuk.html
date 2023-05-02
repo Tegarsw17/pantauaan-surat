@@ -278,14 +278,15 @@
             axios.get(`http://localhost:5151/v1/api/spv`)
                 .then((res) => {
                     console.log(res.data.data)
+                    var dataSpv = res.data.data
                     $('.modal-body').load('modalapproval.html', (data) => {
                         $('#title').text(`Approval Supervisor`)
+                        $('#spvInput').append('<option value="volvo">Volvo</option>')
                         $('#hidden').append(`<input type="hidden" id="surat_id" name="custId" value="${id_surat}">`)
-                        $.each(res.data.data, function (i, val) {
-                            $('#spv').append(`<option value="${val.user_id}">${val.fullname}</option>`)
-                        })
                         $('#imgModal').modal({ show: true });
+                        console.log('---')
                     })
+
                 })
         }
 
