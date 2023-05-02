@@ -97,6 +97,7 @@
                 if (res.status == 200) {
                     localStorage.setItem("token", res.data.data.token);
                     localStorage.setItem("role_id", res.data.data.role_id);
+                    localStorage.setItem("username", res.data.data.username);
                     location.replace('./index.html')
                 }
 
