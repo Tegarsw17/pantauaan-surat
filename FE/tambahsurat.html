@@ -274,34 +274,61 @@
                 keterangan: keterangan,
             };
             e.preventDefault();
+
+            // async function sendImage() {
+            //     const response = await fetch(`http://localhost:5151/v1/api/surat`, {
+            //         method: "POST",
+            //         headers: {
+            //             'authorization': token
+            //         },
+            //         body: JSON.stringify(inputData)
+            //     }).then(function (res) { console.log(res) }).catch(function (err) { console.log(err) })
+            // }
+            // sendImage()
+
+            const sendImage = async (res) => {
+                var id = res.data.data.surat_id
+                axios.post(`http://localhost:5151/v1/api/upload/${id}`, { file: file },
+                    // axios.get(`localhost:5151/v1/api/spv`
+                    {
+                        // timeout: 2000,
+                        headers: {
+                            'authorization': token,
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                )
+                // .then((res) => {
+                //     console.log(res)
+                //     if (res.status == 200) {
+                //         Swal.fire({
+                //             title: "Success",
+                //             text: "data berhasil ditambahkan",
+                //             icon: "success"
+                //         }).then(function () {
+                //             window.location = "./index.html";
+                //         });
+                //     }
+                // }).catch((err) => {
+                //     // console.log(err)
+                //     console.log(err.code)
+                //     if (err.code === 'ECONNABORTED') {
+                //         console.log('requested time out')
+                //     }
+                // })
+            }
+
             var id = axios.post('http://localhost:5151/v1/api/surat', inputData, {
+                timeout: 2000,
                 headers: {
                     'authorization': token
                 }
-            })
-            id = id.then((res) => {
-                var id = res.data.data.surat_id
-                axios.post(`http://localhost:5151/v1/api/upload/${id}`, { file: file }, {
-                    headers: {
-                        'authorization': token,
-                        'Content-Type': 'multipart/form-data'
-                    }
-                })
-                id.then((res) => {
-                    console.log(res)
-                    if (res.status == 200) {
-                        Swal.fire({
-                            title: "Success",
-                            text: "data berhasil ditambahkan",
-                            icon: "success"
-                        }).then(function () {
-                            window.location = "./index.html";
-                        });
-                    }
-                }).catch((err) => {
-                    console.log(err)
-                    window.location = "./index.html"
-                })
+            }).then((res) => {
+                console.log(res)
+                if (res.status == 200) {
+                    // console.log(res)
+                    sendImage(res)
+                }
             })
         })
     </script>
