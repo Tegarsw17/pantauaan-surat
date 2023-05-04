@@ -274,20 +274,19 @@
                 keterangan: keterangan,
             };
             e.preventDefault();
-            var id = axios.post('http://localhost:5151/v1/api/surat', inputData, {
-                headers: {
-                    'authorization': token
-                }
-            })
-            id = id.then((res) => {
+
+            const sendImage = async (res) => {
                 var id = res.data.data.surat_id
-                axios.post(`http://localhost:5151/v1/api/upload/${id}`, { file: file }, {
-                    headers: {
-                        'authorization': token,
-                        'Content-Type': 'multipart/form-data'
+                console.log(id)
+                // axios.get(`http://localhost:5151/v1/api/spv`).then((res) => { console.log(res) })
+                axios.post(`http://localhost:5151/v1/api/upload/${id}`, { file: file },
+                    {
+                        headers: {
+                            'authorization': token,
+                            'Content-Type': 'multipart/form-data'
+                        }
                     }
-                })
-                id.then((res) => {
+                ).then((res) => {
                     console.log(res)
                     if (res.status == 200) {
                         Swal.fire({
@@ -299,9 +298,25 @@
                         });
                     }
                 }).catch((err) => {
-                    console.log(err)
-                    window.location = "./index.html"
+                    // console.log(err)
+                    console.log(err.code)
+                    if (err.code === 'ECONNABORTED') {
+                        console.log('requested time out')
+                    }
                 })
+            }
+
+            var id = axios.post('http://localhost:5151/v1/api/surat', inputData, {
+                // timeout: 2000,
+                headers: {
+                    'authorization': token
+                }
+            }).then((res) => {
+                console.log(res)
+                if (res.status == 200) {
+                    // console.log(res)
+                    sendImage(res)
+                }
             })
         })
     </script>
