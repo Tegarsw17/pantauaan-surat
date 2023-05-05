@@ -210,6 +210,8 @@
     <script>
         var token = localStorage.getItem("token")
         var url = "http://localhost:5151/v1/api/surat_masuk"
+        // axios.get(url, { headers: { 'authorization': token } }).then(function (res) { console.log(res) })
+
         $(document).ready(function () {
             $('#example1').DataTable({
                 scrollY: "625px",
@@ -263,7 +265,7 @@
                             // return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
                             return `<button type="button" class="btn btn-primary mt-1 openBtn" data-toggle="modal" onclick="getPdf(event)"
                         data-target="${data}">Detail</button>
-                        <button type="button" class="btn btn-success mt-1 openBtn" data-toggle="modal" onclick="getApproval(event)"
+                        <button type="button" class="btn btn-success mt-1 openBtn" onclick="getApproval(event)"
                         data-target="${data}">Approval</button>
                         <button type="button" class="btn btn-info mt-1 openBtn" data-toggle="modal" onclick="getDispo(event)"
                         data-target="${data}">Disposisi</button>`
@@ -275,13 +277,16 @@
 
         function getApproval(event) {
             var id_surat = event.target.dataset.target
+            // console.log(id_surat)
             axios.get(`http://localhost:5151/v1/api/spv`)
                 .then((res) => {
                     console.log(res.data.data)
                     var dataSpv = res.data.data
-                    $('.modal-body').load('modalapproval.html', (data) => {
+                    $('#m2').load('modalapproval.html', (data) => {
                         $('#title').text(`Approval Supervisor`)
-                        $('#spvInput').append('<option value="volvo">Volvo</option>')
+                        for (let i = 0; i < dataSpv.length; i++) {
+                            $('#spvInput').append(`<option value="${dataSpv[i].user_id}">${dataSpv[i].fullname}</option>`)
+                        }
                         $('#hidden').append(`<input type="hidden" id="surat_id" name="custId" value="${id_surat}">`)
                         $('#imgModal').modal({ show: true });
                         console.log('---')
@@ -294,12 +299,11 @@
             var id_surat = event.target.dataset.target
             axios.get(`http://localhost:5151/v1/api/manager`)
                 .then((res) => {
-                    console.log(res.data.data)
-                    $('.modal-body').load('modaldispo.html', (data) => {
+                    // console.log(res.data.data)
+                    $('#m2').load('modaldispo.html', (data) => {
                         $('#title').text(`Disposisi Surat`)
                         $('#hidden').append(`<input type="hidden" id="surat_id" name="custId" value="${id_surat}">`)
                         $.each(res.data.data, function (i, val) {
-                            console.log(val)
                             $('#manager').append(`<option value="${val.user_id}">${val.fullname}</option>`)
                         })
                         $('#imgModal').modal({ show: true });

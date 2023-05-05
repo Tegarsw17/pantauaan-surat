@@ -180,6 +180,7 @@
         $(document).ready(function () {
             var role = localStorage.getItem("role_id")
             roleCanAccess([1], role)
+
         })
         axios.get("http://localhost:5151/v1/api/role").then((res) => {
             // console.log(res.data.data[0])
