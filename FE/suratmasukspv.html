@@ -38,6 +38,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <div class="user-panel  d-flex">
+                            <div class="info">
+                                <span href="#" class="d-block" id="namaUser"></span>
+                            </div>
                             <div class="image">
                                 <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                             </div>
@@ -213,9 +216,9 @@
     <script src="dist/js/main.js"></script>
 
     <script>
-        var token = localStorage.getItem("token")
-        var url = "http://localhost:5151/v1/api/surat_masuk"
+        var url = `${linkApi}/surat_masuk`
         $(document).ready(function () {
+            $("#namaUser").html(username)
             $('#example1').DataTable({
                 scrollY: "625px",
                 scrollX: true,
@@ -274,76 +277,6 @@
                 ],
             });
         });
-
-
-
-        function getPdf(event) {
-
-            var id = event.target.dataset.target
-            axios.get(`http://localhost:5151/v1/api/surat/${id}`, {
-                headers: {
-                    'authorization': token
-                }
-            }).then((res) => {
-                var file = res.data.data.file[0]
-                $('.modal-body').load('modal.html', (data) => {
-                    $('#title').text(file.filename);
-                    $('#img').attr('src', `../${file.url}`);
-                    $('#imgModal').modal({ show: true });
-                })
-            })
-        }
-
-        const getSpeechValue = async () => {
-            window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
-            const recognition = new window.SpeechRecognition();
-            // recognition.stop()
-            var speech = true;
-            recognition.interimResults = true;
-            recognition.lang = "id-ID"
-            // console.log(recognition)
-
-            recognition.addEventListener('result', (e) => {
-                const transcript = Array.from(e.results)
-                    .map(result => result[0])
-                    .map(result => result.transcript)
-                    .join('');
-                document.getElementById("swal2-input").value = transcript
-            });
-
-            if (speech == true) {
-                recognition.start();
-            }
-
-            const { value: hasil } = await Swal.fire({
-                title: 'Cari Surat',
-                input: 'text',
-                inputLabel: 'Silahkan berbicara',
-                showCancelButton: true
-            })
-
-            if (hasil) {
-                $('#example1_filter label input').val(hasil)
-                var clk = jQuery.Event("keydown", { keyCode: 13 });
-                $('#example1_filter label input').trigger(clk)
-                recognition.stop();
-            }
-        }
-
-        $('#btnFind').on('click', function async(e) {
-            e.preventDefault();
-            Swal.fire({
-                icon: 'question',
-                showCancelButton: true,
-                title: 'Cari Surat',
-                confirmButtonText: 'Mulai',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    getSpeechValue()
-                }
-            })
-
-        })
 
         // document.getElementById('formSpv').addEventListener(submit, inputSupervisor)
 

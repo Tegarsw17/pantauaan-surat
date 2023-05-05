@@ -37,6 +37,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <div class="user-panel  d-flex">
+                            <div class="info">
+                                <span href="#" class="d-block" id="namaUser"></span>
+                            </div>
                             <div class="image">
                                 <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                             </div>
@@ -230,6 +233,7 @@
     <script>
         var role = localStorage.getItem("role_id")
         $(document).ready(function () {
+            $("#namaUser").html(username)
             roleCanAccess([1], role)
         })
 
@@ -278,8 +282,8 @@
             const sendImage = async (res) => {
                 var id = res.data.data.surat_id
                 console.log(id)
-                // axios.get(`http://localhost:5151/v1/api/spv`).then((res) => { console.log(res) })
-                axios.post(`http://localhost:5151/v1/api/upload/${id}`, { file: file },
+                // axios.get(`${linkApi}/spv`).then((res) => { console.log(res) })
+                axios.post(`${linkApi}/upload/${id}`, { file: file },
                     {
                         headers: {
                             'authorization': token,
@@ -298,15 +302,20 @@
                         });
                     }
                 }).catch((err) => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: err.response.data.message
+                    })
                     // console.log(err)
-                    console.log(err.code)
-                    if (err.code === 'ECONNABORTED') {
-                        console.log('requested time out')
-                    }
+                    // console.log(err.code)
+                    // if (err.code === 'ECONNABORTED') {
+                    //     console.log('requested time out')
+                    // }
                 })
             }
 
-            var id = axios.post('http://localhost:5151/v1/api/surat', inputData, {
+            var id = axios.post(`${linkApi}/surat`, inputData, {
                 // timeout: 2000,
                 headers: {
                     'authorization': token
@@ -317,6 +326,13 @@
                     // console.log(res)
                     sendImage(res)
                 }
+            }).catch((err) => {
+                // console.log(err.response.data)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: err.response.data.message
+                })
             })
         })
     </script>
