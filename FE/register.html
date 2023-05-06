@@ -37,6 +37,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <div class="user-panel  d-flex">
+                            <div class="info">
+                                <span href="#" class="d-block" id="namaUser"></span>
+                            </div>
                             <div class="image">
                                 <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                             </div>
@@ -178,11 +181,11 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         $(document).ready(function () {
-            var role = localStorage.getItem("role_id")
             roleCanAccess([1], role)
+            $("#namaUser").html(username)
 
         })
-        axios.get("http://localhost:5151/v1/api/role").then((res) => {
+        axios.get(`${linkApi}/role`).then((res) => {
             // console.log(res.data.data[0])
             var data = res.data.data
             const element = document.getElementById("role");
@@ -209,7 +212,7 @@
                 password: password,
             };
             e.preventDefault();
-            axios.post('http://localhost:5151/v1/api/register', inputData).then((res) => {
+            axios.post(`${linkApi}/register`, inputData).then((res) => {
                 if (res.status == 200) {
                     Swal.fire({
                         title: "Success",

@@ -39,9 +39,7 @@
           <a class="nav-link" data-toggle="dropdown" href="#">
             <div class="user-panel d-flex">
               <div class="info">
-                <!-- <a href="#" class="d-block">Alexander Pierce</a> -->
                 <span href="#" class="d-block" id="namaUser"></span>
-                <!-- <span href="#" class="d-block mb-2">admin</span> -->
               </div>
               <div class="image">
                 <!-- <span href="#" class="d-block">Alexander Pierce</span> -->
@@ -177,17 +175,14 @@
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="dist/js/pages/dashboard3.js"></script>
   <script>
-    var token = localStorage.getItem("token")
-    var role = localStorage.getItem("role_id")
-    var username = localStorage.getItem("username")
     var smlink = document.getElementById("smLink")
     var linkSM
     var url
     if (role == 1 || 2) {
-      url = 'http://localhost:5151/v1/api/surat_masuk'
+      url = `${linkApi}/surat_masuk`
     }
     if (role == 3) {
-      url = 'http://localhost:5151/v1/api/surat_masuk_manager'
+      url = `${linkApi}/surat_masuk_manager`
     }
     $(document).ready(function () {
       // document.getElementById('namaUser').innerHTML(username)
@@ -219,7 +214,7 @@
         }
       })
       masuk.then((res) => {
-        axios.get("http://localhost:5151/v1/api/surat_keluar", {
+        axios.get(`${linkApi}/surat_keluar`, {
           headers: {
             'authorization': token
           }
