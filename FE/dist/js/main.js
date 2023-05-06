@@ -2,6 +2,7 @@ var token = localStorage.getItem('token')
 var role = localStorage.getItem('role_id')
 var username = localStorage.getItem('username')
 var linkApi = 'http://localhost:5151/v1/api'
+var linkPdf = 'http://localhost:5151/v1/pdf'
 
 function logout() {
   localStorage.clear()
@@ -67,7 +68,7 @@ $('#btnFind').on('click', function async(e) {
 function getPdf(event) {
   var id = event.target.dataset.target
   axios
-    .get(`http://localhost:5151/v1/api/surat/${id}`, {
+    .get(`${linkApi}/surat/${id}`, {
       headers: {
         authorization: token,
       },
@@ -76,7 +77,7 @@ function getPdf(event) {
       var file = res.data.data.file[0]
       $('.modal-body').load('modal.html', (data) => {
         $('#title').text(file.filename)
-        $('#img').attr('src', `../${file.url}`)
+        $('#img').attr('src', `${linkPdf}/${file.filename}`)
         $('#imgModal').modal({ show: true })
       })
     })
