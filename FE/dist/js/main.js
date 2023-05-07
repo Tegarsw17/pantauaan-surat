@@ -46,7 +46,7 @@ const getSpeechValue = async () => {
   })
 
   if (hasil) {
-    $('#example1_filter label input').val('jabar').trigger('keyup')
+    $('#example1_filter label input').val(hasil).trigger('keyup')
     recognition.stop()
   }
 }
