@@ -4,6 +4,7 @@ const message = require('../../response-helpers/messages').MESSAGE
 const responseHendler = require('../../response-helpers/error-helper')
 const { suratDecorator, suratObjekDecorator, suratArrayDecorator } = require('../decorators/surats-decorator')
 const { ApprovalSuratArrayDecorator} = require('../decorators/approvals-decorator')
+const nomorAgendaService = require('../services/nomor_agenda')
 
 
 class letterController {
@@ -14,8 +15,15 @@ class letterController {
             const payload = req.body
             const auth = req.userId
 
+            //nomor agenda otomatis
+            let nomorAgenda = 0
+            const findSurat = await letterQueries.findOneByJenisSurat(payload)
+            if(findSurat) {
+                nomorAgenda = findSurat.nomor_agenda
+            }
+            const nomor = await nomorAgendaService(nomorAgenda)
             //create letters
-            const createLetter = await letterQueries.createSurat(auth, payload)
+            const createLetter = await letterQueries.createSurat(auth, payload, nomor)
 
             if(!createLetter) { return responseHendler.badRequest(res, message('register document').invalidCreateResource)}
             
@@ -89,6 +97,7 @@ class letterController {
         }
 
         catch (err) {
+            console.log(err)
             const key = err.message
             return responseHendler.internalError(res, message(key).errorMessage)
         }

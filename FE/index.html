@@ -37,8 +37,12 @@
         <!-- Notifications Dropdown Menu -->
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
-            <div class="user-panel  d-flex">
+            <div class="user-panel d-flex">
+              <div class="info">
+                <span href="#" class="d-block" id="namaUser"></span>
+              </div>
               <div class="image">
+                <!-- <span href="#" class="d-block">Alexander Pierce</span> -->
                 <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
               </div>
             </div>
@@ -111,7 +115,7 @@
                   <div class="icon">
                     <i class="ion ion-archive"></i>
                   </div>
-                  <a href="./suratmasuk.html" class="small-box-footer">More info <i
+                  <a href="" class="small-box-footer" id="smLink">More info <i
                       class="fas fa-arrow-circle-right"></i></a>
                 </div>
               </div>
@@ -171,16 +175,23 @@
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="dist/js/pages/dashboard3.js"></script>
   <script>
-    var token = localStorage.getItem("token")
-    var role = localStorage.getItem("role_id")
+    var smlink = document.getElementById("smLink")
+    var linkSM
     var url
     if (role == 1 || 2) {
-      url = 'http://localhost:5151/v1/api/surat_masuk'
+      url = `${linkApi}/surat_masuk`
     }
     if (role == 3) {
-      url = 'http://localhost:5151/v1/api/surat_masuk_manager'
+      url = `${linkApi}/surat_masuk_manager`
     }
     $(document).ready(function () {
+      // document.getElementById('namaUser').innerHTML(username)
+      if (role == 1) { linkSM = './suratmasuk.html' }
+      if (role == 2) { linkSM = './suratmasukspv.html' }
+      if (role == 3) { linkSM = './suratmasukmanager.html' }
+      $("#smLink").attr("href", linkSM)
+      $("#namaUser").html(username)
+      // $("#nameUser").html(username)
       var masuk = axios.get(url, {
         headers: {
           'authorization': token
@@ -203,7 +214,7 @@
         }
       })
       masuk.then((res) => {
-        axios.get("http://localhost:5151/v1/api/surat_keluar", {
+        axios.get(`${linkApi}/surat_keluar`, {
           headers: {
             'authorization': token
           }

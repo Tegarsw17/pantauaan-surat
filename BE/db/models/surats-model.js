@@ -29,6 +29,10 @@ surat.init(
     type: DataTypes.STRING,
     allowNull: false
     },
+    tujuan: {
+    type: DataTypes.STRING,
+    allowNull: false
+    },
     pengirim: {
     type: DataTypes.STRING,
     allowNull: false

@@ -32,6 +32,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      tujuan: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       pengirim: {
         type: Sequelize.STRING,
         allowNull: false
@@ -68,28 +72,28 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      // created_at: {
-      //   type: Sequelize.DATEONLY,
-      //   defaultValue: Sequelize.fn('now')
-      // },
-      // updated_at: {
-      //   type: Sequelize.DATEONLY,
-      //   defaultValue: Sequelize.fn('now')
-      // },
-      // deleted_at: {
-      //   type: Sequelize.DATEONLY,
-      // }
       created_at: {
-        type: Sequelize.DATE,
-        defaultValue: Date.now()
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.fn('now')
       },
       updated_at: {
-        type: Sequelize.DATE,
-        defaultValue: Date.now()
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.fn('now')
       },
       deleted_at: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY,
       }
+      // created_at: {
+      //   type: Sequelize.DATE,
+      //   defaultValue: Date.now()
+      // },
+      // updated_at: {
+      //   type: Sequelize.DATE,
+      //   defaultValue: Date.now()
+      // },
+      // deleted_at: {
+      //   type: Sequelize.DATE
+      // }
     })
   },
 

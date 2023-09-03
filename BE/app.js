@@ -31,6 +31,7 @@ app.use('/v1', approvalRouter)
 app.use('/v1', roleRouter)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use('/v1', dispoRouter)
+app.use('/v1/pdf', express.static('storage/pdf'))
 
 
 module.exports = app

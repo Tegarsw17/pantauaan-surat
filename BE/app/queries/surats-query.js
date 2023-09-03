@@ -1,11 +1,12 @@
 const {Surat, Upload_letter, User, Approval} = require('../../db/models')
 
-const createSurat = async (auth, payload) => {
+const createSurat = async (auth, payload, nomorAgenda) => {
     return Surat.create({
         user_id: auth,
         jenis_surat: payload.jenis_surat,
-        nomor_agenda: payload.nomor_agenda,
+        nomor_agenda: nomorAgenda,
         nomor_surat: payload.nomor_surat,
+        tujuan: payload.tujuan,
         pengirim: payload.pengirim,
         perihal: payload.perihal,
         tanggal_surat: payload.tanggal_surat,
@@ -55,11 +56,18 @@ const getDetail = async (payload) => {
         ]
     })
 }
+const findOneByJenisSurat = async (payload) => {
+    return Surat.findOne({
+        where: {jenis_surat: payload.jenis_surat},
+        order: [['id', 'DESC']]
+    })
+}
 module.exports = {
     createSurat,
     findSurat,
     deleteSurat,
     findAllSurat,
     getDetail,
-    findAllSuratManager
+    findAllSuratManager,
+    findOneByJenisSurat
 }

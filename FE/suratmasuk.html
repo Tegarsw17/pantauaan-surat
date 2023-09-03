@@ -38,6 +38,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <div class="user-panel  d-flex">
+                            <div class="info">
+                                <span href="#" class="d-block" id="namaUser"></span>
+                            </div>
                             <div class="image">
                                 <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                             </div>
@@ -208,9 +211,10 @@
     <script src="dist/js/main.js"></script>
 
     <script>
-        var token = localStorage.getItem("token")
-        var url = "http://localhost:5151/v1/api/surat_masuk"
+        var url = `${linkApi}/surat_masuk`
+
         $(document).ready(function () {
+            $("#namaUser").html(username)
             $('#example1').DataTable({
                 scrollY: "625px",
                 scrollX: true,
@@ -263,7 +267,7 @@
                             // return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
                             return `<button type="button" class="btn btn-primary mt-1 openBtn" data-toggle="modal" onclick="getPdf(event)"
                         data-target="${data}">Detail</button>
-                        <button type="button" class="btn btn-success mt-1 openBtn" data-toggle="modal" onclick="getApproval(event)"
+                        <button type="button" class="btn btn-success mt-1 openBtn" onclick="getApproval(event)"
                         data-target="${data}">Approval</button>
                         <button type="button" class="btn btn-info mt-1 openBtn" data-toggle="modal" onclick="getDispo(event)"
                         data-target="${data}">Disposisi</button>`
@@ -275,30 +279,33 @@
 
         function getApproval(event) {
             var id_surat = event.target.dataset.target
-            axios.get(`http://localhost:5151/v1/api/spv`)
+            // console.log(id_surat)
+            axios.get(`${linkApi}/spv`)
                 .then((res) => {
                     console.log(res.data.data)
-                    $('.modal-body').load('modalapproval.html', (data) => {
+                    var dataSpv = res.data.data
+                    $('#m2').load('modalapproval.html', (data) => {
                         $('#title').text(`Approval Supervisor`)
+                        for (let i = 0; i < dataSpv.length; i++) {
+                            $('#spvInput').append(`<option value="${dataSpv[i].user_id}">${dataSpv[i].fullname}</option>`)
+                        }
                         $('#hidden').append(`<input type="hidden" id="surat_id" name="custId" value="${id_surat}">`)
-                        $.each(res.data.data, function (i, val) {
-                            $('#spv').append(`<option value="${val.user_id}">${val.fullname}</option>`)
-                        })
                         $('#imgModal').modal({ show: true });
+                        console.log('---')
                     })
+
                 })
         }
 
         function getDispo(event) {
             var id_surat = event.target.dataset.target
-            axios.get(`http://localhost:5151/v1/api/manager`)
+            axios.get(`${linkApi}/manager`)
                 .then((res) => {
-                    console.log(res.data.data)
-                    $('.modal-body').load('modaldispo.html', (data) => {
+                    // console.log(res.data.data)
+                    $('#m2').load('modaldispo.html', (data) => {
                         $('#title').text(`Disposisi Surat`)
                         $('#hidden').append(`<input type="hidden" id="surat_id" name="custId" value="${id_surat}">`)
                         $.each(res.data.data, function (i, val) {
-                            console.log(val)
                             $('#manager').append(`<option value="${val.user_id}">${val.fullname}</option>`)
                         })
                         $('#imgModal').modal({ show: true });
@@ -306,28 +313,12 @@
                 })
         }
 
-        function getPdf(event) {
-
-            var id = event.target.dataset.target
-            axios.get(`http://localhost:5151/v1/api/surat/${id}`, {
-                headers: {
-                    'authorization': token
-                }
-            }).then((res) => {
-                var file = res.data.data.file[0]
-                $('.modal-body').load('modal.html', (data) => {
-                    $('#title').text(file.filename);
-                    $('#img').attr('src', `../${file.url}`);
-                    $('#imgModal').modal({ show: true });
-                })
-            })
-        }
 
         function inputSupervisor(event) {
             var id_user = document.getElementById("spv").value;
             var id_surat = document.getElementById("surat_id").value;
             event.preventDefault();
-            axios.post(`http://localhost:5151/v1/api/approval/${id_surat}`, { "id": id_user }, {
+            axios.post(`${linkApi}/approval/${id_surat}`, { "id": id_user }, {
                 headers: {
                     'authorization': token
                 }
@@ -360,7 +351,7 @@
                 "id": id_user,
                 "klasifikasi_surat": klasifikasi
             }
-            axios.post(`http://localhost:5151/v1/api/dispo/${id_surat}`, input, {
+            axios.post(`${linkApi}/dispo/${id_surat}`, input, {
                 headers: {
                     'authorization': token
                 }
@@ -384,57 +375,6 @@
                 })
             })
         }
-
-        const getSpeechValue = async () => {
-            window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
-            const recognition = new window.SpeechRecognition();
-            // recognition.stop()
-            var speech = true;
-            recognition.interimResults = true;
-            recognition.lang = "id-ID"
-            // console.log(recognition)
-
-            recognition.addEventListener('result', (e) => {
-                const transcript = Array.from(e.results)
-                    .map(result => result[0])
-                    .map(result => result.transcript)
-                    .join('');
-                document.getElementById("swal2-input").value = transcript
-            });
-
-            if (speech == true) {
-                recognition.start();
-            }
-
-            const { value: hasil } = await Swal.fire({
-                title: 'Cari Surat',
-                input: 'text',
-                inputLabel: 'Silahkan berbicara',
-                showCancelButton: true
-            })
-
-            if (hasil) {
-                $('#example1_filter label input').val(hasil)
-                var clk = jQuery.Event("keydown", { keyCode: 13 });
-                $('#example1_filter label input').trigger(clk)
-                recognition.stop();
-            }
-        }
-
-        $('#btnFind').on('click', function async(e) {
-            e.preventDefault();
-            Swal.fire({
-                icon: 'question',
-                showCancelButton: true,
-                title: 'Cari Surat',
-                confirmButtonText: 'Mulai',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    getSpeechValue()
-                }
-            })
-
-        })
 
     </script>
     <script src="dist/js/pages/dashboard3.js"></script>
