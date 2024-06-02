@@ -1,7 +1,7 @@
 const dotenv = require('dotenv')
 
 //${process.env.NODE_ENV}
-dotenv.config({path: `.env.${process.env.NODE_ENV}`}) 
+dotenv.config({path: `.env.production`}) 
 
 module.exports = {
   username: process.env.DB_USER,
