@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  surat:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    tty: true
+    ports:
+      - 9182:5151
+    depends_on:
+      - surat_db
+    env_file:
+      - .env.development
+    command: sh -c "npm run start:dev"
+    volumes:
+      - type: volume
+        source: automation_module_volume
+        target: /app/node_modules
+      - type: bind
+        source: .
+        target: /app
+
+  surat_db:
+    image: postgres:14
+    ports:
+      - 5437:5432
+    environment:
+      - POSTGRES_PASSWORD=12345678
+      - POSTGRES_DB=surat_db
+
+volumes:
+  automation_module_volume:
