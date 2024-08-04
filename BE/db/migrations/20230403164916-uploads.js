@@ -30,26 +30,13 @@ module.exports = {
       },
       created_at: {
         type: Sequelize.DATEONLY,
-        defaultValue: Sequelize.fn('now')
       },
       updated_at: {
         type: Sequelize.DATEONLY,
-        defaultValue: Sequelize.fn('now')
       },
       deleted_at: {
         type: Sequelize.DATEONLY,
       }
-      // created_at: {
-      //   type: Sequelize.DATE,
-      //   defaultValue: Date.now()
-      // },
-      // updated_at: {
-      //   type: Sequelize.DATE,
-      //   defaultValue: Date.now()
-      // },
-      // deleted_at: {
-      //   type: Sequelize.DATE
-      // }
     })
   },
 
@@ -57,3 +44,4 @@ module.exports = {
      await queryInterface.dropTable('upload_letters')
   }
 }
+

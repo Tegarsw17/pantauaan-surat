@@ -13,7 +13,7 @@ class approvalController {
         try {
             const payloadParams = req.params
             const payloadBody = req.body
-
+    
             const findSurat = await letterQueries.findSurat(payloadParams)
             if(!findSurat) { return responseHendler.notFound(res, message('letter').notFoundResource)}
             if(findSurat.jenis_surat !== 'surat masuk') { return responseHendler.badRequest(res, message('must surat keluar').errorMessage)}

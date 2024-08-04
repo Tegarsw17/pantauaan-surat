@@ -2,13 +2,11 @@
     <div class="d-flex justify-content-center">
         <h3 id="title"></h3>
         <div id="placeholder"></div>
-        <form method="GET" onsubmit="inputSupervisor(event)" id="formSpv">
+        <form method="GET" onsubmit="approve(event)" id="formManager">
             <div id="hidden"></div>
             <div class="form-group">
-                <label for="spv">Nama Supervisor</label>
-                <!-- <div id="spvDd"></div> -->
-                <select class="form-control form-control-lg" id="spvInput">
-                    <!-- <option value="0">- - SELECT - -</option> -->
+                <label for="manager">Catatan</label>
+                <textarea id="catatan" class="form-control" rows="6"></textarea>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>

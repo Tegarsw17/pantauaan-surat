@@ -317,6 +317,7 @@
         function inputSupervisor(event) {
             var id_user = document.getElementById("spv").value;
             var id_surat = document.getElementById("surat_id").value;
+            console.log(id_user, id_surat)
             event.preventDefault();
             axios.post(`${linkApi}/approval/${id_surat}`, { "id": id_user }, {
                 headers: {
@@ -375,6 +376,7 @@
                 })
             })
         }
+
 
     </script>
     <script src="dist/js/pages/dashboard3.js"></script>

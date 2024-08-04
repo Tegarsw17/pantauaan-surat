@@ -271,7 +271,10 @@
                         render: function (data, type, row, meta) {
                             // return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
                             return `<button type="button" class="btn btn-primary mt-1 openBtn" data-toggle="modal" onclick="getPdf(event)"
-                        data-target="${data}">Detail</button>`
+                                    data-target="${data}">Detail</button>
+                                    <button type="button" class="btn btn-success mt-1 openBtn" onclick="getApprove(event)"
+                                    data-target="${data}">Approve</button>
+                                    `
                         }
                     },
                 ],
@@ -279,6 +282,50 @@
         });
 
         // document.getElementById('formSpv').addEventListener(submit, inputSupervisor)
+
+        function getApprove(event) {
+            var id_surat = event.target.dataset.target
+
+            $('#m2').load('modalapprove.html', (data) => {
+                $('#title').text(`Approve Surat`)
+                $('#hidden').append(`<input type="hidden" id="surat_id" name="custId" value="${id_surat}">`)
+                $('#imgModal').modal({ show: true });
+            })
+        }
+
+        function approve(event) {
+            var id_user = document.getElementById("manager").value;
+            var id_surat = document.getElementById("surat_id").value;
+            var catatan = document.getElementById("catatan").value;
+            event.preventDefault();
+            var input = {
+                "catatan": catatan,
+            }
+            console.log(input, id_user, id_surat)
+            axios.patch(`${linkApi}/approval/${id_surat}`, input, {
+                headers: {
+                    'authorization': token
+                }
+            }).then((res) => {
+                if (res.status == 200) {
+
+                    Swal.fire({
+                        title: "Success",
+                        text: "approve telah terkirim",
+                        icon: "success"
+                    }).then(function () {
+                        location.replace('./suratmasuk.html')
+                    });
+                }
+            }).catch((err) => {
+                console.log(err)
+                Swal.fire({
+                    title: "Oppss",
+                    text: "approve gagal terkirim",
+                    icon: "error"
+                })
+            })
+        }
 
 
     </script>
