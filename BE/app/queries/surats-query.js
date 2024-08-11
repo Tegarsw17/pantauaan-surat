@@ -1,4 +1,5 @@
-const {Surat, Upload_letter, User, Approval} = require('../../db/models')
+const {Surat, Upload_letter, User, Approval } = require('../../db/models')
+const { Sequelize, Op } = require('sequelize')
 
 const createSurat = async (auth, payload, nomorAgenda) => {
     return Surat.create({
@@ -16,6 +17,7 @@ const createSurat = async (auth, payload, nomorAgenda) => {
         unit_proses: payload.unit_proses,
         tindak_lanjut: payload.tindak_lanjut,
         keterangan: payload.keterangan,
+        status_type: 'CREATED'
     })
 }
 
@@ -23,8 +25,8 @@ const findSurat = async (payload) => {
     return Surat.findOne({where: {id: payload.id}})
 }
 
-const deleteSurat = async (payload) => {
-    return Surat.destroy({where: {id: payload.id}})
+const deleteSurat = async (id) => {
+    return Surat.destroy({where: {id: id}})
 }
 
 const findAllSurat = async (payload) => {
@@ -62,6 +64,55 @@ const findOneByJenisSurat = async (payload) => {
         order: [['id', 'DESC']]
     })
 }
+
+const updateStatusType = async (id, status) => {
+    return Surat.update({status_type: status}, {where: {id: id}})
+}
+
+const getSuratById = async (id) => {
+    return Surat.findOne({where: {id: id}})
+}
+
+const findAllSpv = async (jenis_surat) => {
+    try {
+        const surats = await Surat.findAll({
+            where: {
+                jenis_surat: jenis_surat,
+                status_type: {
+                    [Sequelize.Op.not]: 'CREATED'
+                }
+            },
+            include: [
+                { model: Upload_letter },
+                { model: User },
+                { model: Approval }
+            ]
+        });
+        return surats;
+    } catch (error) {
+        throw new Error(`Error in findAllSpv: ${error.message}`);
+    }
+};
+
+const findAllManager = async (jenis_surat) => {
+    try {
+        const letter = await Surat.findAll({
+            where: {
+                jenis_surat: jenis_surat,
+                status_type: 'DISPOSITION'
+            },
+            include: [
+                { model: Upload_letter },
+                { model: User },
+                { model: Approval }
+            ]
+        });
+        return letter;
+    } catch (error) {
+        throw new Error(`Error in findAllManager: ${error.message}`);
+    }
+};
+
 module.exports = {
     createSurat,
     findSurat,
@@ -69,5 +120,9 @@ module.exports = {
     findAllSurat,
     getDetail,
     findAllSuratManager,
-    findOneByJenisSurat
+    findOneByJenisSurat,
+    updateStatusType,
+    getSuratById, 
+    findAllSpv,
+    findAllManager, 
 }

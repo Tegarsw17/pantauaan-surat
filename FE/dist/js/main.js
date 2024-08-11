@@ -17,21 +17,33 @@ function roleCanAccess(role_list, role) {
 }
 
 const getSpeechValue = async () => {
-  window.SpeechRecognition =
-    window.webkitSpeechRecognition || window.SpeechRecognition
-  const recognition = new window.SpeechRecognition()
-  // recognition.stop()
+  // Cek apakah browser mendukung Speech Recognition
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition
+
+  if (!SpeechRecognition) {
+    alert('Browser Anda tidak mendukung Speech Recognition.')
+    return
+  }
+
+  const recognition = new SpeechRecognition()
+
   var speech = true
   recognition.interimResults = true
   recognition.lang = 'id-ID'
-  // console.log(recognition)
 
   recognition.addEventListener('result', (e) => {
     const transcript = Array.from(e.results)
       .map((result) => result[0])
       .map((result) => result.transcript)
       .join('')
-    document.getElementById('swal2-input').value = transcript
+
+    // Hilangkan titik di akhir transkrip jika ada
+    const cleanedTranscript = transcript.endsWith('.')
+      ? transcript.slice(0, -1)
+      : transcript
+
+    document.getElementById('swal2-input').value = cleanedTranscript
   })
 
   if (speech == true) {
@@ -64,6 +76,7 @@ $('#btnFind').on('click', function async(e) {
     }
   })
 })
+
 
 function getPdf(event) {
   var id = event.target.dataset.target

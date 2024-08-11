@@ -191,7 +191,7 @@
     <script src="dist/js/main.js"></script>
 
     <script>
-        var url = `${linkApi}/surat_masuk_manager`
+        var url = `${linkApi}/surat_masuk/manager`
         $(document).ready(function () {
             $("#namaUser").html(username)
             $('#example1').DataTable({
@@ -245,7 +245,7 @@
                             // return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
                             return `<button type="button" class="btn btn-primary openBtn" data-toggle="modal" onclick="getPdf(event)"
                                             data-target="${data}">
-                                            Detail
+                                            Lihat
                                         </button>`
                         }
                     },

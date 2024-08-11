@@ -7,7 +7,7 @@ module.exports = {
       await queryInterface.describeTable('surats').then(async () => {
         await queryInterface.addColumn(
           'surats',
-          'status',
+          'status_type',
           {
             type: Sequelize.ENUM('CREATED', 'SEND_TO_APPROVED', 'APPROVED', 'REJECTED', 'DISPOSITION'),
             allowNull: true,
@@ -22,7 +22,7 @@ module.exports = {
 
   down: async (queryInterface) => {
     await queryInterface.sequelize.transaction(async (t) => {
-      await queryInterface.removeColumn('surats', 'status', {
+      await queryInterface.removeColumn('surats', 'status_type', {
         transaction: t,
       });
     });

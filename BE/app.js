@@ -22,6 +22,10 @@ app.use(function(req, res, next) {
     next()
 })
 
+app.use(function(err, req, res, next) {
+    console.error(err.stack);
+});
+
 app.use(bodyParser.json())
 app.use(express.urlencoded({extended: true}))
 

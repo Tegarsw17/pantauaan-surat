@@ -51,6 +51,7 @@ const suratArrayDecorator = async (payload) => {
             unit_proses: surat.unit_proses,
             tindak_lanjut: surat.tindak_lanjut,
             keterangan: surat.keterangan,
+            status_type: surat.status_type,
             file: surat.upload_letters.map((document) => {
                 return {
                     filename: document.filename,
@@ -79,6 +80,7 @@ const suratObjekDecorator = async (payload) => {
         unit_proses: payload.unit_proses,
         tindak_lanjut: payload.tindak_lanjut,
         keterangan: payload.keterangan,
+        status_type: payload.status_type,
         file: payload.upload_letters.map((document) => {
             return {
                 filename: document.filename,

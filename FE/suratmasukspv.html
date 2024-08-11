@@ -216,7 +216,7 @@
     <script src="dist/js/main.js"></script>
 
     <script>
-        var url = `${linkApi}/surat_masuk`
+        var url = `${linkApi}/surat_masuk/spv`
         $(document).ready(function () {
             $("#namaUser").html(username)
             $('#example1').DataTable({
@@ -230,7 +230,6 @@
                         request.setRequestHeader("authorization", token);
                     }
                 },
-                // 'ajax': './data/surat.json',
                 'columns': [
                     {
                         render: function (data, type, full, meta) {
@@ -269,12 +268,15 @@
                     {
                         data: 'id',
                         render: function (data, type, row, meta) {
-                            // return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
-                            return `<button type="button" class="btn btn-primary mt-1 openBtn" data-toggle="modal" onclick="getPdf(event)"
-                                    data-target="${data}">Detail</button>
-                                    <button type="button" class="btn btn-success mt-1 openBtn" onclick="getApprove(event)"
-                                    data-target="${data}">Approve</button>
+                            let button = `<button type="button" class="btn btn-primary mt-1 openBtn" data-toggle="modal" onclick="getPdf(event)"
+                                    data-target="${data}">Lihat</button>
                                     `
+                            if (row.status_type == "SEND_TO_APPROVED") {
+                                button += `<button type="button" class="btn btn-success mt-1 openBtn" onclick="approve(event)"
+                                    data-target="${data}">Approve Surat</button>
+                                    `
+                            }
+                            return button
                         }
                     },
                 ],
@@ -294,15 +296,10 @@
         }
 
         function approve(event) {
-            var id_user = document.getElementById("manager").value;
-            var id_surat = document.getElementById("surat_id").value;
-            var catatan = document.getElementById("catatan").value;
+            var id_surat = event.target.dataset.target
             event.preventDefault();
-            var input = {
-                "catatan": catatan,
-            }
-            console.log(input, id_user, id_surat)
-            axios.patch(`${linkApi}/approval/${id_surat}`, input, {
+
+            axios.post(`${linkApi}/approval/accept/${id_surat}`, {
                 headers: {
                     'authorization': token
                 }
@@ -311,17 +308,17 @@
 
                     Swal.fire({
                         title: "Success",
-                        text: "approve telah terkirim",
+                        text: "approved",
                         icon: "success"
                     }).then(function () {
-                        location.replace('./suratmasuk.html')
+                        location.replace('./suratmasukspv.html')
                     });
                 }
             }).catch((err) => {
                 console.log(err)
                 Swal.fire({
                     title: "Oppss",
-                    text: "approve gagal terkirim",
+                    text: "approved gagal",
                     icon: "error"
                 })
             })

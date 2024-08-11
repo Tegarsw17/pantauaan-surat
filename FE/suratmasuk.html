@@ -264,13 +264,27 @@
                     {
                         data: 'id',
                         render: function (data, type, row, meta) {
-                            // return '<a class="btn btn-primary" href="#" role="button">Lihat</a>'
-                            return `<button type="button" class="btn btn-primary mt-1 openBtn" data-toggle="modal" onclick="getPdf(event)"
-                        data-target="${data}">Detail</button>
-                        <button type="button" class="btn btn-success mt-1 openBtn" onclick="getApproval(event)"
-                        data-target="${data}">Approval</button>
-                        <button type="button" class="btn btn-info mt-1 openBtn" data-toggle="modal" onclick="getDispo(event)"
-                        data-target="${data}">Disposisi</button>`
+                            let buttons = `
+                                <button type="button" class="btn btn-primary mt-1 openBtn" data-toggle="modal" onclick="getPdf(event)"
+                                    data-target="${data}">Lihat</button>
+                            `;
+
+                            // Hanya tambahkan tombol Hapus jika status adalah "DRAFT" atau "CREATED"
+                            if (row.status_type === 'CREATED') {
+                                buttons += `<button type="button" class="btn btn-info mt-1 openBtn" data-toggle="modal" onclick="deleteSurat(event)"
+                                    data-target="${data}">Hapus</button>
+                                    <button type="button" class="btn btn-success mt-1 openBtn" onclick="inputSupervisor(event)"
+                                    data-target="${data}">Ajukan Approval</button>
+                                    `;
+                            }
+
+                            if (row.status_type === 'APPROVED') {
+                                buttons += `<button type="button" class="btn btn-info mt-1 openBtn" data-toggle="modal" onclick="getDispo(event)"
+                                data-target="${data}">Disposisi</button>`;
+                            }
+
+
+                            return buttons;
                         }
                     },
                 ],
@@ -280,21 +294,21 @@
         function getApproval(event) {
             var id_surat = event.target.dataset.target
             // console.log(id_surat)
-            axios.get(`${linkApi}/spv`)
-                .then((res) => {
-                    console.log(res.data.data)
-                    var dataSpv = res.data.data
+            // axios.get(`${linkApi}/spv`)
+            //     .then((res) => {
+            //         console.log(res.data.data)
+            //         var dataSpv = res.data.data
                     $('#m2').load('modalapproval.html', (data) => {
-                        $('#title').text(`Approval Supervisor`)
-                        for (let i = 0; i < dataSpv.length; i++) {
-                            $('#spvInput').append(`<option value="${dataSpv[i].user_id}">${dataSpv[i].fullname}</option>`)
-                        }
+                        // $('#title').text(`Approval Kabag`)
+                        // for (let i = 0; i < dataSpv.length; i++) {
+                        //     $('#spvInput').append(`<option value="${dataSpv[i].user_id}">${dataSpv[i].fullname}</option>`)
+                        // }
                         $('#hidden').append(`<input type="hidden" id="surat_id" name="custId" value="${id_surat}">`)
                         $('#imgModal').modal({ show: true });
                         console.log('---')
                     })
 
-                })
+                // })
         }
 
         function getDispo(event) {
@@ -315,33 +329,67 @@
 
 
         function inputSupervisor(event) {
-            var id_user = document.getElementById("spv").value;
-            var id_surat = document.getElementById("surat_id").value;
-            console.log(id_user, id_surat)
-            event.preventDefault();
-            axios.post(`${linkApi}/approval/${id_surat}`, { "id": id_user }, {
+            event.preventDefault(); // Prevent the form from submitting the default way
+
+            // var id_user = document.getElementById("spv").value;
+            var id_surat = event.target.dataset.target
+            console.log(id_surat, linkApi);
+
+            axios.post(`${linkApi}/approval/${id_surat}`, {
                 headers: {
                     'authorization': token
                 }
             }).then((res) => {
-                if (res.status == 200) {
+                if (res.status === 200) {
                     Swal.fire({
                         title: "Success",
                         text: "Approval telah terkirim",
                         icon: "success"
                     }).then(function () {
-                        location.replace('./suratmasuk.html')
+                        location.replace('./suratmasuk.html');
                     });
                 }
             }).catch((err) => {
-                console.log(err)
+                console.log(err);
                 Swal.fire({
                     title: "Oppss",
-                    text: "approval gagal terkirim",
+                    text: "Approval gagal terkirim",
                     icon: "error"
-                })
-            })
+                });
+            });
         }
+
+        function deleteSurat(event) {
+            event.preventDefault(); // Prevent the form from submitting the default way
+
+            // var id_user = document.getElementById("spv").value;
+            var id_surat = event.target.dataset.target
+            console.log(id_surat, linkApi);
+
+            axios.delete(`${linkApi}/surat/${id_surat}`, {
+                headers: {
+                    'authorization': token
+                }
+            }).then((res) => {
+                if (res.status === 200) {
+                    Swal.fire({
+                        title: "Success",
+                        text: "Surat telah di hapus",
+                        icon: "success"
+                    }).then(function () {
+                        location.replace('./suratmasuk.html');
+                    });
+                }
+            }).catch((err) => {
+                console.log(err);
+                Swal.fire({
+                    title: "Oppss",
+                    text: "Surat gagal di hapus",
+                    icon: "error"
+                });
+            });
+        }
+
 
         function inputManager(event) {
             var id_user = document.getElementById("manager").value;
