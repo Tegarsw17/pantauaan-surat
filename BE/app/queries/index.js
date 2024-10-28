@@ -4,6 +4,7 @@ const uploadQueries = require('../queries/upload_letter-query')
 const approvalQueries = require('../queries/approval-query')
 const roleQueries = require('../queries/jabatan_role-query')
 const dispoQueries = require('../queries/disposition-query')
+const dispositionLetterQueries = require('../queries/disposition-letter-query')
 
 
 module.exports = {
@@ -13,4 +14,5 @@ module.exports = {
     approvalQueries,
     roleQueries,
     dispoQueries,
+    dispositionLetterQueries,
 }

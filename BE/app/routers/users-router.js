@@ -19,4 +19,6 @@ router.get('/api/spv', usercontroller.getUserSpv)
 //get user by role manager
 router.get('/api/manager', usercontroller.getUserManager)
 
+router.get('/api/user/disposition', usercontroller.getUserForDispositionLetter)
+
 module.exports = router

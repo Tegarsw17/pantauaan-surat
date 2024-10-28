@@ -5,6 +5,8 @@ const Jabatan_role = require('../models/jabatan_roles-model')
 const User_disposition = require('../models/user_dispositions-model')
 const Upload_letter = require('../models/uploads-model')
 const Approval = require('../models/approvals-model')
+const DispositionLetter = require('../models/disposition-letter-model')
+const sequelize = require('../config/config')
 
 
 // Jabatan_role.belongsTo(User, {
@@ -34,6 +36,8 @@ Surat.hasMany(Approval, {
 Approval.belongsTo(User, {
     foreignKey: 'user_id'
 })
+
+
 module.exports = {
     User,
     Surat,
@@ -41,5 +45,7 @@ module.exports = {
     Jabatan_role,
     User_disposition,
     Upload_letter,
-    Approval
+    Approval,
+    DispositionLetter,
+    sequelize,
 }

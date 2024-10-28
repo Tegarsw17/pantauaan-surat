@@ -104,6 +104,21 @@ class userController {
             return responseHendler.internalError(res, message(key).errorMessage)
         }
     }
+
+    async getUserForDispositionLetter(req, res) {
+        try {
+            const payload = req.params.id
+            const getUser = await userQueries.findUserById(payload)
+            if(!getUser) { return responseHendler.notFound(res, message('user').notFoundResource)}
+
+            const data = await allUserDecorators(getUser)
+            return responseHendler.ok(res, message('data Supervisor').success, data)
+        }
+        catch(err) {
+            const key = err.message
+            return responseHendler.internalError(res, message(key).errorMessage)
+        }
+    }
 }
 
 module.exports = {

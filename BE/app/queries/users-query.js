@@ -1,4 +1,6 @@
-const { User, Jabatan_role} = require('../../db/models')
+const { User, Jabatan_role } = require('../../db/models')
+const { Op } = require('sequelize')
+
 const bcrypt = require('bcrypt')
 
 
@@ -48,6 +50,16 @@ const findUserByRole = async (payload) => {
     })
 }
 
+const findRecipientDisposition = async () => {
+    return User.findAll({
+        where: {
+            jabatan_role_id: {
+                [Op.in]: [2, 11, 12, 13]
+            }
+        }, 
+    })
+}
+
 module.exports = {
     createUser,
     findUserByEmail,
@@ -55,5 +67,6 @@ module.exports = {
     deleteUser,
     findUserByName,
     findAllUser,
-    findUserByRole
+    findUserByRole,
+    findRecipientDisposition,
 }

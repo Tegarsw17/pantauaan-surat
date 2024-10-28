@@ -9,7 +9,8 @@ module.exports = {
       jabatan_role_id: 3,
       phone: '085723144211',
       email: 'manager@gmail.com',
-      password: '$2b$08$K4vxH/fN8/JzHyzCxPcNjejo0oT0kz/M4gRnV0AQcB/0AOJ.hA7oK' //manager123
+      password: '$2b$08$K4vxH/fN8/JzHyzCxPcNjejo0oT0kz/M4gRnV0AQcB/0AOJ.hA7oK', //manager123
+      is_admin: true,
     },
     {
       fullname: 'spv',
@@ -23,7 +24,8 @@ module.exports = {
       jabatan_role_id: 1,
       phone: '085723144211',
       email: 'admin@gmail.com',
-      password: '$2b$08$wj.8rcOSkrIanZ88f9BmK.iigucxh3SBqUFhZQMSBQ6hewrM1XQCq'//'admin123'
+      password: '$2b$08$wj.8rcOSkrIanZ88f9BmK.iigucxh3SBqUFhZQMSBQ6hewrM1XQCq', //'admin123'
+      is_admin: true,
     }
     ], {});
 
