@@ -20,6 +20,8 @@
 
 ## Setup
 1. masuk melalui terminal ke folder BE (cd be) kemudian lakukan migrasi ke database dengan perintah sebagai berikut:
+    ketikkan diterminal perintah:
+    - cd be
     - npm install
     - npm run sequelize:create
     - npm run sequelize:migrate
@@ -34,11 +36,20 @@
 - admin
     email: admin@gmail.com
     password: admin123
-- supervisior
+- Kasubag TU
     email: spv@gmail.com
     password: spv123
-- manager
+- Kepala Kantor
     email: manager@gmail.com
     password: manager123
+- KASIE TEKOP DAN OPERASI
+    email: kasie1@gmail.com
+    password: test123
+- KASIE KAMPEN DAN YANDAR
+    email: kasie2@gmail.com
+    password: test123
+- KASIE PEL. DAN KERJASAMA
+    email: kasie3@gmail.com
+    password: test123
 
 ## ENJOY

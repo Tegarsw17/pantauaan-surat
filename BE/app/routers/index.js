@@ -4,6 +4,7 @@ const uploadRouter = require('./upload-router')
 const approvalRouter = require('./approval-router')
 const roleRouter = require('./role-router')
 const dispoRouter = require('./disposition-router')
+const dispositionLetterRouter = require('./disposition-letter-router')
 
 module.exports = {
     userRouter,
@@ -12,4 +13,5 @@ module.exports = {
     approvalRouter,
     roleRouter,
     dispoRouter,
+    dispositionLetterRouter,
 }

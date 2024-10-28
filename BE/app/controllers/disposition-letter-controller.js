@@ -1,13 +1,13 @@
 const {userQueries, letterQueries, dispositionLetterQueries } = require('../queries')
 const message = require('../../response-helpers/messages').MESSAGE
 const responseHandler = require('../../response-helpers/error-helper')
+const { dispositionLetterArrayDecorator } = require('../decorators/disposition-letter-decorator')
 
 class DispositionLetterController {
     async createDispositionLetter(req, res) {
         try {
             const { recipient_ids, letter_id, catatan } = req.body
             const senderId = req.userId
-            
             const letter = await letterQueries.findSurat({id: letter_id})
             if(!letter) {return responseHandler.notFound(res, message('letter').notFoundResource)}
     
@@ -20,6 +20,7 @@ class DispositionLetterController {
                     catatan: catatan,
                     pengirim: letter.pengirim,
                     perihal: letter.perihal,
+                    nomor_surat: letter.nomor_surat,
                     tanggal_surat: letter.tanggal_surat,
                     tanggal_diterima: letter.tanggal_diterima
                 })
@@ -30,6 +31,7 @@ class DispositionLetterController {
         }
 
         catch(err){
+            console.log(err)
             const key = err.message
             return responseHandler.internalError(res, message(key).errorMessage)
         }
@@ -43,7 +45,7 @@ class DispositionLetterController {
             return responseHandler.ok(res, message('get disposition').success, data)
 
         } catch (error) {
-            const key = err.message
+            const key = error.message
             return responseHandler.internalError(res, message(key).errorMessage)
         }
     }
@@ -51,19 +53,29 @@ class DispositionLetterController {
         try {
             const userId = req.userId
 
-            const user = await userQueries.findUserById(senderId)
+            const user = await userQueries.findUserById(userId)
             if(!user) { return responseHandler.notFound(res, message('user').notFoundResource)}
 
             let result;
             if (user.is_admin == true) {
                 result = await dispositionLetterQueries.getAll()
             } else {
-                result = await dispositionLetterQueries.getByUserId(userId)
+                result = await dispositionLetterQueries.getByRecipientId(userId)
             }
+
+            const recipients = await userQueries.findUserByIds(result.map(disposition => disposition.recipient_id))
+     
+            const recipientMap = recipients.reduce((map, recipient) => {
+                map[recipient.id] = recipient;
+                return map;
+            }, {});
+
+            result =await dispositionLetterArrayDecorator(result, recipientMap)
 
             return responseHandler.ok(res, message('get all disposition').success, result)
         } catch (error) {
-            const key = err.message
+            console.log(error)
+            const key = error.message
             return responseHandler.internalError(res, message(key).errorMessage)
         }
     }
@@ -79,7 +91,7 @@ class DispositionLetterController {
             return responseHandler.ok(res, message('delete disposition').success)
 
         } catch (error) {
-            const key = err.message
+            const key = error.message
             return responseHandler.internalError(res, message(key).errorMessage)
         }
     }
@@ -98,7 +110,7 @@ class DispositionLetterController {
             return responseHandler.ok(res, message('update disposition').success)
     
         } catch (error) {
-            const key = err.message
+            const key = error.message
             return responseHandler.internalError(res, message(key).errorMessage)
         }
     }

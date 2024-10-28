@@ -82,7 +82,8 @@
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="d-flex justify-content-between ml-2 mr-2">
-                    <h1 class="m-0">Surat Masuk</h1>
+                    <h1 class="m-0">Disposisi Surat</h1>
+
                     <button class="btn btn-primary btn-lg mr-4" id="btnFind"><i class="ion ion-mic-a"></i> Temukan
                         dengan
                         suara</button>
@@ -103,21 +104,15 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>No Surat</th>
+                                                <th>Penanggung Jawab</th>
                                                 <th>Pengirim</th>
                                                 <th>Perihal</th>
                                                 <th>Tanggal Surat</th>
                                                 <th>Tanggal Diterima</th>
-                                                <th>Status</th>
-                                                <th>Control</th>
-                                                <th>Unit Proses</th>
-                                                <th>Tindak Lanjut</th>
-                                                <th>Keterangan</th>
+                                                <th>Catatan</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-
-                                        </tbody>
                                     </table>
                                 </div>
                                 <!-- /.card-body -->
@@ -141,7 +136,9 @@
         <footer class="main-footer">
             <strong>Copyright &copy; 2023.</strong>
         </footer>
-       <!-- Modal -->
+        <!-- Button trigger modal -->
+
+        <!-- Modal -->
         <div class="modal fade" id="imgModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -151,8 +148,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <div id="m2"></div>
+                    <div class="modal-body" id="m2">
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -160,6 +157,28 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="formModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
     </div>
     <!-- ./wrapper -->
 
@@ -183,6 +202,8 @@
     <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script> -->
 
     <!-- AdminLTE -->
     <script src="dist/js/adminlte.js"></script>
@@ -191,12 +212,13 @@
     <script src="dist/js/main.js"></script>
 
     <script>
-        var url = `${linkApi}/surat_masuk/manager`
+        var url = `${linkApi}/disposition`
+        console.log(url)
         $(document).ready(function () {
             $("#namaUser").html(username)
             $('#example1').DataTable({
                 scrollY: "625px",
-                scrollX: "true",
+                scrollX: true,
                 scrollCollapse: true,
                 'ajax': {
                     'url': url,
@@ -212,6 +234,7 @@
                         }
                     },
                     { data: 'nomor_surat' },
+                    { data: 'penanggung_jawab' },
                     { data: 'pengirim' },
                     { data: 'perihal' },
                     {
@@ -234,20 +257,13 @@
                             return day + '-' + month + '-' + year;
                         })
                     },
-                    { data: 'status' },
-                    { data: 'control' },
-                    { data: 'unit_proses' },
-                    { data: 'tindak_lanjut' },
-                    { data: 'keterangan' },
+                    { data: 'catatan' },
                     {
                         data: 'id',
                         render: function (data, type, row, meta) {
                             let button = `<button type="button" class="btn btn-primary mt-1 openBtn" data-toggle="modal" onclick="getPdf(event)"
                                     data-target="${data}">Lihat</button>
                                     `
-                                button += `<button type="button" class="btn btn-primary mt-1 openBtn" data-toggle="modal" onclick="getModalCreateDispo(event)"
-                                    data-target="${data}">Kirim Disposisi</button>`
-                            
                             return button
                         }
                     },
@@ -255,17 +271,8 @@
             });
         });
 
-        function getModalCreateDispo(event) {
-            var id_surat = event.target.dataset.target;
-            $('#m2').load('modalCreateDisposition.html', (data) => {
-                $('#title').text('Disposisi Surat');
-                $('#hidden').append(`<input type="hidden" id="surat_id" name="custId" value="${id_surat}">`);
-                $('#imgModal').modal('show');
-             });
-        }
 
     </script>
-    
 
     <!-- OPTIONAL SCRIPTS -->
     <script src="plugins/chart.js/Chart.min.js"></script>

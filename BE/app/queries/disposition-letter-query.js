@@ -1,4 +1,4 @@
-const { DispositionLetter } = require('../models/disposition-letter-model')
+const { DispositionLetter } = require('../../db/models')
 
 const bulkCreate = async (data, trx) => {
     await DispositionLetter.bulkCreate(data, { transaction: trx })

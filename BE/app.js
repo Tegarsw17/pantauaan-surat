@@ -1,6 +1,14 @@
 const express = require('express')
 const app = express()
-const {userRouter, letterRouter, uploadRouter, approvalRouter, roleRouter, dispoRouter } = require('./app/routers')
+const {
+    userRouter, 
+    letterRouter, 
+    uploadRouter, 
+    approvalRouter, 
+    roleRouter, 
+    dispoRouter, 
+    dispositionLetterRouter 
+} = require('./app/routers')
 const bodyParser = require('body-parser')
 const { cors, corsOptions } = require('./app/middlewares/cors')
 const swaggerUi = require(`swagger-ui-express`)
@@ -36,6 +44,7 @@ app.use('/v1', approvalRouter)
 app.use('/v1', roleRouter)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use('/v1', dispoRouter)
+app.use('/v1', dispositionLetterRouter)
 app.use('/v1/pdf', express.static('storage/pdf'))
 
 

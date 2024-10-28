@@ -60,6 +60,16 @@ const findRecipientDisposition = async () => {
     })
 }
 
+const findUserByIds = async (ids) => {
+    return User.findAll({
+        where: { 
+            id: {
+                [Op.in]: ids,
+            }
+        }
+    })
+}
+
 module.exports = {
     createUser,
     findUserByEmail,
@@ -69,4 +79,5 @@ module.exports = {
     findAllUser,
     findUserByRole,
     findRecipientDisposition,
+    findUserByIds,
 }

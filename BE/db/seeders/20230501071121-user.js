@@ -5,7 +5,8 @@ module.exports = {
   async up (queryInterface, Sequelize) {
    await queryInterface.bulkInsert('users', [
     {
-      fullname: 'manager',
+      id: 1,
+      fullname: 'Kepala Kantor',
       jabatan_role_id: 3,
       phone: '085723144211',
       email: 'manager@gmail.com',
@@ -13,13 +14,15 @@ module.exports = {
       is_admin: true,
     },
     {
-      fullname: 'spv',
+      id: 2,
+      fullname: 'Kasubag TU',
       jabatan_role_id: 2,
       phone: '085723144211',
       email: 'spv@gmail.com',
       password: "$2b$08$wZ2S3eBy2itPowwpHnOboOrCpyLqGdn5EJa.Yd/DIMr9YUXO9.hz2" //'spv123'
     },
     {
+      id: 3,
       fullname: 'admin',
       jabatan_role_id: 1,
       phone: '085723144211',

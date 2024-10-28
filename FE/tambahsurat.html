@@ -26,13 +26,10 @@
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
-
             </ul>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-
-
                 <!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
@@ -51,7 +48,6 @@
                         </a>
                     </div>
                 </li>
-
             </ul>
         </nav>
         <!-- /.navbar -->
@@ -60,15 +56,11 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="index.html" class="brand-link text-center">
-                <!-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-          style="opacity: .8"> -->
                 <span class="brand-text ">SURAT</span>
             </a>
 
             <!-- Sidebar -->
             <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-
                 <!-- Sidebar Menu -->
                 <nav class="mt-2" id="navbar"></nav>
                 <!-- /.sidebar-menu -->
@@ -82,17 +74,6 @@
             <div class="content-header">
                 <div class="d-flex justify-content-between ml-2 mr-2">
                     <h1 class="m-0">Registrasi</h1>
-                    <!-- <div class="form-inline">
-                        <div class="input-group" data-widget="sidebar-search">
-                            <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                                aria-label="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-sidebar btn-secondary">
-                                    <i class="fas fa-search fa-fw"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
             <!-- /.content-header -->
@@ -103,53 +84,47 @@
                     <div class="col-8">
                         <div class="container-fluid">
                             <div class="card card-primary">
-                                <!-- /.card-header -->
-                                <!-- form start -->
-                                <form>
+                                <form id="suratForm">
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for="fullname">Jenis Surat</label>
+                                            <label for="jenis_surat">Jenis Surat</label>
                                             <select class="form-control" id="jenis_surat" onchange="viewTujuan()">
                                                 <option value="surat masuk">Surat Masuk</option>
                                                 <option value="surat keluar">Surat Keluar</option>
                                             </select>
                                         </div>
                                         <div class="form-group" id="tujuanView" hidden>
-                                            <label for="fullname">Tujuan</label>
+                                            <label for="tujuan">Tujuan</label>
                                             <input type="text" class="form-control" name="tujuan" id="tujuan">
                                         </div>
                                         <div class="form-group">
                                             <label for="no_surat">Nomor Surat</label>
-                                            <input type="text" class="form-control" name="no_surat" id="no_surat">
+                                            <input type="text" class="form-control" name="no_surat" id="no_surat" required>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="pengirim">Pengirim</label>
-                                                <input type="text" class="form-control" name="pengirim" id="pengirim">
+                                                <input type="text" class="form-control" name="pengirim" id="pengirim" required>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="perihal">Perihal</label>
-                                                <input type="text" class="form-control" name="perihal" id="perihal">
+                                                <input type="text" class="form-control" name="perihal" id="perihal" required>
                                             </div>
                                         </div>
                                         <div class="form-row">
-
                                             <div class="form-group col-md-6">
                                                 <label for="tanggal_surat">Tanggal Surat</label>
-                                                <input type="date" class="form-control" name="tanggal_surat"
-                                                    id="tanggal_surat">
+                                                <input type="date" class="form-control" name="tanggal_surat" id="tanggal_surat" required>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="tanggal_terima">Tanggal Diterima</label>
-                                                <input type="date" class="form-control" name="tanggal_terima"
-                                                    id="tanggal_terima">
+                                                <input type="date" class="form-control" name="tanggal_terima" id="tanggal_terima" required>
                                             </div>
                                         </div>
                                         <div class="form-row">
-
                                             <div class="form-group col-md-6">
                                                 <label for="status">Status</label>
-                                                <input type="text" class="form-control" name="status" id="status">
+                                                <input type="text" class="form-control" name="status" id="status" required>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="control">Control</label>
@@ -157,40 +132,32 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-
                                             <div class="form-group col-md-6">
                                                 <label for="unit_proses">Unit Proses</label>
-                                                <input type="text" class="form-control" name="unit_proses"
-                                                    id="unit_proses">
+                                                <input type="text" class="form-control" name="unit_proses" id="unit_proses">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="tindak_lanjut">Tindak Lanjut</label>
-                                                <input type="text" class="form-control" name="tindak_lanjut"
-                                                    id="tindak_lanjut">
+                                                <input type="text" class="form-control" name="tindak_lanjut" id="tindak_lanjut">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="keterangan">Keterangan</label>
                                             <textarea class="form-control" id="keterangan" rows="3"></textarea>
                                         </div>
-                                        <div class="form-row">
-
-                                            <div class="form-group col-md-6">
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" id="file">
-                                                    <label class="custom-file-label" for="customFile">Choose
-                                                        file</label>
-                                                </div>
+                                        <div class="form-group">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="file" accept="application/pdf" required onchange="updateFileName()">
+                                                <label class="custom-file-label" for="file">Choose file</label>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- /.card-body -->
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
                                 </form>
                             </div>
-                            <!-- content posisiton -->
+                            <!-- content position -->
                         </div>
                     </div>
                 </div>
@@ -224,117 +191,122 @@
     <script src="dist/js/adminlte.js"></script>
     <script src="dist/js/navbar.js"></script>
     <script src="dist/js/main.js"></script>
-
-    <!-- OPTIONAL SCRIPTS -->
-    <script src="plugins/chart.js/Chart.min.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="dist/js/pages/dashboard3.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script>
-        var role = localStorage.getItem("role_id")
+        var role = localStorage.getItem("role_id");
         $(document).ready(function () {
-            $("#namaUser").html(username)
-            roleCanAccess([1], role)
-        })
+            $("#namaUser").html(username);
+            roleCanAccess([1], role);
+        });
 
         function viewTujuan() {
-            var jns_surat = document.getElementById("jenis_surat").value
-            if (jns_surat == 'surat keluar') {
-                $('#tujuanView').removeAttr('hidden')
-            } else {
-                $('#tujuanView').attr('hidden', true)
-            }
+            var jns_surat = document.getElementById("jenis_surat").value;
+            $('#tujuanView').toggle(jns_surat === 'surat keluar');
         }
 
-        const form = document.querySelector("form");
-        form.addEventListener("submit", (e) => {
-            var jenis_surat = document.getElementById("jenis_surat").value;
-            var tujuan = document.getElementById("tujuan").value;
-            var nomor_surat = document.getElementById("no_surat").value;
-            var pengirim = document.getElementById("pengirim").value;
-            var perihal = document.getElementById("perihal").value;
-            var tanggal_surat = document.getElementById("tanggal_surat").value;
-            var tanggal_diterima = document.getElementById("tanggal_terima").value;
-            var status = document.getElementById("status").value;
-            var control = document.getElementById("control").value;
-            var unit_proses = document.getElementById("unit_proses").value;
-            var tindak_lanjut = document.getElementById("tindak_lanjut").value;
-            var keterangan = document.getElementById("keterangan").value;
-            var file = document.getElementById("file").files[0];
-            var token = localStorage.getItem("token")
-
-            const inputData = {
-                jenis_surat: jenis_surat,
-                tujuan: tujuan,
-                nomor_surat: nomor_surat,
-                pengirim: pengirim,
-                perihal: perihal,
-                tanggal_surat: tanggal_surat,
-                tanggal_diterima: tanggal_diterima,
-                status: status,
-                control: control,
-                unit_proses: unit_proses,
-                tindak_lanjut: tindak_lanjut,
-                keterangan: keterangan,
-            };
+        const form = document.getElementById("suratForm");
+        form.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            const sendImage = async (res) => {
-                var id = res.data.data.surat_id
-                console.log(id)
-                // axios.get(`${linkApi}/spv`).then((res) => { console.log(res) })
-                axios.post(`${linkApi}/upload/${id}`, { file: file },
-                    {
-                        headers: {
-                            'authorization': token,
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    }
-                ).then((res) => {
-                    console.log(res)
-                    if (res.status == 200) {
-                        Swal.fire({
-                            title: "Success",
-                            text: "data berhasil ditambahkan",
-                            icon: "success"
-                        }).then(function () {
-                            window.location = "./index.html";
-                        });
-                    }
-                }).catch((err) => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: err.response.data.message
-                    })
-                    // console.log(err)
-                    // console.log(err.code)
-                    // if (err.code === 'ECONNABORTED') {
-                    //     console.log('requested time out')
-                    // }
-                })
+            const inputData = {
+                jenis_surat: document.getElementById("jenis_surat").value,
+                tujuan: document.getElementById("tujuan").value,
+                nomor_surat: document.getElementById("no_surat").value,
+                pengirim: document.getElementById("pengirim").value,
+                perihal: document.getElementById("perihal").value,
+                tanggal_surat: document.getElementById("tanggal_surat").value,
+                tanggal_diterima: document.getElementById("tanggal_terima").value,
+                status: document.getElementById("status").value,
+                control: document.getElementById("control").value,
+                unit_proses: document.getElementById("unit_proses").value,
+                tindak_lanjut: document.getElementById("tindak_lanjut").value,
+                keterangan: document.getElementById("keterangan").value,
+            };
+
+            // Validasi input
+            if (!inputData.nomor_surat || !inputData.pengirim) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Validation Error',
+                    text: 'Nomor Surat dan Pengirim harus diisi.'
+                });
+                return;
             }
 
-            var id = axios.post(`${linkApi}/surat`, inputData, {
-                // timeout: 2000,
-                headers: {
-                    'authorization': token
+            try {
+                const token = localStorage.getItem('token');
+                const res = await axios.post(`${linkApi}/surat`, inputData, {
+                    headers: { 'authorization': token }
+                });
+                if (res.status === 200) {
+                    await sendImage(res.data.data.surat_id);
                 }
-            }).then((res) => {
-                console.log(res)
-                if (res.status == 200) {
-                    // console.log(res)
-                    sendImage(res)
-                }
-            }).catch((err) => {
-                // console.log(err.response.data)
+            } catch (err) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: err.response.data.message
-                })
-            })
-        })
+                    text: err.response?.data?.message || 'Terjadi kesalahan, coba lagi.'
+                });
+            }
+        });
+
+        const sendImage = async (id) => {
+            const fileInput = document.getElementById("file");
+            const file = fileInput.files[0];
+
+            if (!file) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Validation Error',
+                    text: 'File harus dipilih.'
+                });
+                return;
+            }
+
+            try {
+                const token = localStorage.getItem('token');
+                const formData = new FormData();
+                formData.append("file", file);
+
+                const response = await axios.post(`${linkApi}/upload/${id}`, formData, {
+                    headers: {
+                        'authorization': token,
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                if (response.status === 200) {
+                    Swal.fire({
+                        title: "Success",
+                        text: "Data berhasil ditambahkan",
+                        icon: "success"
+                    }).then(() => {
+                        window.location = "./index.html";
+                    });
+                }
+            } catch (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: err.response?.data?.message || 'Terjadi kesalahan saat mengupload file.'
+                });
+            }
+        };
+
+        function logout() {
+            localStorage.removeItem("token");
+            localStorage.removeItem("role_id");
+            window.location.href = "login.html";
+        }
+
+        function updateFileName() {
+        const fileInput = document.getElementById("file");
+        const fileLabel = fileInput.nextElementSibling;
+        const fileName = fileInput.files[0] ? fileInput.files[0].name : "Choose file";
+        
+        fileLabel.innerText = fileName;
+}
     </script>
 </body>
 
