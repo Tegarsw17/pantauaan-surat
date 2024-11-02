@@ -18,4 +18,19 @@ router.get('/api/surat/:id', tokenjwt.verifyToken, lettercontroller.getDetaillet
 //get surat masuk manager
 router.get('/api/surat_masuk_manager', tokenjwt.verifyToken, lettercontroller.getSuratMasukManager)
 
+//send approval
+router.post('/api/approval/:id', lettercontroller.SendApproval)
+//accept approval
+router.post('/api/approval/accept/:id', lettercontroller.AcceptApproval)
+//reject approval
+router.patch('/api/approval/reject/:id', lettercontroller.RejectApproval)
+//send disposition
+router.post('/api/dispo/:id', tokenjwt.verifyToken,authorization(1), lettercontroller.sendDisposition)
+//delete document
+router.delete('/api/surat/:id', tokenjwt.verifyToken, authorization(1), lettercontroller.deleteLetter)
+//get surat masuk spv
+router.get('/api/surat_masuk/spv', tokenjwt.verifyToken, lettercontroller.getAllForSpv)
+//get surat masuk manager
+router.get('/api/surat_masuk/manager', tokenjwt.verifyToken, lettercontroller.getAllForManager)
+
 module.exports = router

@@ -39,6 +39,7 @@ const suratArrayDecorator = async (payload) => {
             id: surat.id,
             admin: surat.user.fullname,
             jenis_surat: surat.jenis_surat,
+            tujuan: surat.tujuan,
             nomor_agenda: surat.nomor_agenda,
             nomor_surat: surat.nomor_surat,
             pengirim: surat.pengirim,
@@ -50,6 +51,7 @@ const suratArrayDecorator = async (payload) => {
             unit_proses: surat.unit_proses,
             tindak_lanjut: surat.tindak_lanjut,
             keterangan: surat.keterangan,
+            status_type: surat.status_type,
             file: surat.upload_letters.map((document) => {
                 return {
                     filename: document.filename,
@@ -67,6 +69,7 @@ const suratObjekDecorator = async (payload) => {
         admin: payload.user.fullname,
         jenis_surat: payload.jenis_surat,
         nomor_agenda: payload.nomor_agenda,
+        tujuan: payload.tujuan,
         nomor_surat: payload.nomor_surat,
         pengirim: payload.pengirim,
         perihal: payload.perihal,
@@ -77,6 +80,7 @@ const suratObjekDecorator = async (payload) => {
         unit_proses: payload.unit_proses,
         tindak_lanjut: payload.tindak_lanjut,
         keterangan: payload.keterangan,
+        status_type: payload.status_type,
         file: payload.upload_letters.map((document) => {
             return {
                 filename: document.filename,

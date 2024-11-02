@@ -18,19 +18,34 @@
 </head>
 
 <body class="hold-transition login-page">
+    <div id="load" class="position-absolute w-100 h-100 align-items-center justify-content-center" hidden="true"
+        style="z-index:999;background-color: rgba(197, 184, 184, 0.1);">
+        <div class="spinner-grow text-dark" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-dark" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-dark" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <h1 class="mb-5">Sistem Informasi Pengarsipan</h1>
     <div class="login-box">
         <!-- /.login-logo -->
         <div class="card">
             <div class="login-logo mt-3">
-                <a href="index.html"><b>Log</b>In</a>
+                <img src="./dist/img/dishub.png" alt="" width="100px"><br>
+                UPBU Kelas I Mopah
+                <!-- <a href="index.html"><b>Log</b>In</a> -->
             </div>
             <div class="card-body login-card-body">
                 <form action="#" method="post">
-                    <div class="input-group mb-3 mt-3">
+                    <div class="input-group mb-3 mt-1">
                         <input type="email" class="form-control" id="email" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                                <!-- <span class="fas fa-envelope"></span> -->
                             </div>
                         </div>
                     </div>
@@ -38,19 +53,13 @@
                         <input type="password" class="form-control" id="password" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+                                <span class="fas fa-eye" onclick="passType()"></span>
                             </div>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
-                                <label for="remember">
-                                    Remember Me
-                                </label>
-                            </div>
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
@@ -73,10 +82,19 @@
     <script src="plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="dist/js/main.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        const showLoading = () => {
+            $('#load').addClass('d-flex')
+        }
+        const hideLoading = () => {
+            $('#load').removeClass('d-flex')
+
+        }
         $(document).ready(function () {
             var token = localStorage.getItem("token")
             if (token) {
@@ -85,6 +103,7 @@
         })
         const form = document.querySelector("form");
         form.addEventListener("submit", (e) => {
+            showLoading()
             var email = document.getElementById("email").value;
             var password = document.getElementById("password").value;
             const inputData = {
@@ -92,19 +111,38 @@
                 password: password,
             };
             e.preventDefault();
-            console.log(inputData)
-            axios.post("http://localhost:5151/v1/api/login", inputData).then((res) => {
-                console.log(res)
+            // console.log(inputData)
+            axios.post(`${linkApi}/login`, inputData).then((res) => {
+                hideLoading()
                 // jika sukses
                 if (res.status == 200) {
                     localStorage.setItem("token", res.data.data.token);
                     localStorage.setItem("role_id", res.data.data.role_id);
+                    localStorage.setItem("username", res.data.data.username);
                     location.replace('./index.html')
                 }
 
                 // jika gagal
+            }).catch((err) => {
+                hideLoading()
+                if (err.response.status == 404) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: err.response.data.message
+                    })
+                }
             })
         })
+
+        function passType() {
+            var x = document.getElementById("password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
     </script>
 </body>
 

@@ -27,8 +27,6 @@ const allUserDecorators = async (payload) => {
     return {
       user_id: user.id,
       fullname: user.fullname,
-      jabatan: user.jabatan_role.jabatan,
-      role:  user.jabatan_role.role
     }
   })
   return await Promise.all(userMaps)

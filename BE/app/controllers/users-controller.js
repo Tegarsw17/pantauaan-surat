@@ -54,6 +54,7 @@ class userController {
         }
 
         catch(err) {
+            console.log(err)
             const key = err.message
             return responseHendler.internalError(res, message(key).errorMessage)
         }
@@ -100,6 +101,22 @@ class userController {
         }
         catch(err) {
             const key = err.message
+            return responseHendler.internalError(res, message(key).errorMessage)
+        }
+    }
+
+    async getUserForDispositionLetter(req, res) {
+        try {
+            const getUser = await userQueries.findRecipientDisposition()
+            console.log(getUser)
+            if(!getUser) { return responseHendler.notFound(res, message('user').notFoundResource)}
+
+            const data = await allUserDecorators(getUser)
+            return responseHendler.ok(res, message('data Supervisor').success, data)
+        }   
+        catch(err) {
+            const key = err.message
+            console.log(key)
             return responseHendler.internalError(res, message(key).errorMessage)
         }
     }

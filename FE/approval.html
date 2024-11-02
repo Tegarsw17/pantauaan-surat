@@ -38,6 +38,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <div class="user-panel  d-flex">
+                            <div class="info">
+                                <span href="#" class="d-block" id="namaUser"></span>
+                            </div>
                             <div class="image">
                                 <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                             </div>
@@ -188,10 +191,9 @@
     <script src="dist/js/main.js"></script>
 
     <script>
-        var token = localStorage.getItem("token")
-
-        var url = "http://localhost:5151/v1/api/approval/all"
+        var url = `${linkApi}/approval/all`
         $(document).ready(function () {
+            $("#namaUser").html(username)
             $('#example1').DataTable({
                 scrollY: "625px",
                 scrollX: "true",
@@ -230,7 +232,7 @@
             // console.log(event.target.dataset.value)
             var surat_id = event.target.dataset.target
             var approval_id = event.target.dataset.value
-            axios.get(`http://localhost:5151/v1/api/surat/${surat_id}`, {
+            axios.get(`${linkApi}/surat/${surat_id}`, {
                 headers: {
                     'authorization': token
                 }
@@ -249,7 +251,7 @@
             var catatan = document.getElementById("catatan").value;
             var id = document.getElementById("approval_id").value;
             event.preventDefault();
-            axios.patch(`http://localhost:5151/v1/api/approval/${id}`, { catatan: catatan }, {
+            axios.patch(`${linkApi}/approval/${id}`, { catatan: catatan }, {
                 headers: {
                     'authorization': token
                 }

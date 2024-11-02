@@ -1,0 +1,79 @@
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <h3 id="title"></h3>
+        <div id="placeholder"></div>
+        <form method="GET" onsubmit="createDispositionLetter(event)" id="formManager">
+            <div id="hidden"></div>
+            <div class="form-group">
+            </div>
+            <div class="form-group">
+                <label for="penerima_disposisi">Penerima Disposisi</label>
+                <select class="form-control" id="penerima_disposisi" multiple onfocus="loadPenerimaDisposisi()">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="catatan">Catatan</label>
+                <textarea class="form-control" id="catatan" rows="3" placeholder="Tambahkan catatan di sini..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+
+<script>
+   function loadPenerimaDisposisi() {
+        axios.get(`${linkApi}/user/disposition`)
+            .then(function (response) {
+                const data = response.data;
+
+                const selectElement = document.getElementById('penerima_disposisi');
+                data.data.forEach(function (item) {
+                    const option = document.createElement('option');
+                    option.value = item.user_id;
+                    option.textContent = item.fullname;
+                    selectElement.appendChild(option);
+                });
+            })
+            .catch(function (error) {
+                console.error('Gagal memuat data penerima disposisi:', error.message);
+            });
+    }
+
+    function createDispositionLetter(event) {
+        var id_user = document.getElementById("penerima_disposisi").value;
+        var id_surat = document.getElementById("surat_id").value;
+        const catatan = document.getElementById('catatan').value;
+        event.preventDefault(); 
+        var input = {
+            "recipient_ids": [id_user],
+            "letter_id": id_surat,
+            "catatan": catatan
+        }
+        axios.post(`${linkApi}/disposition/`, input, {
+            headers: {
+                'authorization': token
+            }
+        }).then((res) => {
+            if (res.status == 200) {
+                Swal.fire({
+                    title: "Success",
+                    text: "Disposisi telah terkirim",
+                    icon: "success"
+                }).then(function () {
+                    setTimeout(() => {
+                        location.replace('./suratmasuk.html');
+                    }, 1500);
+                });
+            }
+        }).catch((err) => {
+            console.log(err.message);
+            Swal.fire({
+                title: "Oppss",
+                text: "Disposisi gagal terkirim",
+                icon: "error"
+            });
+        });
+    }
+    
+</script>

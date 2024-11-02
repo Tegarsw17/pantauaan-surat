@@ -29,6 +29,7 @@ const ApprovalSuratArrayDecorator = async (payload) => {
             admin: approval.surat.user.fullname,
             jenis_surat: approval.surat.jenis_surat,
             nomor_agenda: approval.surat.nomor_agenda,
+            tujuan: approval.surat.tujuan,
             nomor_surat: approval.surat.nomor_surat,
             pengirim: approval.surat.pengirim,
             perihal: approval.surat.perihal,

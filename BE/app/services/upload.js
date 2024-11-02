@@ -1,55 +1,33 @@
-const multer = require('multer')
-const util = require('util')
-const path = require('path')
-const __basedir = path.resolve()
-// const { cloudinary } = require('../../db/config/cloudinary')
-// const { CloudinaryStorage } = require("multer-storage-cloudinary")
-
-// const imageFilter = (req, file, cb) => {
-//     if(file.mimetype.startsWith('pdf')) {
-//         cb (null, true)
-//     }else {
-//         cb('please upload only pdf', false)
-//     }
-// }
-
-// const storage = new CloudinaryStorage({
-//     cloudinary: cloudinary,
-//     params: {
-//         folder: "BingleShop",
-//         format: async (req, file) => {
-//             "jpg", "png"
-//         }, // supports promises as well
-//         public_id: (req, file) => {
-//             console.log(
-//                 new Date().toISOString().replace(/:/g, "-") + file.originalname
-//             )
-//             return (
-//                 new Date().toISOString().replace(/:/g, "-") + file.originalname
-//             )
-//         }
-//     }
-// })
+const multer = require('multer');
+const util = require('util');
+const path = require('path');
+const __basedir = path.resolve();
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, __basedir + '/storage/pdf')
+        cb(null, path.join(__basedir, '/storage/pdf'));
     },
     filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`) //
+        cb(null, `${Date.now()}-${file.originalname}`);
     },
-})
+});
 
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'application/pdf') {
+        cb(null, true);
+    } else {
+        cb(new Error('Only PDF files are allowed!'), false); 
+    }
+};
 
-const uploadImage =  multer({
+const uploadImage = multer({
     storage: storage,
-    // fileFilter: imageFilter,
-}).single('file') //untuk menentukan banyak image yg bisa diupload
+    fileFilter: fileFilter,
+}).single('file');
 
-let uploadFile = util.promisify(uploadImage)
-
+let uploadFile = util.promisify(uploadImage);
 
 module.exports = {
     uploadFile,
     __basedir,
-}
+};

@@ -29,6 +29,10 @@ surat.init(
     type: DataTypes.STRING,
     allowNull: false
     },
+    tujuan: {
+    type: DataTypes.STRING,
+    allowNull: false
+    },
     pengirim: {
     type: DataTypes.STRING,
     allowNull: false
@@ -65,6 +69,10 @@ surat.init(
     type: DataTypes.STRING,
     allowNull: false
     },
+    status_type: {
+      type: DataTypes.STRING,
+      allowNull: false
+      },
   },
   {
     sequelize: sequelize,

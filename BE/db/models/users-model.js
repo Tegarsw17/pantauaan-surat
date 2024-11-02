@@ -33,6 +33,10 @@ user.init(
         type: DataTypes.STRING,
         allowNull: false
       },
+      is_admin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
   },
   {
     sequelize: sequelize,

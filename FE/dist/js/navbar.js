@@ -26,6 +26,14 @@ with font-awesome or any other icon font library -->
       </a>
     </li>
   </ul>
+   <ul class="nav nav-treeview">
+    <li class="nav-item">
+      <a href="./disposisisurat.html" class="nav-link">
+        <i class="far fa-circle nav-icon"></i>
+        <p>Disposisi Surat</p>
+      </a>
+    </li>
+  </ul>
   <ul class="nav nav-treeview">
     <li class="nav-item">
       <a href="./tambahsurat.html" class="nav-link">
@@ -39,7 +47,7 @@ with font-awesome or any other icon font library -->
   <a href="./register.html" class="nav-link">
     <i class="nav-icon fas fa-edit"></i>
     <p>
-      Registrasi
+      Registrasi User
     </p>
   </a>
 </li>
@@ -72,14 +80,15 @@ with font-awesome or any other icon font library -->
       </a>
     </li>
   </ul>
-  <ul class="nav nav-treeview">
+     <ul class="nav nav-treeview">
     <li class="nav-item">
-      <a href="./approval.html" class="nav-link">
+      <a href="./disposisisurat.html" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
-        <p>Approval</p>
+        <p>Disposisi Surat</p>
       </a>
     </li>
   </ul>
+   </ul>
 </li>
 </ul>`
 
@@ -110,6 +119,38 @@ with font-awesome or any other icon font library -->
       </a>
     </li>
   </ul>
+    <ul class="nav nav-treeview">
+    <li class="nav-item">
+      <a href="./disposisisurat.html" class="nav-link">
+        <i class="far fa-circle nav-icon"></i>
+        <p>Disposisi Surat</p>
+      </a>
+    </li>
+  </ul>
+  </ul>
+</li>
+</ul>`
+
+let otherUser = `<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+<!-- Add icons to the links using the .nav-icon class
+with font-awesome or any other icon font library -->
+<li class="nav-item">
+  <a href="#" class="nav-link">
+    <i class="nav-icon far fa-envelope"></i>
+    <p>
+      Surat
+      <i class="right fas fa-angle-left"></i>
+    </p>
+  </a>
+  <ul class="nav nav-treeview">
+    <li class="nav-item">
+      <a href="./disposisisurat.html" class="nav-link">
+        <i class="far fa-circle nav-icon"></i>
+        <p>Disposisi Surat</p>
+      </a>
+    </li>
+  </ul>
+  </ul>
 </li>
 </ul>`
 
@@ -123,6 +164,10 @@ if (navRole == 2) {
 }
 if (navRole == 3) {
   element.innerHTML = navItemManager
+}
+
+if (navRole != 1 && navRole != 2 && navRole != 3) {
+  element.innerHTML = otherUser
 }
 
 var path = window.location.href
